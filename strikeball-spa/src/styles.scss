@@ -11,7 +11,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$strikeball-spa-primary: mat.define-palette(mat.$red-palette);
+$strikeball-spa-primary: mat.define-palette(mat.$blue-gray-palette);
 $strikeball-spa-accent: mat.define-palette(mat.$green-palette);
 
 // The warn palette is optional (defaults to red).

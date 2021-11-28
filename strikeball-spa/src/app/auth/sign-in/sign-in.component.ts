@@ -17,6 +17,7 @@ export class SignInComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.form.controls['password']
   }
 
 }

@@ -7,11 +7,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AuthContainerComponent } from './auth-container/auth-container.component';
+import { SignInComponent } from './auth-container/sign-in/sign-in.component';
 import { AuthRoutingModule } from './auth-routing.module';
-import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
-  declarations: [SignInComponent],
+  declarations: [AuthContainerComponent, SignInComponent],
   imports: [
     MatInputModule,
     MatIconModule,

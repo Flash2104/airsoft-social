@@ -1,9 +1,14 @@
+
+.sign-in-card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 .sign-in-form {
   display: flex;
   flex-direction: column;
-  max-width: 600px;
-  padding: 200px 50px;
   margin: 0 auto;
+  padding: 10px;
 }
 
 .submit-button-row {

@@ -4,8 +4,15 @@ import { AuthContainerComponent } from './auth-container/auth-container.componen
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'auth',
+    pathMatch: 'full',
     component: AuthContainerComponent,
+
+  },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full',
   },
 ];
 

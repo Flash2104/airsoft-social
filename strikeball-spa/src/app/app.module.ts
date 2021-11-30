@@ -12,24 +12,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    MatToolbarModule,
-    MatGridListModule,
-    BrowserModule,
     AuthModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-
-    MatCardModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSlideToggleModule,
+    SharedModule,
     OverlayModule,
+    BrowserModule
   ],
   providers: [],
   bootstrap: [AppComponent],

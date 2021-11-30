@@ -3,13 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignInComponent } from './auth/auth-container/sign-in/sign-in.component';
 
 const routes: Routes = [
-  // {
-  //   path: 'auth',
-  //   loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  // },
   {
     path: 'auth',
-    component: SignInComponent,
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: '',

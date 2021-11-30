@@ -1,5 +1,5 @@
 {
-  "name": "strikeball-spa",
+  "name": "airsoft-spa",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -20,6 +20,12 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "@ngneat/elf": "^1.0.0",
+    "@ngneat/elf-cli-ng": "^1.0.0",
+    "@ngneat/elf-devtools": "^1.0.2",
+    "@ngneat/elf-entities": "^1.0.0",
+    "@ngneat/elf-persist-state": "^1.0.0",
+    "@ngneat/elf-state-history": "^1.0.0-beta.2",
     "bootstrap": "^5.1.3",
     "c": "^1.1.1",
     "rxjs": "~7.4.0",

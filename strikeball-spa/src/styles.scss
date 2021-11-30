@@ -1,6 +1,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use "@angular/material" as mat;
+@import "~bootstrap/scss/bootstrap";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -11,56 +12,31 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$spa-warn: mat.define-palette(mat.$amber-palette);
+$sb-warn: mat.define-palette(mat.$amber-palette);
 
-$light-primary: mat.define-palette(mat.$grey-palette);
-$light-accent: mat.define-palette(mat.$lime-palette);
-$light-theme: mat.define-light-theme((
+$sb-primary: mat.define-palette(mat.$grey-palette, 500, 100, 900);
+$sb-accent: mat.define-palette(mat.$lime-palette, 500, 100, 900);
+$sb-theme: mat.define-dark-theme((
  color: (
-   primary: $light-primary,
-   accent: $light-accent,
-   warn: $spa-warn
+   primary: $sb-primary,
+   accent: $sb-accent,
+   warn: $sb-warn
  )
 ));
+@include mat.all-component-themes($sb-theme);
 
-// Define a dark theme
-$dark-primary: mat.define-palette(mat.$grey-palette);
-$dark-accent: mat.define-palette(mat.$lime-palette);
-$dark-theme: mat.define-dark-theme((
- color: (
-   primary: $dark-primary,
-   accent: $dark-accent,
-   warn: $spa-warn
- )
-));
+$sb-light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $sb-primary,
+      accent: $sb-accent,
+      warn: $sb-warn,
+    ),
+  )
+);
 
-// $strikeball-spa-primary: mat.define-palette(mat.$gray-palette, 500, 200, 900);
-// $strikeball-spa-accent: mat.define-palette(mat.$lime-palette, 500, 200, 900);
-
-// The warn palette is optional (defaults to red).
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".''
-// $strikeball-spa-theme: mat.define-dark-theme(
-//   (
-//     color: (
-//       primary: $strikeball-spa-primary,
-//       accent: $strikeball-spa-accent,
-//       warn: $spa-warn,
-//     ),
-//   )
-// );
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.core-theme($dark-theme);
-@include mat.button-theme($dark-theme);
-@include mat.all-component-themes($dark-theme);
-
-.my-light-theme {
-  @include mat.core-color($light-theme);
-  @include mat.button-color($light-theme);
+.light-theme {
+  @include mat.all-component-colors($sb-light-theme);
  }
 // @include mat.strong-focus-indicators-theme($strikeball-spa-theme);
 
@@ -81,33 +57,38 @@ h5,
 h6 {
   margin: 8px 0;
 }
-.mat-grid-list {
-  background-color: mat.get-color-from-palette($dark-primary, 'darker');
-}
+
 p {
   margin: 0;
 }
 
 html,
 body {
-  margin: 0;
+  height: 100%;
 }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 
 .header {
-  position: fixed;
   display: flex;
-  top: 0;
-  min-height: 48px;
   width: 100%;
   z-index: 120;
+  margin: 0 auto;
 }
-.main {
-  margin-top: 56px;
 
+.main {
+  padding: 0 10px;
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
+  max-height: 48px;
   bottom: 0;
-  min-height: 32px;
+  display: flex;
+  width: 100%;
+  z-index: 120;
+  margin: 0 auto;
 }

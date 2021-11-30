@@ -15,12 +15,8 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
   form: FormGroup = new FormGroup({
-    emailFormControl: this.emailFormControl,
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(6),

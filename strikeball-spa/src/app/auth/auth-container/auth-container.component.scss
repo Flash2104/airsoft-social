@@ -3,6 +3,9 @@
   max-width: 600px;
   padding-top: 160px;
   margin: 0 auto;
+  @media (max-width: 640px) {
+    padding-top: 64px;
+  }
 }
 
 .auth-card {

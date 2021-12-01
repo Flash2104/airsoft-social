@@ -2,8 +2,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -12,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from './shared-module/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +19,13 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     SharedModule,
     OverlayModule,
-    BrowserModule
+    BrowserModule,
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

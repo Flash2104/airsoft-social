@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
 import {
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { FormErrorStateMatcher } from '../../../shared/utils/error-state-matcher';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, OnDestroy {
+  private _destroy$: Subject<void> = new Subject<void>();
+
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
@@ -22,24 +25,21 @@ export class SignInComponent implements OnInit {
       Validators.minLength(6),
     ]),
   });
-  matcher = new MyErrorStateMatcher();
+
+  matcher: FormErrorStateMatcher = new FormErrorStateMatcher();
+
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
 
-  onSubmit(): void {}
-}
+  ngOnInit(): void {
+    console.log('Init');
+  }
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
+  onSubmit(): void {
+    console.log('Submit');
   }
 }

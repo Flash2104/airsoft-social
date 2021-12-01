@@ -1,16 +1,26 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private _destroy$: Subject<void> = new Subject<void>();
   form: FormGroup = new FormGroup({
     toggleControl: new FormControl(false),
   });
+
   constructor(private overlay: OverlayContainer, private renderer: Renderer2) {}
   ngOnInit(): void {
     this.form.controls['toggleControl'].valueChanges.subscribe((lightMode) => {
@@ -24,5 +34,9 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
   }
-  ngOnDestroy(): void {}
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
 }

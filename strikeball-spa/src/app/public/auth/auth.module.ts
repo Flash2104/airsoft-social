@@ -8,16 +8,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { SharedModule } from '../shared/shared.module';
+import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from '../../shared/shared.module';
 import { AuthContainerComponent } from './auth-container/auth-container.component';
 import { SignInComponent } from './auth-container/sign-in/sign-in.component';
 import { SignUpComponent } from './auth-container/sign-up/sign-up.component';
-import { AuthRoutingModule } from './auth-routing.module';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: AuthContainerComponent,
+  },
+];
 
 @NgModule({
   declarations: [AuthContainerComponent, SignInComponent, SignUpComponent],
   imports: [
-    AuthRoutingModule,
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
@@ -28,6 +34,9 @@ import { AuthRoutingModule } from './auth-routing.module';
     MatDialogModule,
     MatTabsModule,
     SharedModule,
+
+    RouterModule.forChild(routes),
   ],
+  exports: [],
 })
 export class AuthModule {}

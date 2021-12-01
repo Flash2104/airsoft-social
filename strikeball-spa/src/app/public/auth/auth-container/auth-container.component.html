@@ -1,0 +1,33 @@
+<div class="auth-container">
+  <ng-container *ngIf="(authLoading$ | async) === false; else elseTemplate">
+    <mat-tab-group mat-align-tabs="start">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="me-2">input</mat-icon> Вход
+        </ng-template>
+        <mat-card class="auth-card">
+          <mat-card-content>
+            <app-sign-in></app-sign-in>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="me-2">assignment</mat-icon> <span>Регистрация</span>
+        </ng-template>
+        <mat-card class="auth-card">
+          <mat-card-content>
+            <app-sign-up></app-sign-up>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <mat-card class="loading-card">
+      <mat-card-content>
+        <loader> </loader>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>

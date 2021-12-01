@@ -7,20 +7,24 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { FormErrorStateMatcher } from '../../../shared/utils/error-state-matcher';
+import { FormErrorStateMatcher } from '../../../../shared/utils/error-state-matcher';
 
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss'],
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignInComponent implements OnInit, OnDestroy {
+export class SignUpComponent implements OnInit, OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
 
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+    confirmPassword: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
     ]),
@@ -35,11 +39,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  ngOnInit(): void {
-    console.log('Init');
-  }
+  ngOnInit(): void {}
 
-  onSubmit(): void {
-    console.log('Submit');
-  }
+  onSubmit(): void {}
 }

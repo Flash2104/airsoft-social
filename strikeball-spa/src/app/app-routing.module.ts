@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RootModule } from './root/root.module';
 
 const routes: Routes = [
   {
-    path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-  },
-  {
     path: '',
-    redirectTo: 'auth',
-    pathMatch: 'full',
+    loadChildren: () => RootModule,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      onSameUrlNavigation: 'reload',
+      enableTracing: false,
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

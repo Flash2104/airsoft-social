@@ -18,7 +18,7 @@ import {
 export class AuthGuard implements CanActivate {
   constructor(
     private _authRepository: AuthRepository,
-    private _router: Router // private _persistQuery: PersistenceQuery, // private _authService: AuthService, // private _deviceInfoQuery: DeviceInfoQuery
+    private _router: Router
   ) {}
 
   canActivate(
@@ -27,15 +27,14 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> {
     return combineLatest([
       this._authRepository.token$,
-      // this._deviceInfoQuery.select((x) => x.deviceId),
       authPersist.initialized$,
     ]).pipe(
       take(1),
       map(([token]) => {
-        if (token == null || token.jwt == null) {
+        if (token?.token != null) {
           this._router
             .navigate(
-              ['public', 'auth']
+              ['private', 'home']
               // { queryParams: { returnUrl: state.url } }
             )
             .then();

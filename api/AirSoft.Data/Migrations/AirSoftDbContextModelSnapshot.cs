@@ -71,6 +71,112 @@ namespace AirSoft.Data.Migrations
                             Phone = "89266762453"
                         });
                 });
+
+            modelBuilder.Entity("AirSoft.Data.Entity.DbUserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRoles", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Role = "Administrator"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Role = "Organizer"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Role = "TeamLeader"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Role = "Sponsor"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Role = "Merchant"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Role = "Private"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Role = "User"
+                        });
+                });
+
+            modelBuilder.Entity("AirSoft.Data.Entity.DbUsersToRoles", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UsersToRoles", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3"),
+                            RoleId = 1
+                        });
+                });
+
+            modelBuilder.Entity("AirSoft.Data.Entity.DbUsersToRoles", b =>
+                {
+                    b.HasOne("AirSoft.Data.Entity.DbUserRole", "Role")
+                        .WithMany("UsersToRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AirSoft.Data.Entity.DbUser", "User")
+                        .WithMany("UsersToRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AirSoft.Data.Entity.DbUser", b =>
+                {
+                    b.Navigation("UsersToRoles");
+                });
+
+            modelBuilder.Entity("AirSoft.Data.Entity.DbUserRole", b =>
+                {
+                    b.Navigation("UsersToRoles");
+                });
 #pragma warning restore 612, 618
         }
     }

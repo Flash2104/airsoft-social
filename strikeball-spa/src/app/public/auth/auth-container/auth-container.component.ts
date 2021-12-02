@@ -1,15 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { AuthRepository } from './../repository/auth.repository';
-import { AuthService } from './auth.service';
+import { AuthRepository } from '../repository/auth.repository';
 
 @Component({
   selector: 'app-auth-container',
   templateUrl: './auth-container.component.html',
   styleUrls: ['./auth-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [AuthService],
 })
 export class AuthContainerComponent implements OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();

@@ -5,12 +5,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { FormErrorStateMatcher } from '../../../../shared/utils/error-state-matcher';
+import { AuthService } from '../auth.service';
 
 export interface ISignInData {
-  login: string;
+  phoneOrEmail: string;
   password: string;
 }
 
@@ -33,7 +33,7 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   matcher: FormErrorStateMatcher = new FormErrorStateMatcher();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(private _authService: AuthService) {}
 
   ngOnDestroy(): void {
     this._destroy$.next();
@@ -45,6 +45,13 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log('Submit');
+    if (this.form.valid) {
+      this._authService
+        .signIn({
+          phoneOrEmail: this.form.controls['email'].value,
+          password: this.form.controls['password'].value,
+        })
+        .subscribe();
+    }
   }
 }

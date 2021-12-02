@@ -9,7 +9,6 @@ export type OperationCode =
 export interface IServerError {
   code: number;
   message: string;
-  reason: string;
 }
 
 export interface IOperationStatus {
@@ -18,7 +17,7 @@ export interface IOperationStatus {
 }
 
 export interface IServerResponse<T> {
-  result: T | null;
-  totalCount?: number | null;
-  status: IOperationStatus;
+  data: T | null;
+  isSuccess: boolean;
+  errors: IServerError[] | null;
 }

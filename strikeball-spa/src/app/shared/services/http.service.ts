@@ -1,20 +1,10 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  catchError,
-  map,
-  mergeMap,
-  Observable,
-  take,
-  tap,
-  throwError,
-} from 'rxjs';
+import { map, mergeMap, Observable, of, take } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthRepository } from '../../public/auth/repository/auth.repository';
+import { ISignInRequest } from './dto-models/auth/sign-in/sign-in-request';
+import { ISignInResponse } from './dto-models/auth/sign-in/sign-in-response';
 import { IServerResponse } from './dto-models/server-response';
 
 @Injectable({ providedIn: 'root' })
@@ -23,15 +13,13 @@ export class HttpService {
 
   /* #region  Beneficiary Account Non-SEPA*/
 
-  // createNonSEPA(
-  //   account: IBeneficiaryNonSEPACreateDto
-  // ): Observable<IServerResponse<IBeneficiaryNonSEPACreateDto>> {
-  //   return of('beneficiaryNonSEPAAccount/create').pipe(
-  //     mergeMap((url) =>
-  //       this.httpPost<IBeneficiaryNonSEPACreateDto>(url, account)
-  //     )
-  //   );
-  // }
+  authSignIn(
+    data: ISignInRequest
+  ): Observable<IServerResponse<ISignInResponse>> {
+    return of('api/auth/sign-in').pipe(
+      mergeMap((url) => this.httpPost<ISignInResponse>(url, data))
+    );
+  }
 
   // getNonSEPAList(
   //   request: IBeneficiaryNonSEPAListRequestDto
@@ -48,7 +36,7 @@ export class HttpService {
     return this._authRepo.token$.pipe(
       take(1),
       map((auth) => {
-        const token: string | null | undefined = auth?.jwt;
+        const token: string | null | undefined = auth?.token;
         const headersObj: { [key: string]: string | string[] } = {
           'content-type': 'application/json',
         };
@@ -66,19 +54,7 @@ export class HttpService {
         this._http.get<IServerResponse<T>>(environment.proxyUrl + path, {
           headers,
         })
-      ),
-      tap((resp) => {
-        if (resp.status?.error != null) {
-          throw new Error(
-            `Code: ${
-              resp.status.code != null
-                ? resp.status.code
-                : resp.status.error.code
-            }. Message: ${resp.status.error.message}`
-          );
-        }
-      }),
-      catchError((err) => throwError(tryHandleHttpError(err)))
+      )
     );
   }
 
@@ -91,19 +67,7 @@ export class HttpService {
         this._http.post<IServerResponse<T>>(environment.proxyUrl + path, body, {
           headers,
         })
-      ),
-      tap((resp) => {
-        if (resp.status?.error != null) {
-          throw new Error(
-            `Code: ${
-              resp.status.code != null
-                ? resp.status.code
-                : resp.status.error.code
-            }. Message: ${resp.status.error.message}`
-          );
-        }
-      }),
-      catchError((err) => throwError(tryHandleHttpError(err)))
+      )
     );
   }
 
@@ -114,20 +78,9 @@ export class HttpService {
           responseType: 'blob' as 'json',
           headers,
         })
-      ),
-      tap((resp) => {
-        if (resp.status?.error != null) {
-          throw new Error(
-            `Code: ${
-              resp.status.code != null
-                ? resp.status.code
-                : resp.status.error.code
-            }. Message: ${resp.status.error.message}`
-          );
-        }
-      }),
+      )
       // eslint-disable-next-line no-use-before-define
-      catchError((err) => throwError(tryHandleHttpError(err)))
+      // catchError((err) => throwError(() => tryHandleHttpError(err)))
     );
   }
 
@@ -193,22 +146,22 @@ export class HttpService {
   }
 }
 
-export const tryHandleHttpError = <T>(err: T): string | T => {
-  if (typeof err === 'string') {
-    return err;
-  } else if (err instanceof HttpErrorResponse) {
-    // try to parse a good response with a human friendly error message
-    let errMsg: string | null =
-      (err != null &&
-        err.error != null &&
-        err.error.error != null &&
-        err.error.error.message) ||
-      null;
-    if (errMsg == null) {
-      // no error message received, take message from http response
-      errMsg = `${err.status}. ${err.statusText}`;
-    }
-    return errMsg;
-  }
-  return err;
-};
+// export const tryHandleHttpError = <T>(err: T): string | T => {
+//   if (typeof err === 'string') {
+//     return err;
+//   } else if (err instanceof HttpErrorResponse) {
+//     // try to parse a good response with a human friendly error message
+//     let errMsg: string | null =
+//       (err != null &&
+//         err.error != null &&
+//         err.error.error != null &&
+//         err.error.error.message) ||
+//       null;
+//     if (errMsg == null) {
+//       // no error message received, take message from http response
+//       errMsg = `${err.status}. ${err.statusText}`;
+//     }
+//     return errMsg;
+//   }
+//   return err;
+// };

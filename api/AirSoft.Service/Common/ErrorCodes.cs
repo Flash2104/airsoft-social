@@ -1,7 +1,7 @@
 ﻿
 namespace AirSoft.Service.Common;
 
-internal class ErrorCodes
+public class ErrorCodes
 {
     public const int CommonError = 81000;
     public const int RequestArgumentInvalid = 81001;
@@ -11,5 +11,13 @@ internal class ErrorCodes
     public sealed class AuthService
     {
         public const int WrongLoginOrPass = 82002;
+        public const int UserNotFound = 82003;
+        public const int EmptyPassword = 82004;
+    }
+
+    public sealed class UserRepository
+    {
+        public const int MoreThanOneUserByPhone = 82101;
+        public const int MoreThanOneUserByEmail = 82102;
     }
 }

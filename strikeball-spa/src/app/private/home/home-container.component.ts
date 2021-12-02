@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../../public/auth/auth-container/auth.service';
 
 @Component({
   selector: 'app-home-container',
@@ -8,5 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeContainerComponent {
-  constructor(public dialog: MatDialog) {}
+  constructor(private _authService: AuthService) {}
+
+  onSubmit(): void {
+    this._authService.signOut().subscribe();
+  }
 }

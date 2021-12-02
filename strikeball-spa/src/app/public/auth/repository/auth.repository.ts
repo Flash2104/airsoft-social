@@ -2,20 +2,12 @@ import { Injectable } from '@angular/core';
 import { createState, select, Store, withProps } from '@ngneat/elf';
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 import { Observable } from 'rxjs';
-
-export interface IAuthUser {
-  id: string;
-  name: string | null;
-}
-
-export interface IAuthToken {
-  jwt: string | null;
-  expiryDate: string | null;
-}
+import { ITokenData } from '../../../shared/services/dto-models/auth/token-data';
+import { IUserData } from './../../../shared/services/dto-models/auth/user-data';
 
 export interface IAuthState {
-  user: IAuthUser | null;
-  token: IAuthToken | null;
+  user: IUserData | null;
+  token: ITokenData | null;
   loading: boolean;
 }
 
@@ -34,11 +26,11 @@ export const authPersist = persistState(authStore, {
 
 @Injectable({ providedIn: 'root' })
 export class AuthRepository {
-  user$: Observable<IAuthUser | null> = authStore.pipe(
+  user$: Observable<IUserData | null> = authStore.pipe(
     select((state) => state.user)
   );
 
-  token$: Observable<IAuthToken | null> = authStore.pipe(
+  token$: Observable<ITokenData | null> = authStore.pipe(
     select((state) => state.token)
   );
 
@@ -53,16 +45,13 @@ export class AuthRepository {
     }));
   }
 
-  updateUser(user: IAuthState['user']): void {
+  updateUserToken(
+    user: IAuthState['user'] | null,
+    token: IAuthState['token']
+  ): void {
     authStore.update((state) => ({
       ...state,
       user,
-    }));
-  }
-
-  updateToken(token: IAuthState['token']): void {
-    authStore.update((state) => ({
-      ...state,
       token,
     }));
   }

@@ -1,11 +1,16 @@
 ﻿using AirSoft.Data.Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace AirSoft.Data;
 
 public interface IDbContext : IDisposable
 {
     DbSet<DbUser>? Users { get; set; }
+
+    DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
+    EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
     Task SaveAsync();
 
@@ -46,6 +51,8 @@ public class AirSoftDbContext : DbContext, IDbContext
     {
         modelBuilder.HasDefaultSchema("dbo");
 
+        new DbUserRolesMapping().Map(modelBuilder.Entity<DbUserRole>());
+        new DbUsersToRolesMapping().Map(modelBuilder.Entity<DbUsersToRoles>());
         new DbUserMapping().Map(modelBuilder.Entity<DbUser>());
     }
 }

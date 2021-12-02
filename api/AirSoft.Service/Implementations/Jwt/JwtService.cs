@@ -7,10 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AirSoft.Service.Contracts.Jwt;
 
-namespace AirSoft.Service.Implementation.Jwt;
+namespace AirSoft.Service.Implementations.Jwt;
 
-public class JwtService
+public class JwtService : IJwtService
 {
     private readonly IConfigService _configService;
 
@@ -33,12 +34,17 @@ public class JwtService
         var expiresStamp = expires.ToString("O");
         var issuedAt = DateTime.UtcNow;
         var tokenHandler = new JwtSecurityTokenHandler();
+        var userId = request.User.Id.ToString("N");
+        var roleClaims = request.User.UserRoles?.Select(r => new Claim(ClaimTypes.Role, r.Role)) ?? new List<Claim>();
+        roleClaims = roleClaims.Concat(new List<Claim>()
+        {
+            new(ClaimTypes.Actor, userId),
+            new(ClaimTypes.Name, userId),
+            new(ClaimTypes.Expired, expiresStamp)
+        }).ToList();
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.Expired, expiresStamp),
-            }),
+            Subject = new ClaimsIdentity(roleClaims),
             Expires = expires,
             IssuedAt = issuedAt,
             SigningCredentials = new SigningCredentials(

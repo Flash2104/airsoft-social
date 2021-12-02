@@ -2,7 +2,9 @@
   <div class="header">
     <mat-toolbar>
       AirSoft Events
-      <div class="flex-stretch"></div>
+      <div class="flex-stretch">
+        <router-outlet name="toolbar"></router-outlet>
+      </div>
       <mat-icon class="me-3">bedtime</mat-icon>
       <form [formGroup]="form" >
         <mat-slide-toggle formControlName="toggleControl" class="me-3">

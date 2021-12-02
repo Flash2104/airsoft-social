@@ -93,31 +93,36 @@ namespace AirSoft.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Role = "Administrator"
+                            Role = "Creator"
                         },
                         new
                         {
                             Id = 2,
-                            Role = "Organizer"
+                            Role = "Administrator"
                         },
                         new
                         {
                             Id = 3,
-                            Role = "TeamLeader"
+                            Role = "Organizer"
                         },
                         new
                         {
                             Id = 4,
-                            Role = "Sponsor"
+                            Role = "TeamLeader"
                         },
                         new
                         {
                             Id = 5,
-                            Role = "Merchant"
+                            Role = "Sponsor"
                         },
                         new
                         {
                             Id = 6,
+                            Role = "Merchant"
+                        },
+                        new
+                        {
+                            Id = 7,
                             Role = "Private"
                         },
                         new

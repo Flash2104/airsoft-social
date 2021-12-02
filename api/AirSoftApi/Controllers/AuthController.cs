@@ -3,6 +3,7 @@ using AirSoft.Service.Contracts.Auth.SignIn;
 using AirSoftApi.Models;
 using AirSoftApi.Models.Auth;
 using AirSoftApi.Models.Auth.SignIn;
+using AirSoftApi.Models.Auth.SignUp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,22 @@ namespace AirSoftApi.Controllers
         [HttpPost("sign-in")]
         [AllowAnonymous]
         public async Task<ServerResponseDto<SignInResponseDto>> SignIn([FromBody] SignInRequestDto request)
+        {
+            var logPath = $"{request.PhoneOrEmail}.{nameof(AuthController)} {nameof(SignIn)} | ";
+            return await HandleRequest<SignInRequestDto, SignInRequest, SignInResponse, SignInResponseDto>(
+                _authService.SignIn,
+                request,
+                dto => new SignInRequest(dto.PhoneOrEmail, dto.Password),
+                res => new SignInResponseDto(
+                    new TokenResponseDto(res.TokenData.Token, res.TokenData.ExpiryDate),
+                    new UserDto(res.User.Id, res.User.Email, res.User.Phone)),
+                logPath
+            );
+        }
+
+        [HttpPost("sign-up")]
+        [AllowAnonymous]
+        public async Task<ServerResponseDto<SignUpResponseDto>> SignUp([FromBody] SignUpRequestDto request)
         {
             var logPath = $"{request.PhoneOrEmail}.{nameof(AuthController)} {nameof(SignIn)} | ";
             return await HandleRequest<SignInRequestDto, SignInRequest, SignInResponse, SignInResponseDto>(

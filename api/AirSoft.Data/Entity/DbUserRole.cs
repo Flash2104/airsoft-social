@@ -15,12 +15,13 @@ public class DbUserRole
 
 public enum UserRoleType
 {
-    Administrator = 1,
-    Organizer = 2,
-    TeamLeader = 3,
-    Sponsor = 4,
-    Merchant = 5,
-    Private = 6,
+    Creator = 1,
+    Administrator = 2,
+    Organizer = 3,
+    TeamLeader = 4,
+    Sponsor = 5,
+    Merchant = 6,
+    Private = 7,
     User = 8
 }
 

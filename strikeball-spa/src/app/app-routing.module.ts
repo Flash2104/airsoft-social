@@ -13,7 +13,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       onSameUrlNavigation: 'reload',
-      // preloadingStrategy: PreloadAllModules,
       enableTracing: false,
     }),
   ],

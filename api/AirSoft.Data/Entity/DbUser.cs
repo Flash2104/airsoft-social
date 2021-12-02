@@ -87,7 +87,7 @@ internal sealed class DbUserMapping
             x => x.HasData(new DbUsersToRoles()
             {
                 UserId = adminId,
-                RoleId = (int) UserRoleType.Administrator
+                RoleId = (int) UserRoleType.Creator
             })
             );
     }

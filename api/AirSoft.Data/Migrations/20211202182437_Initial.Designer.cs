@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirSoft.Data.Migrations
 {
     [DbContext(typeof(AirSoftDbContext))]
-    [Migration("20211202103811_Initial")]
+    [Migration("20211202182437_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,31 +95,36 @@ namespace AirSoft.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Role = "Administrator"
+                            Role = "Creator"
                         },
                         new
                         {
                             Id = 2,
-                            Role = "Organizer"
+                            Role = "Administrator"
                         },
                         new
                         {
                             Id = 3,
-                            Role = "TeamLeader"
+                            Role = "Organizer"
                         },
                         new
                         {
                             Id = 4,
-                            Role = "Sponsor"
+                            Role = "TeamLeader"
                         },
                         new
                         {
                             Id = 5,
-                            Role = "Merchant"
+                            Role = "Sponsor"
                         },
                         new
                         {
                             Id = 6,
+                            Role = "Merchant"
+                        },
+                        new
+                        {
+                            Id = 7,
                             Role = "Private"
                         },
                         new

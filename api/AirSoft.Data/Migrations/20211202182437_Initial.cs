@@ -78,12 +78,13 @@ namespace AirSoft.Data.Migrations
                 columns: new[] { "Id", "Role" },
                 values: new object[,]
                 {
-                    { 1, "Administrator" },
-                    { 2, "Organizer" },
-                    { 3, "TeamLeader" },
-                    { 4, "Sponsor" },
-                    { 5, "Merchant" },
-                    { 6, "Private" },
+                    { 1, "Creator" },
+                    { 2, "Administrator" },
+                    { 3, "Organizer" },
+                    { 4, "TeamLeader" },
+                    { 5, "Sponsor" },
+                    { 6, "Merchant" },
+                    { 7, "Private" },
                     { 8, "User" }
                 });
 

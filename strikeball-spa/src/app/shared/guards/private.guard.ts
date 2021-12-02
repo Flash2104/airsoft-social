@@ -36,9 +36,8 @@ export class PrivateGuard implements CanActivate {
           this._router
             .navigate(
               ['public', 'auth']
-              // { queryParams: { returnUrl: state.url } }
             )
-            .then();
+            .then(x => this._router.navigate(['public', {outlets: {toolbar:['toolbar']}}]));
           return false;
         }
         return true;

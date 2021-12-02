@@ -7,6 +7,7 @@ const routes: Routes = [
     path: '',
     children: [
       { path: '', redirectTo: 'private', pathMatch: 'full' },
+      { path: '*', redirectTo: 'private', pathMatch: 'full' },
       {
         path: 'public',
         loadChildren: () =>

@@ -17,12 +17,12 @@ public enum UserRoleType
 {
     Creator = 1,
     Administrator = 2,
-    Organizer = 3,
-    TeamLeader = 4,
-    Sponsor = 5,
-    Merchant = 6,
-    Private = 7,
-    User = 8
+    //Organizer = 3,
+    //TeamLeader = 4,
+    //Sponsor = 5,
+    //Merchant = 6,
+    //Private = 7,
+    User = 3
 }
 
 internal sealed class DbUserRolesMapping

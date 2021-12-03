@@ -1,7 +1,7 @@
-import { EmptyToolbarComponent } from './toolbar/empty-toolbar/empty-toolbar.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../shared/guards/auth.guard';
+import { EmptyToolbarComponent } from './toolbar/empty-toolbar/empty-toolbar.component';
 
 const routes: Routes = [
   {
@@ -15,13 +15,6 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
     ],
-  },
-  { path: '*', redirectTo: '/public(toolbar:toolbar)', pathMatch: 'full' },
-  {
-    path: 'toolbar',
-    component: EmptyToolbarComponent,
-    canActivate: [AuthGuard],
-    outlet: 'toolbar'
   },
 ];
 

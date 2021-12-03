@@ -46,14 +46,14 @@ public class GenericRepository<TEntity> where TEntity : class
         }
     }
 
-    public virtual TEntity? GetById(object id)
+    public virtual async Task<TEntity?> GetByIdAsync(object id)
     {
-        return _dbSet?.Find(id);
+        return await _dbSet!.FindAsync(id);
     }
 
-    public virtual void Insert(TEntity entity)
+    public virtual TEntity? Insert(TEntity entity)
     {
-        _dbSet?.Add(entity);
+        return _dbSet?.Add(entity).Entity;
     }
 
     public virtual void Delete(object id)

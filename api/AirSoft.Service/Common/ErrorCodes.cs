@@ -10,9 +10,15 @@ public class ErrorCodes
 
     public sealed class AuthService
     {
+        public const int EmptyLoginOrPass = 82001;
         public const int WrongLoginOrPass = 82002;
         public const int UserNotFound = 82003;
         public const int EmptyPassword = 82004;
+
+        public const int AlreadyExist = 82005;
+        public const int PasswordsNotEqual = 82006;
+        public const int UserRoleNotFound = 82007;
+        public const int CreatedUserIsNull = 82008;
     }
 
     public sealed class UserRepository

@@ -1,5 +1,6 @@
 ﻿using AirSoft.Service.Contracts.Auth;
 using AirSoft.Service.Contracts.Auth.SignIn;
+using AirSoft.Service.Contracts.Auth.SignUp;
 using AirSoftApi.Models;
 using AirSoftApi.Models.Auth;
 using AirSoftApi.Models.Auth.SignIn;
@@ -27,6 +28,7 @@ namespace AirSoftApi.Controllers
         public async Task<ServerResponseDto<SignInResponseDto>> SignIn([FromBody] SignInRequestDto request)
         {
             var logPath = $"{request.PhoneOrEmail}.{nameof(AuthController)} {nameof(SignIn)} | ";
+            await Task.Delay(200); // Todo: remove 
             return await HandleRequest<SignInRequestDto, SignInRequest, SignInResponse, SignInResponseDto>(
                 _authService.SignIn,
                 request,
@@ -43,11 +45,11 @@ namespace AirSoftApi.Controllers
         public async Task<ServerResponseDto<SignUpResponseDto>> SignUp([FromBody] SignUpRequestDto request)
         {
             var logPath = $"{request.PhoneOrEmail}.{nameof(AuthController)} {nameof(SignIn)} | ";
-            return await HandleRequest<SignInRequestDto, SignInRequest, SignInResponse, SignInResponseDto>(
-                _authService.SignIn,
+            return await HandleRequest<SignUpRequestDto, SignUpRequest, SignUpResponse, SignUpResponseDto>(
+                _authService.SignUp,
                 request,
-                dto => new SignInRequest(dto.PhoneOrEmail, dto.Password),
-                res => new SignInResponseDto(
+                dto => new SignUpRequest(dto.PhoneOrEmail, dto.Password, dto.ConfirmPassword),
+                res => new SignUpResponseDto(
                     new TokenResponseDto(res.TokenData.Token, res.TokenData.ExpiryDate),
                     new UserDto(res.User.Id, res.User.Email, res.User.Phone)),
                 logPath

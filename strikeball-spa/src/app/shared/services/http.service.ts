@@ -5,13 +5,15 @@ import { environment } from '../../../environments/environment';
 import { AuthRepository } from '../../public/auth/repository/auth.repository';
 import { ISignInRequest } from './dto-models/auth/sign-in/sign-in-request';
 import { ISignInResponse } from './dto-models/auth/sign-in/sign-in-response';
+import { ISignUpRequest } from './dto-models/auth/sign-up/sign-up-request';
+import { ISignUpResponse } from './dto-models/auth/sign-up/sign-up-response';
 import { IServerResponse } from './dto-models/server-response';
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
   constructor(private _http: HttpClient, private _authRepo: AuthRepository) {}
 
-  /* #region  Beneficiary Account Non-SEPA*/
+  /* #region  Auth*/
 
   authSignIn(
     data: ISignInRequest
@@ -21,14 +23,13 @@ export class HttpService {
     );
   }
 
-  // getNonSEPAList(
-  //   request: IBeneficiaryNonSEPAListRequestDto
-  // ): Observable<IServerResponse<IBeneficiaryNonSEPAListResponseDto>> {
-  //   return of('beneficiaryNonSEPAAccount/getList').pipe(
-  //     map((str) => this.addParamsToUrl(str, { ...request })),
-  //     mergeMap((url) => this.httpGet<IBeneficiaryNonSEPAListResponseDto>(url))
-  //   );
-  // }
+  authSignUp(
+    data: ISignUpRequest
+  ): Observable<IServerResponse<ISignUpResponse>> {
+    return of('api/auth/sign-up').pipe(
+      mergeMap((url) => this.httpPost<ISignUpResponse>(url, data))
+    );
+  }
 
   /* #endregion */
 

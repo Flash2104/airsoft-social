@@ -103,31 +103,6 @@ namespace AirSoft.Data.Migrations
                         new
                         {
                             Id = 3,
-                            Role = "Organizer"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Role = "TeamLeader"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Role = "Sponsor"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Role = "Merchant"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Role = "Private"
-                        },
-                        new
-                        {
-                            Id = 8,
                             Role = "User"
                         });
                 });

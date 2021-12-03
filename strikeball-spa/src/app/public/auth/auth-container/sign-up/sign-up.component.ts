@@ -1,13 +1,14 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { FormErrorStateMatcher } from '../../../../shared/utils/error-state-matcher';
+import { AuthService } from '../auth.service';
+
+export interface ISignUpData {
+  phoneOrEmail: string;
+  password: string;
+  confirmPassword: string;
+}
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +16,7 @@ import { FormErrorStateMatcher } from '../../../../shared/utils/error-state-matc
   styleUrls: ['./sign-up.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignUpComponent implements OnInit, OnDestroy {
+export class SignUpComponent implements OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
 
   form: FormGroup = new FormGroup({
@@ -32,14 +33,22 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   matcher: FormErrorStateMatcher = new FormErrorStateMatcher();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(private _authService: AuthService) {}
 
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
   }
 
-  ngOnInit(): void {}
-
-  onSubmit(): void {}
+  onSubmit(): void {
+    if (this.form.valid) {
+      this._authService
+        .signUp({
+          phoneOrEmail: this.form.controls['email'].value,
+          password: this.form.controls['password'].value,
+          confirmPassword: this.form.controls['confirmPassword'].value,
+        })
+        .subscribe();
+    }
+  }
 }

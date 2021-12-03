@@ -1,4 +1,5 @@
 ﻿using AirSoft.Data;
+using AirSoft.Data.Entity;
 using AirSoft.Service.Contracts;
 using AirSoft.Service.Repositories;
 
@@ -9,6 +10,7 @@ public class DataService: IDataService
     private readonly IDbContext _dbContext;
 
     private UserRepository? _users;
+    private GenericRepository<DbUserRole>? _userRoles;
 
     public DataService(IDbContext dbContext)
     {
@@ -16,4 +18,5 @@ public class DataService: IDataService
     }
 
     public UserRepository Users => _users ??= new UserRepository(_dbContext);
+    public GenericRepository<DbUserRole>? UserRoles => _userRoles ??= new GenericRepository<DbUserRole>(_dbContext);
 }

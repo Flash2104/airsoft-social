@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { FormErrorStateMatcher } from '../../../../shared/utils/error-state-matcher';
@@ -20,7 +15,7 @@ export interface ISignInData {
   styleUrls: ['./sign-in.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignInComponent implements OnInit, OnDestroy {
+export class SignInComponent implements OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
 
   form: FormGroup = new FormGroup({
@@ -38,10 +33,6 @@ export class SignInComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
-  }
-
-  ngOnInit(): void {
-    console.log('Init');
   }
 
   onSubmit(): void {

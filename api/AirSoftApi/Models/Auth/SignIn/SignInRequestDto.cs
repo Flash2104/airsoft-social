@@ -11,8 +11,10 @@ public class SignInRequestDto: IValidatableObject
         Password = password;
     }
     
+    [Required]
     public string PhoneOrEmail { get; }
 
+    [Required]
     public string Password { get; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

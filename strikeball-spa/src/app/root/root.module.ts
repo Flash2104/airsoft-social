@@ -12,12 +12,18 @@ const routes: Routes = [
         path: 'public',
         loadChildren: () =>
           import('../public/public.module').then((m) => m.PublicModule),
+        data: {
+          animation: 'PublicPages',
+        },
       },
       {
         path: 'private',
         loadChildren: () =>
           import('../private/private.module').then((m) => m.PrivateModule),
         canActivate: [PrivateGuard],
+        data: {
+          animation: 'PrivatePages',
+        },
       },
     ],
   },

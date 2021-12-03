@@ -36,4 +36,9 @@ public class UserRepository: GenericRepository<DbUser>
 
         return dbUsers.FirstOrDefault();
     }
+
+    public DbUser? CreateDbUser(DbUser user)
+    {
+        return Insert(user);
+    }
 }

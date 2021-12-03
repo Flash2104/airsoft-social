@@ -1,9 +1,8 @@
 <div #rootDiv class="app-root">
   <div class="header">
     <mat-toolbar>
-      AirSoft Events
+      <a [routerLink]="['/private/home']" class=""> AirSoft Events </a>
       <div class="flex-stretch">
-        <router-outlet name="toolbar"></router-outlet>
       </div>
       <mat-icon class="me-3">bedtime</mat-icon>
       <form [formGroup]="form" >
@@ -14,8 +13,8 @@
     </mat-toolbar>
   </div>
 
-  <div class="container main">
-    <router-outlet></router-outlet>
+  <div [@routeAnimations]="prepareRoute(outlet)" class="container main">
+    <router-outlet #outlet="outlet"></router-outlet>
   </div>
 
   <!-- <div class="footer">

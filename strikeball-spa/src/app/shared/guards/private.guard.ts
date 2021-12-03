@@ -33,11 +33,7 @@ export class PrivateGuard implements CanActivate {
       take(1),
       map(([token]) => {
         if (token == null || token.token == null) {
-          this._router
-            .navigate(
-              ['public', 'auth']
-            )
-            .then(x => this._router.navigate(['public', {outlets: {toolbar:['toolbar']}}]));
+          this._router.navigate(['public', 'auth']).then();
           return false;
         }
         return true;

@@ -8,4 +8,6 @@ public interface IDataService
     UserRepository Users { get; }
 
     GenericRepository<DbUserRole>? UserRoles { get; }
+
+    Task<bool> SaveAsync();
 }

@@ -11,6 +11,7 @@ import {
   authPersist,
   AuthRepository,
 } from '../../public/auth/repository/auth.repository';
+import { AuthService } from './../../public/auth/auth-container/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ import {
 export class PrivateGuard implements CanActivate {
   constructor(
     private _authRepository: AuthRepository,
+    private _authService: AuthService,
     private _router: Router // private _persistQuery: PersistenceQuery, // private _authService: AuthService, // private _deviceInfoQuery: DeviceInfoQuery
   ) {}
 
@@ -32,8 +34,17 @@ export class PrivateGuard implements CanActivate {
     ]).pipe(
       take(1),
       map(([token]) => {
-        if (token == null || token.token == null) {
+        const navigateAuth = (): void => {
           this._router.navigate(['public', 'auth']).then();
+        };
+        if (token == null || token.token == null) {
+          navigateAuth();
+          return false;
+        }
+        const expireDate = new Date(token.expiryDate ?? '');
+        const currentDate = new Date();
+        if (expireDate < currentDate) {
+          this._authService.signOut().subscribe(() => navigateAuth());
           return false;
         }
         return true;

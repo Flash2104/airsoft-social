@@ -1,4 +1,9 @@
-<form [formGroup]="form" id="sign_in_form" class="sign-in-form" (submit)="onSubmit()">
+<form
+  [formGroup]="form"
+  id="sign_in_form"
+  class="sign-in-form"
+  (submit)="onSubmit()"
+>
   <mat-form-field class="mb-3" appearance="fill">
     <mat-label>Телефон или email</mat-label>
     <input
@@ -43,7 +48,13 @@
     </mat-error>
   </mat-form-field>
   <div class="submit-button-row">
-    <button type="submit" mat-raised-button class="submit-button" (click)="onSubmit()">
+    <button
+      type="submit"
+      mat-raised-button
+      class="submit-button"
+      [disabled]="!form.valid"
+      (click)="onSubmit()"
+    >
       Вход
     </button>
   </div>

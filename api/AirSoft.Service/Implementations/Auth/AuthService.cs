@@ -124,6 +124,7 @@ public class AuthService : IAuthService
         }
         _logger.Log(LogLevel.Information, $"{logPath} User created: {created?.Id}.");
         var tokenData = await _jwtService.BuildToken(new JwtRequest(created));
+        await this._dataService.SaveAsync();
         return new SignUpResponse(tokenData, new UserData(created!.Id, created.Email, created.Phone));
     }
 }

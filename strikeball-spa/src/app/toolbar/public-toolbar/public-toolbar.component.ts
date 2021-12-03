@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-empty-toolbar',
-  templateUrl: './empty-toolbar.component.html',
-  styleUrls: ['./empty-toolbar.component.scss'],
+  selector: 'air-public-toolbar',
+  templateUrl: './public-toolbar.component.html',
+  styleUrls: ['./public-toolbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmptyToolbarComponent implements OnDestroy {
+export class PublicToolbarComponent implements OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
 
   constructor() {}

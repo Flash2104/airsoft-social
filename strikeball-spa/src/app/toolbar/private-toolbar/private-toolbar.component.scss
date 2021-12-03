@@ -1,0 +1,13 @@
+.toolbar {
+  @extend .container !optional;
+  display: flex;
+  margin: 0 48px;
+}
+
+.flex-stretch {
+  flex-grow: 1;
+}
+
+.submit-button {
+  padding: 0 50px;
+}

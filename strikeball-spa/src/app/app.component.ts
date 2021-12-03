@@ -18,6 +18,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
+import { AuthService } from './public/auth/auth-container/auth.service';
 
 export const slideInAnimation = trigger('routeAnimations', [
   transition('PrivatePages <=> PublicPages', [
@@ -49,7 +50,7 @@ export const slideInAnimation = trigger('routeAnimations', [
 ]);
 
 @Component({
-  selector: 'app-root',
+  selector: 'air-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,16 +62,21 @@ export class AppComponent implements OnInit, OnDestroy {
     toggleControl: new FormControl(false),
   });
 
-  constructor(private overlay: OverlayContainer, private renderer: Renderer2) {}
+  constructor(
+    private _overlay: OverlayContainer,
+    private _renderer: Renderer2,
+    public authService: AuthService
+  ) {}
+
   ngOnInit(): void {
     this.form.controls['toggleControl'].valueChanges.subscribe((lightMode) => {
       const lightClassName = 'light-theme';
       if (lightMode) {
-        this.renderer.addClass(document.body, lightClassName);
-        this.overlay.getContainerElement().classList.add(lightClassName);
+        this._renderer.addClass(document.body, lightClassName);
+        this._overlay.getContainerElement().classList.add(lightClassName);
       } else {
-        this.renderer.removeClass(document.body, lightClassName);
-        this.overlay.getContainerElement().classList.remove(lightClassName);
+        this._renderer.removeClass(document.body, lightClassName);
+        this._overlay.getContainerElement().classList.remove(lightClassName);
       }
     });
   }

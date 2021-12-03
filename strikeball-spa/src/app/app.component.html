@@ -1,11 +1,17 @@
-<div #rootDiv class="app-root">
+<div>
   <div class="header">
     <mat-toolbar>
       <a [routerLink]="['/private/home']" class=""> AirSoft Events </a>
-      <div class="flex-stretch">
+      <div class="container flex-stretch">
+        <ng-container *ngIf="(authService.checkUserLoggedIn() | async); else elseTemplate">
+          <air-private-toolbar></air-private-toolbar>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <air-public-toolbar></air-public-toolbar>
+        </ng-template>
       </div>
       <mat-icon class="me-3">bedtime</mat-icon>
-      <form [formGroup]="form" >
+      <form [formGroup]="form">
         <mat-slide-toggle formControlName="toggleControl" class="me-3">
         </mat-slide-toggle>
       </form>

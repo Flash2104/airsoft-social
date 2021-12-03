@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthService } from '../../public/auth/auth-container/auth.service';
 
 @Component({
-  selector: 'app-home-container',
+  selector: 'air-home-container',
   templateUrl: './home-container.component.html',
   styleUrls: ['./home-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

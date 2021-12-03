@@ -14,9 +14,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RootModule } from './root/root.module';
 import { SharedModule } from './shared/shared.module';
+import { PrivateToolbarComponent } from './toolbar/private-toolbar/private-toolbar.component';
+import { PublicToolbarComponent } from './toolbar/public-toolbar/public-toolbar.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PublicToolbarComponent, PrivateToolbarComponent],
   imports: [
     RouterModule,
     CommonModule,

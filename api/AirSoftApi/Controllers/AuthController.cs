@@ -1,6 +1,8 @@
-﻿using AirSoft.Service.Contracts.Auth;
+﻿using AirSoft.Data.Entity;
+using AirSoft.Service.Contracts.Auth;
 using AirSoft.Service.Contracts.Auth.SignIn;
 using AirSoft.Service.Contracts.Auth.SignUp;
+using AirSoftApi.AuthPolicies;
 using AirSoftApi.Models;
 using AirSoftApi.Models.Auth;
 using AirSoftApi.Models.Auth.SignIn;
@@ -43,6 +45,22 @@ namespace AirSoftApi.Controllers
         [HttpPost("sign-up")]
         [AllowAnonymous]
         public async Task<ServerResponseDto<SignUpResponseDto>> SignUp([FromBody] SignUpRequestDto request)
+        {
+            var logPath = $"{request.PhoneOrEmail}.{nameof(AuthController)} {nameof(SignIn)} | ";
+            return await HandleRequest<SignUpRequestDto, SignUpRequest, SignUpResponse, SignUpResponseDto>(
+                _authService.SignUp,
+                request,
+                dto => new SignUpRequest(dto.PhoneOrEmail, dto.Password, dto.ConfirmPassword),
+                res => new SignUpResponseDto(
+                    new TokenResponseDto(res.TokenData.Token, res.TokenData.ExpiryDate),
+                    new UserDto(res.User.Id, res.User.Email, res.User.Phone)),
+                logPath
+            );
+        }
+
+        [HttpGet("get-users")]
+        [Authorize(Roles = RolesConst.God)]
+        public async Task<ServerResponseDto<SignUpResponseDto>> GetUsers([FromBody] SignUpRequestDto request)
         {
             var logPath = $"{request.PhoneOrEmail}.{nameof(AuthController)} {nameof(SignIn)} | ";
             return await HandleRequest<SignUpRequestDto, SignUpRequest, SignUpResponse, SignUpResponseDto>(

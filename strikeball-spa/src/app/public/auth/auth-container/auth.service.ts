@@ -1,9 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, EMPTY, mapTo, Observable, of, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  combineLatest,
+  EMPTY,
+  map,
+  mapTo,
+  Observable,
+  of,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { HttpService } from '../../../shared/services/http.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
-import { AuthRepository } from '../repository/auth.repository';
+import { authPersist, AuthRepository } from '../repository/auth.repository';
 import { ISignInData } from './sign-in/sign-in.component';
 import { ISignUpData } from './sign-up/sign-up.component';
 
@@ -79,6 +90,27 @@ export class AuthService {
         return EMPTY;
       }),
       mapTo(void 0)
+    );
+  }
+
+  checkUserLoggedIn(): Observable<boolean> {
+    return combineLatest([
+      this._authRepo.token$,
+      authPersist.initialized$,
+    ]).pipe(
+      take(1),
+      map(([token]) => {
+        if (token == null || token.token == null) {
+          return false;
+        }
+        const expireDate = new Date(token.expiryDate ?? '');
+        const currentDate = new Date();
+        if (expireDate < currentDate) {
+          this.signOut().subscribe();
+          return false;
+        }
+        return true;
+      })
     );
   }
 

@@ -8,7 +8,7 @@
         <div *ngIf="(authLoading$ | async) === false; else elseTemplate">
           <mat-card class="auth-card">
             <mat-card-content>
-              <app-sign-in></app-sign-in>
+              <air-sign-in></air-sign-in>
             </mat-card-content>
           </mat-card>
         </div>
@@ -20,7 +20,7 @@
         <div *ngIf="(authLoading$ | async) === false; else elseTemplate">
           <mat-card class="auth-card">
             <mat-card-content>
-              <app-sign-up></app-sign-up>
+              <air-sign-up></air-sign-up>
             </mat-card-content>
           </mat-card>
         </div>

@@ -20,7 +20,7 @@ export class PrivateGuard implements CanActivate {
   constructor(
     private _authRepository: AuthRepository,
     private _authService: AuthService,
-    private _router: Router // private _persistQuery: PersistenceQuery, // private _authService: AuthService, // private _deviceInfoQuery: DeviceInfoQuery
+    private _router: Router
   ) {}
 
   canActivate(
@@ -29,7 +29,6 @@ export class PrivateGuard implements CanActivate {
   ): Observable<boolean> {
     return combineLatest([
       this._authRepository.token$,
-      // this._deviceInfoQuery.select((x) => x.deviceId),
       authPersist.initialized$,
     ]).pipe(
       take(1),

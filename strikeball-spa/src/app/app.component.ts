@@ -18,7 +18,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
-import { AuthService } from './public/auth/auth-container/auth.service';
+import { AuthService } from './public/auth/auth.service';
 
 export const slideInAnimation = trigger('routeAnimations', [
   transition('PrivatePages <=> PublicPages', [
@@ -28,22 +28,20 @@ export const slideInAnimation = trigger('routeAnimations', [
         position: 'absolute',
         top: 0,
         left: 0,
-        width: '100%',
-        transform: 'translate(0, 0)',
-      }),
+        width: '100%'
+      })
     ]),
     query(':enter', [
-      animate('300ms linear', style({ transform: 'translate(0, -100%)' })),
+      style({ left: '-100%' })
     ]),
     query(':leave', animateChild()),
-
     group([
       query(':leave', [
-        animate('300ms linear', style({ transform: 'translate(0, 100%)' })),
+        animate('400ms ease-out', style({ left: '100%' }))
       ]),
       query(':enter', [
-        animate('300ms linear', style({ transform: 'translate(0, 0)' })),
-      ]),
+        animate('400ms ease-out', style({ left: '0%' }))
+      ])
     ]),
     query(':enter', animateChild()),
   ]),

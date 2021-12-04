@@ -4,24 +4,39 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule, Routes } from '@angular/router';
+import { СommandContainerComponent } from './command/command-container.component';
 import { MainContainerComponent } from './main-container.component';
-
+import { ProfileContainerComponent } from './profile/profile-container.component';
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '*', redirectTo: 'home', pathMatch: 'full' },
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      {
-        path: 'home',
-        component: MainContainerComponent,
-      },
+      { path: '*', redirectTo: '', pathMatch: 'full' },
+      { path: '', component: MainContainerComponent , children: [
+        {
+          path: 'profile',
+          component: ProfileContainerComponent,
+        },
+        {
+          path: 'command',
+          component: СommandContainerComponent,
+        },
+        {
+          path: 'events',
+          component: СommandContainerComponent,
+        },
+      ]},
+
     ],
   },
 ];
 
 @NgModule({
-  declarations: [MainContainerComponent],
+  declarations: [
+    MainContainerComponent,
+    ProfileContainerComponent,
+    СommandContainerComponent,
+  ],
   imports: [
     MatButtonModule,
     MatSidenavModule,

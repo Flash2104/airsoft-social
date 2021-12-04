@@ -12,11 +12,11 @@ import {
   take,
   tap,
 } from 'rxjs';
-import { HttpService } from '../../../shared/services/http.service';
-import { SnackbarService } from '../../../shared/services/snackbar.service';
-import { authPersist, AuthRepository } from '../repository/auth.repository';
-import { ISignInData } from './sign-in/sign-in.component';
-import { ISignUpData } from './sign-up/sign-up.component';
+import { HttpService } from '../../shared/services/http.service';
+import { SnackbarService } from '../../shared/services/snackbar.service';
+import { authPersist, AuthRepository } from './repository/auth.repository';
+import { ISignInData } from './auth-container/sign-in/sign-in.component';
+import { ISignUpData } from './auth-container/sign-up/sign-up.component';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -39,7 +39,7 @@ export class AuthService {
             resp.data?.user ?? null,
             resp.data?.tokenData ?? null
           );
-          this._router.navigate(['private', 'home']).then((res) => {
+          this._router.navigate(['private', 'profile']).then((res) => {
             this._authRepo.setLoading(false);
           });
         } else {
@@ -72,7 +72,7 @@ export class AuthService {
             resp.data?.user ?? null,
             resp.data?.tokenData ?? null
           );
-          this._router.navigate(['private', 'home']).then((res) => {
+          this._router.navigate(['private', 'profile']).then((res) => {
             this._authRepo.setLoading(false);
           });
         } else {
@@ -95,8 +95,7 @@ export class AuthService {
 
   checkUserLoggedIn(): Observable<boolean> {
     return combineLatest([
-      this._authRepo.token$,
-      authPersist.initialized$,
+      this._authRepo.token$
     ]).pipe(
       take(1),
       map(([token]) => {
@@ -121,9 +120,8 @@ export class AuthService {
       }),
       tap(() => {
         this._authRepo.updateUserToken(null, null);
-        this._router.navigate(['public', 'auth']).then((res) => {
-          this._authRepo.setLoading(false);
-        });
+        this._authRepo.setLoading(false);
+        this._router.navigate(['public', 'auth']).then();
       }),
       catchError((err) => {
         this._authRepo.setLoading(false);

@@ -103,7 +103,7 @@
         "max-len": [
           "error",
           {
-            "code": 200
+            "code": 250
           }
         ],
         "@typescript-eslint/explicit-member-accessibility": [
@@ -288,7 +288,7 @@
         "max-len": [
           "error",
           {
-            "code": 200
+            "code": 250
           }
         ],
         "@angular-eslint/template/eqeqeq": "off"

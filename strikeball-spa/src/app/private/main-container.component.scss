@@ -1,39 +1,31 @@
-
+@use 'sass:map';
+@use '@angular/material' as mat;
 .main-container {
   width: 100%;
-  height: 100%;
-  margin: 0 auto;
 }
-.example-container {
-  height: 500px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+.main-sidenav-container {
+  min-height: 100vh;
+  padding-top: 70px;
 }
-.example-sidenav-content {
+.main-sidenav-content {
   display: flex;
-  height: 100%;
   align-items: center;
   justify-content: center;
 }
-.example-sidenav {
-   user-select: none;
-}
-.full-width {
+.main-sidenav-list {
+  padding-top: 70px;
+  height: 100%;
   width: 100%;
 }
-.menu-button {
-  transition: 300ms ease-in-out;
-  transform: rotate(0deg);
+.main-sidenav {
+  width: 200px;
+  user-select: none;
 }
-.menu-button.rotated {
-  transform: rotate(180deg);
+
+.link-text {
+  font-size: 14px;
 }
-.submenu {
-  overflow-y: hidden;
-  transition: transform 300ms ease;
-  transform: scaleY(0);
-  transform-origin: top;
-  padding-left: 30px;
-}
-.submenu.expanded {
-  transform: scaleY(1);
-}
+
+// .mat-nav-list a.active {
+//   background: mat.get-color-from-palette($sb-accent, 'darker');
+// }

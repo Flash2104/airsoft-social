@@ -20,6 +20,7 @@ const name = 'auth';
 const authStore = new Store({ state, name, config });
 
 export const authPersist = persistState(authStore, {
+  source: (st) => st.pipe(select((s) => ({ token: s.token }))),
   key: name,
   storage: localStorageStrategy,
 });

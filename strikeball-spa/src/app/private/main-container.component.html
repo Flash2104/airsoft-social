@@ -1,29 +1,48 @@
 <div class="main-container">
-  <mat-sidenav-container class="example-container">
-    <mat-sidenav class="example-sidenav" mode="side" opened="true">
-      <mat-nav-list>
-        <mat-list-item class="parent">
-          <span class="full-width">Parent Menu</span>
-          <mat-icon mat-list-icon>home</mat-icon>
-          <mat-icon class="menu-button rotated">expand_more</mat-icon>
-        </mat-list-item>
-        <div class="submenu expanded">
-          <a mat-list-item href="...">Submenu Item 1</a>
-          <a mat-list-item href="...">Submenu Item 2</a>
-          <mat-list-item class="parent">
-            <span class="full-width">Nested Menu</span>
-            <mat-icon class="menu-button rotated">expand_more</mat-icon>
-          </mat-list-item>
-          <div class="submenu expanded">
-            <mat-list-item>SubSubmenu Item 1</mat-list-item>
-            <mat-list-item>SubSubmenu Item 2</mat-list-item>
+  <mat-sidenav-container class="main-sidenav-container">
+    <mat-sidenav class="main-sidenav" mode="side" opened="true">
+      <mat-nav-list class="main-sidenav-list">
+        <button
+          mat-raised-button
+          mat-list-item
+          routerLink="/private/profile"
+          class="link-text"
+          routerLinkActive="mat-primary"
+        >
+          <div class="d-flex">
+            <mat-icon class="ms-3" mat-list-icon>person</mat-icon>
+            <div class="ms-3">Профиль</div>
           </div>
-        </div>
+        </button>
+        <button
+          mat-raised-button
+          mat-list-item
+          routerLink="/private/command"
+          class="link-text"
+          routerLinkActive="mat-primary"
+        >
+          <div class="d-flex">
+            <mat-icon class="ms-3" mat-list-icon>groups</mat-icon>
+            <div class="ms-3">Команда</div>
+          </div>
+        </button>
+        <button
+          mat-raised-button
+          mat-list-item
+          routerLink="/private/events"
+          class="link-text"
+          routerLinkActive="mat-primary"
+        >
+          <div class="d-flex">
+            <mat-icon class="ms-3" mat-list-icon>calendar_view_month</mat-icon>
+            <div class="ms-3">События</div>
+          </div>
+        </button>
       </mat-nav-list>
     </mat-sidenav>
 
-    <div class="example-sidenav-content">
-      Main content that resizes properly
+    <div class="main-sidenav-content">
+      <router-outlet></router-outlet>
     </div>
   </mat-sidenav-container>
 </div>

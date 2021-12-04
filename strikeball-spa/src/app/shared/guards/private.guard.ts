@@ -11,7 +11,7 @@ import {
   authPersist,
   AuthRepository,
 } from '../../public/auth/repository/auth.repository';
-import { AuthService } from './../../public/auth/auth-container/auth.service';
+import { AuthService } from '../../public/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',

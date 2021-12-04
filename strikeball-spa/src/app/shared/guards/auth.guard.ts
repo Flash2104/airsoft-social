@@ -34,8 +34,7 @@ export class AuthGuard implements CanActivate {
         if (token?.token != null) {
           this._router
             .navigate(
-              ['private', 'home']
-              // { queryParams: { returnUrl: state.url } }
+              ['private', 'profile']
             )
             .then();
           return false;

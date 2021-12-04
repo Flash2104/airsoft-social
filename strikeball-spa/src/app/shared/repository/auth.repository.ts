@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { createState, select, Store, withProps } from '@ngneat/elf';
 import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
 import { Observable } from 'rxjs';
-import { ITokenData } from '../../../shared/services/dto-models/auth/token-data';
-import { IUserData } from './../../../shared/services/dto-models/auth/user-data';
+import { ITokenData } from '../services/dto-models/auth/token-data';
+import { IUserData } from '../services/dto-models/auth/user-data';
 
 export interface IAuthState {
   user: IUserData | null;

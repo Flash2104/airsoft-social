@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AuthService } from '../../public/auth/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'air-private-toolbar',

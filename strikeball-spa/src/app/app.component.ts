@@ -18,7 +18,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
-import { AuthService } from './public/auth/auth.service';
+import { AuthService } from './shared/services/auth.service';
 
 export const slideInAnimation = trigger('routeAnimations', [
   transition('PrivatePages <=> PublicPages', [

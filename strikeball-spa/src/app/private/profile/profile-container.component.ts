@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuthService } from '../../public/auth/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'air-profile-container',
@@ -8,6 +8,7 @@ import { AuthService } from '../../public/auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileContainerComponent {
+
   constructor(private _authService: AuthService) {}
 
   onSubmit(): void {

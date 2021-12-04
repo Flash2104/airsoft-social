@@ -12,11 +12,11 @@ import {
   take,
   tap,
 } from 'rxjs';
-import { HttpService } from '../../shared/services/http.service';
-import { SnackbarService } from '../../shared/services/snackbar.service';
-import { authPersist, AuthRepository } from './repository/auth.repository';
-import { ISignInData } from './auth-container/sign-in/sign-in.component';
-import { ISignUpData } from './auth-container/sign-up/sign-up.component';
+import { HttpService } from './http.service';
+import { SnackbarService } from './snackbar.service';
+import { authPersist, AuthRepository } from '../repository/auth.repository';
+import { ISignInData } from '../../public/auth/auth-container/sign-in/sign-in.component';
+import { ISignUpData } from '../../public/auth/auth-container/sign-up/sign-up.component';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

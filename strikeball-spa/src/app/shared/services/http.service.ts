@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, mergeMap, Observable, of, take } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AuthRepository } from '../../public/auth/repository/auth.repository';
+import { AuthRepository } from '../repository/auth.repository';
 import { ISignInRequest } from './dto-models/auth/sign-in/sign-in-request';
 import { ISignInResponse } from './dto-models/auth/sign-in/sign-in-response';
 import { ISignUpRequest } from './dto-models/auth/sign-up/sign-up-request';

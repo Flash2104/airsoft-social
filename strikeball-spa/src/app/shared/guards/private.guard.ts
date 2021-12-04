@@ -10,8 +10,8 @@ import { map, take } from 'rxjs/operators';
 import {
   authPersist,
   AuthRepository,
-} from '../../public/auth/repository/auth.repository';
-import { AuthService } from '../../public/auth/auth.service';
+} from '../repository/auth.repository';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',

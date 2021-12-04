@@ -22,10 +22,10 @@
   user-select: none;
 }
 
-.link-text {
+.link-button {
+  display: flex;
   font-size: 14px;
+  padding: 5px 0;
+  width: 100%;
+  align-items: center;
 }
-
-// .mat-nav-list a.active {
-//   background: mat.get-color-from-palette($sb-accent, 'darker');
-// }

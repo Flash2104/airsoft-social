@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { AuthRepository } from '../repository/auth.repository';
+import { AuthRepository } from '../../../shared/repository/auth.repository';
 
 @Component({
   selector: 'air-auth-container',
@@ -16,7 +15,7 @@ export class AuthContainerComponent implements OnDestroy {
     takeUntil(this._destroy$)
   );
 
-  constructor(public dialog: MatDialog, private _authRepo: AuthRepository) {}
+  constructor(private _authRepo: AuthRepository) {}
 
   ngOnDestroy(): void {
     this._destroy$.next();

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { FormErrorStateMatcher } from '../../../../shared/utils/error-state-matcher';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 export interface ISignUpData {
   phoneOrEmail: string;

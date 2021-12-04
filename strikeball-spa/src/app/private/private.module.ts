@@ -1,3 +1,5 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,8 +13,9 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '*', redirectTo: '', pathMatch: 'full' },
+      { path: '*', redirectTo: '/', pathMatch: 'full' },
       { path: '', component: MainContainerComponent , children: [
+        { path: '', redirectTo: 'profile', pathMatch: 'full' },
         {
           path: 'profile',
           component: ProfileContainerComponent,
@@ -26,7 +29,6 @@ const routes: Routes = [
           component: СommandContainerComponent,
         },
       ]},
-
     ],
   },
 ];
@@ -42,6 +44,7 @@ const routes: Routes = [
     MatSidenavModule,
     MatListModule,
     MatIconModule,
+    CommonModule,
     RouterModule.forChild(routes),
   ],
 })

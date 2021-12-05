@@ -105,7 +105,7 @@ public class AuthService : IAuthService
             Id = Guid.NewGuid(),
             Email = isEmail ? emailOrPhone : null,
             Phone = !isEmail ? PhoneHelper.CleanPhone(emailOrPhone) : null,
-            AddedDate = DateTime.UtcNow,
+            CreatedDate = DateTime.UtcNow,
             ModifiedDate = DateTime.UtcNow
         };
         dbUser.PasswordHash = dbUser.HashPassword(request.Password);

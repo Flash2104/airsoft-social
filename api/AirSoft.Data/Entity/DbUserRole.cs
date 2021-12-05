@@ -15,14 +15,14 @@ public class DbUserRole
 
 public enum UserRoleType
 {
+    None = 0,
     Creator = 1,
     Administrator = 2,
-    //Organizer = 3,
-    //TeamLeader = 4,
-    //Sponsor = 5,
-    //Merchant = 6,
-    //Private = 7,
-    User = 3
+    User = 3,
+    Organizer = 4,
+    TeamLeader = 5,
+    Sponsor = 6,
+    Merchant = 7
 }
 
 internal sealed class DbUserRolesMapping
@@ -35,7 +35,7 @@ internal sealed class DbUserRolesMapping
         builder.Property(x => x.Role).IsRequired().HasMaxLength(255);
         builder.HasMany(x => x.Users).WithMany(x => x.UserRoles).UsingEntity<DbUsersToRoles>();
 
-        var roles = Enum.GetValues<UserRoleType>().Select(v => new DbUserRole { Id = (int)v, Role = v.ToString() })
+        var roles = Enum.GetValues<UserRoleType>().Where(x => x != UserRoleType.None).Select(v => new DbUserRole { Id = (int)v, Role = v.ToString() })
             .ToArray();
         builder.HasData(roles);
     }

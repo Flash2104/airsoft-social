@@ -22,4 +22,8 @@
     <ProjectReference Include="..\AirSoft.Service\AirSoft.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>

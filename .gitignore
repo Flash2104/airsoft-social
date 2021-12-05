@@ -4,3 +4,4 @@ api/.vs/
 obj
 bin
 api/AirSoftApi/AirSoftApi.csproj.user
+*.DotSettings

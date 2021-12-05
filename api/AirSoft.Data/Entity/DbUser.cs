@@ -17,7 +17,7 @@ public class DbUser
         LazyLoader = lazyLoader;
     }
 
-    private ILazyLoader LazyLoader { get; set; }
+    private ILazyLoader LazyLoader { get; set; } = null!;
 
     private ICollection<DbUserRole>? _userRoles;
 
@@ -27,7 +27,7 @@ public class DbUser
 
     public Guid ModifiedBy { get; set; }
 
-    public DateTime AddedDate { get; set; }
+    public DateTime CreatedDate { get; set; }
 
     public DateTime ModifiedDate { get; set; }
 
@@ -44,7 +44,9 @@ public class DbUser
     }
 
     public virtual List<DbUsersToRoles>? UsersToRoles { get; set; }
-    
+
+    public virtual DbMember? Member { get; set; }
+
     public string HashPassword(string password)
     {
         var ph = new PasswordHasher<DbUser>();
@@ -61,23 +63,22 @@ public class DbUser
 
 internal sealed class DbUserMapping
 {
-    public void Map(EntityTypeBuilder<DbUser> builder)
+    public void Map(EntityTypeBuilder<DbUser> builder, Guid userId)
     {
         builder.ToTable("Users");
 
         builder.HasKey(x => new { x.Id });
         builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(255);
-        builder.Property(x => x.AddedDate).IsRequired().HasMaxLength(50);
+        builder.Property(x => x.CreatedDate).IsRequired().HasMaxLength(50);
         builder.Property(x => x.ModifiedDate).IsRequired().HasMaxLength(50);
-        var adminId = Guid.Parse("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3");
 
         var admin = new DbUser
         {
-            Id = adminId,
-            AddedDate = new DateTime(2021, 12, 02, 1, 50, 00),
+            Id = userId,
+            CreatedDate = new DateTime(2021, 12, 02, 1, 50, 00),
             ModifiedDate = new DateTime(2021, 12, 02, 1, 50, 00),
-            CreatedBy = adminId,
-            ModifiedBy = adminId,
+            CreatedBy = userId,
+            ModifiedBy = userId,
             Email = "khoruzhenko.work@gmail.com",
             PasswordHash = "AQAAAAEAACcQAAAAEMQnvSxDqgyc+KNNzIFjcuST/qZGfHVSLT9P+Z3revJP2Q9Tctz8PIeDxj2k7aJkLg==",
             Phone = "89266762453"
@@ -86,7 +87,7 @@ internal sealed class DbUserMapping
         builder.HasMany(x => x.UserRoles).WithMany(x => x.Users).UsingEntity<DbUsersToRoles>(
             x => x.HasData(new DbUsersToRoles()
             {
-                UserId = adminId,
+                UserId = userId,
                 RoleId = (int) UserRoleType.Creator
             })
             );

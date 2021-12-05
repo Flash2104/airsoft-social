@@ -9,9 +9,12 @@ using NLog.Web;
 using System.Text;
 using System.Text.Json.Serialization;
 using AirSoft.Service.Contracts.Auth;
+using AirSoft.Service.Contracts.Member;
 using AirSoft.Service.Implementations;
 using AirSoft.Service.Implementations.Auth;
 using AirSoft.Service.Implementations.Jwt;
+using AirSoft.Service.Implementations.Member;
+using AirSoftApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,9 +56,14 @@ builder.Services.AddScoped<IConfigService, ConfigService>(p => configService);
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDataService, DataService>();
+builder.Services.AddScoped<ICorrelationService, CorrelationService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
 
 builder.Services.AddControllers();
-builder.Services.AddMvc().AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.AddMvc(opt =>
+{
+    opt.Filters.Add<CorrelationInitializeActionFilter>();
+}).AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

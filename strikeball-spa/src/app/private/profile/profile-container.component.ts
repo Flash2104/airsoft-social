@@ -4,7 +4,9 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
+import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
+import { IProfileData } from './../../shared/services/dto-models/profile/profile-data';
 import { ProfileRepository } from './repository/profile.repository';
 import { ProfileService } from './repository/profile.service';
 
@@ -22,9 +24,22 @@ export class ProfileContainerComponent implements OnInit, OnDestroy {
     takeUntil(this._destroy$)
   );
 
+  public profile$: Observable<IProfileData | null> =
+    this._profileRepo.profile$.pipe(
+      filter((p) => p != null),
+      map((p) => {
+        const sanitized = this._sanitizer.bypassSecurityTrustResourceUrl(
+          'data:image/png;base64, ' + p?.avatarData
+        );
+        return { ...p, avatarData: sanitized } as IProfileData;
+      }),
+      takeUntil(this._destroy$)
+    );
+
   constructor(
     private _profileService: ProfileService,
-    private _profileRepo: ProfileRepository
+    private _profileRepo: ProfileRepository,
+    private _sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {

@@ -1,25 +1,29 @@
 <div class="container h-100">
-  <div
-    *ngIf="(loading$ | async) === false; else elseTemplate"
-    class="row h-100"
-  >
-    <div class="col">
-      <div class="row"></div>
-      <div class="row">
-        <div class="col-4"></div>
-        <div class="col-8"></div>
-      </div>
-      <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4">
+  <div *ngIf="(loading$ | async) === false; else elseTemplate">
+    <div *ngIf="(profile$ | async) as profile">
+      <div class="row mb-3">
+        <div class="col">
           <button mat-raised-button class="submit-button">
-            Вышел из профиля
+            Редактировать
           </button>
         </div>
-        <div class="col-4"></div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-4">
+          <mat-card class="card-avatar">
+            <!-- <mat-card-header>
+              <img mat-card-avatar [src]="profile.avatarData"/>
+              <mat-card-title>{{profile.name}} {{profile.surname}}</mat-card-title>
+              <mat-card-subtitle *ngIf="profile.roles != null && profile.roles.length > 0" >{{profile.roles[0].title}}</mat-card-subtitle>
+            </mat-card-header> -->
+            <img mat-card-image [src]="profile.avatarData" alt="Аватар">
+          </mat-card>
+        </div>
+        <div class="col-8"></div>
       </div>
     </div>
   </div>
+
 </div>
 <ng-template #elseTemplate>
   <loader> </loader>

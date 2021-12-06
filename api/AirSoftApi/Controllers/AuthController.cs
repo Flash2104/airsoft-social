@@ -29,7 +29,6 @@ namespace AirSoftApi.Controllers
         public async Task<ServerResponseDto<SignInResponseDto>> SignIn([FromBody] SignInRequestDto request)
         {
             var logPath = $"{request.PhoneOrEmail}.{nameof(AuthController)} {nameof(SignIn)} | ";
-            await Task.Delay(1000);
             return await HandleRequest(
                 _authService.SignIn,
                 request,

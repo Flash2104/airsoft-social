@@ -45,7 +45,8 @@ public class MemberService : IMemberService
             dbMember.User?.Email,
             dbMember.User?.Phone,
             dbMember.Avatar.ToArray(),
-            dbMember.TeamId
+            dbMember.TeamId,
+            dbMember.MemberRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList()
         ));
     }
 }

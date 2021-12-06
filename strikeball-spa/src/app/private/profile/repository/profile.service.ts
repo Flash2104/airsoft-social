@@ -22,7 +22,7 @@ export class ProfileService {
       switchMap(() => this._http.profileGetCurrent()),
       tap((resp) => {
         if (resp.isSuccess && resp.data != null) {
-          this._profileRepo.setProfile(resp.data?.profileData ?? null);
+          this._profileRepo.setProfile(resp.data?.memberData ?? null);
         } else {
           let message = 'Произошла ошибка';
           if (resp.errors != null && resp.errors[0] != null) {

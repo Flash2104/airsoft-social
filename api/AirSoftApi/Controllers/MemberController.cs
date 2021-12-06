@@ -28,7 +28,6 @@ namespace AirSoftApi.Controllers
         [Authorize]
         public async Task<ServerResponseDto<GetCurrentMemberResponseDto>> GetCurrent()
         {
-            await Task.Delay(1000);
             var logPath = $"{_correlationService.GetUserId()}.{nameof(MemberController)} {nameof(GetCurrent)} | ";
             return await HandleRequest(
                 _memberService.GetCurrentMember,
@@ -40,7 +39,8 @@ namespace AirSoftApi.Controllers
                          res.MemberData.Email,
                          res.MemberData.Phone,
                          res.MemberData.Avatar?.ToArray(),
-                         res.MemberData.TeamId
+                         res.MemberData.TeamId,
+                         res.MemberData.Roles
                          )
                     ),
                 logPath

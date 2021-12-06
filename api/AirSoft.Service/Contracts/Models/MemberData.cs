@@ -2,7 +2,7 @@
 
 public class MemberData
 {
-    public MemberData(Guid id, string? name, string? surname, string? email, string? phone, byte[]? avatar, Guid? teamId)
+    public MemberData(Guid id, string? name, string? surname, string? email, string? phone, byte[]? avatar, Guid? teamId, List<ReferenceData<int>>? roles)
     {
         Id = id;
         Name = name;
@@ -11,6 +11,7 @@ public class MemberData
         Phone = phone;
         Avatar = avatar;
         TeamId = teamId;
+        Roles = roles;
     }
 
     public Guid Id { get; }
@@ -26,4 +27,6 @@ public class MemberData
     public byte[]? Avatar { get; }
 
     public Guid? TeamId { get; }
+
+    public List<ReferenceData<int>>? Roles { get; }
 }

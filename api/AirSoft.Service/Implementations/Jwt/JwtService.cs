@@ -36,7 +36,7 @@ public class JwtService : IJwtService
         var tokenHandler = new JwtSecurityTokenHandler();
         var userId = request?.User?.Id.ToString("N");
         var roleClaims = request?.User?.UserRoles?.Select(r => new Claim(ClaimTypes.Role, r.Role)) ?? new List<Claim>();
-        roleClaims = roleClaims.Concat(new List<Claim>()
+        var claims = roleClaims.Concat(new List<Claim>()
         {
             new(ClaimTypes.Actor, userId),
             new(ClaimTypes.Name, userId),
@@ -45,7 +45,7 @@ public class JwtService : IJwtService
         }).ToList();
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(roleClaims),
+            Subject = new ClaimsIdentity(claims),
             Expires = expires,
             IssuedAt = issuedAt,
             SigningCredentials = new SigningCredentials(

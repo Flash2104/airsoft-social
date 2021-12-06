@@ -11,9 +11,9 @@ public class UserRepository: GenericRepository<DbUser>
     {
     }
 
-    public DbUser? GetByPhone(string phone)
+    public async Task<DbUser?> GetByPhoneAsync(string phone)
     {
-        var users = Get(e => e.Phone == phone);
+        var users = await GetAsync(e => e.Phone == phone);
         var dbUsers = users.ToList();
         if (dbUsers.Count > 1)
         {
@@ -24,9 +24,9 @@ public class UserRepository: GenericRepository<DbUser>
         return dbUsers.FirstOrDefault();
     }
 
-    public DbUser? GetByEmail(string email)
+    public async Task<DbUser?> GetByEmailAsync(string email)
     {
-        var users = Get(e => e.Email == email);
+        var users = await GetAsync(e => e.Email == email);
         var dbUsers = users.ToList();
         if (dbUsers.Count > 1)
         {

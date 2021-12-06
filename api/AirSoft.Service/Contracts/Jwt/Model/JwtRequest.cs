@@ -5,11 +5,11 @@ namespace AirSoft.Service.Contracts.Jwt.Model;
 
 public class JwtRequest
 {
-    public JwtRequest(DbUser? user)
+    public JwtRequest(DbUser user)
     {
         User = user;
     }
 
-    public DbUser? User { get; }
+    public DbUser User { get; }
 }
 

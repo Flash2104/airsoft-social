@@ -52,5 +52,30 @@ namespace AirSoftApi.Controllers
                 return new ServerResponseDto<TResponseDto>(new ErrorDto(ErrorCodes.CommonError, ex.Message));
             }
         }
+
+        protected async Task<ServerResponseDto<TResponseDto>> HandleRequest<TServiceResponse, TResponseDto>(
+            Func<Task<TServiceResponse>> serviceFunction,
+            Func<TServiceResponse, TResponseDto> responseMap,
+            string logPath)
+        {
+            _logger.Log(LogLevel.Trace, $"{logPath} started.");
+            try
+            {
+                var serviceResponse = await serviceFunction();
+                var responseDto = responseMap(serviceResponse);
+                _logger.Log(LogLevel.Trace, $"{logPath} ended.");
+                return new ServerResponseDto<TResponseDto>(responseDto);
+            }
+            catch (AirSoftBaseException baseEx)
+            {
+                _logger.LogError(baseEx, $"{logPath} AirSoft Exception.");
+                return new ServerResponseDto<TResponseDto>(new ErrorDto(baseEx.Code, baseEx.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{logPath} Common Exception.");
+                return new ServerResponseDto<TResponseDto>(new ErrorDto(ErrorCodes.CommonError, ex.Message));
+            }
+        }
     }
 }

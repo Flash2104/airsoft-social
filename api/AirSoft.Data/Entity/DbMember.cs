@@ -72,7 +72,7 @@ internal sealed class DbMemberMapping
 
         builder.HasOne(x => x.Team).WithMany(x => x.Members).HasForeignKey(x => x.TeamId);
         builder.HasOne(x => x.User).WithOne(x => x.Member).HasForeignKey<DbMember>(x => x.UserId);
-        string root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); ;
+        string? root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         var adminProfile = new DbMember()
         {
             Id = memberId,

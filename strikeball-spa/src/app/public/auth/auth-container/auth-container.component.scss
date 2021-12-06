@@ -8,18 +8,20 @@
   }
 }
 
-.auth-card {
+@mixin card {
   max-width: 600px;
   min-height: 400px;
-  padding-top: 32px;
   margin: 0 auto;
 }
 
+.auth-card {
+  @include card;
+  padding-top: 32px;
+}
+
 .loading-card {
-  max-width: 600px;
-  min-height: 400px;
+  @include card;
   display: flex;
   justify-content: center;
   align-content: center;
-  margin: 0 auto;
 }

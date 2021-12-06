@@ -15,7 +15,7 @@ public class GenericRepository<TEntity> where TEntity : class
         this._dbSet = context.Set<TEntity>();
     }
 
-    public virtual IEnumerable<TEntity> Get(
+    public virtual async Task<IEnumerable<TEntity>> GetAsync(
         Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "")
@@ -38,12 +38,9 @@ public class GenericRepository<TEntity> where TEntity : class
 
         if (orderBy != null)
         {
-            return orderBy(query).ToList();
+            return await orderBy(query).ToListAsync();
         }
-        else
-        {
-            return query.ToList();
-        }
+        return await query.ToListAsync();
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(object id)
@@ -78,7 +75,7 @@ public class GenericRepository<TEntity> where TEntity : class
     public virtual void Update(TEntity entityToUpdate)
     {
         _dbSet?.Attach(entityToUpdate);
-        if(_context == null) return;
+        if (_context == null) return;
         _context.Entry(entityToUpdate).State = EntityState.Modified;
     }
 }

@@ -21,7 +21,7 @@ public interface IDbContext : IDisposable
 
 public class AirSoftDbContext : DbContext, IDbContext
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor _httpContextAccessor = null!;
 
     public AirSoftDbContext()
     {
@@ -30,7 +30,7 @@ public class AirSoftDbContext : DbContext, IDbContext
 
     public AirSoftDbContext(DbContextOptions<AirSoftDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
     {
-        _httpContextAccessor = httpContextAccessor;
+        _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
     }
 
     public DbSet<DbUser>? Users { get; set; }

@@ -46,8 +46,8 @@ public class AuthService : IAuthService
         }
         var isEmail = EmailHelper.IsValidEmail(emailOrPhone);
         DbUser? dbUser = isEmail
-            ? _dataService.Users.GetByEmail(emailOrPhone)
-            : _dataService.Users.GetByPhone(PhoneHelper.CleanPhone(emailOrPhone));
+            ? await _dataService.Users.GetByEmailAsync(emailOrPhone)
+            : await _dataService.Users.GetByPhoneAsync(PhoneHelper.CleanPhone(emailOrPhone));
 
         if (dbUser == null)
         {
@@ -57,7 +57,7 @@ public class AuthService : IAuthService
         if (validPassword)
         {
             _logger.Log(LogLevel.Trace, $"{logPath}. Password valid.");
-            var tokenData = await _jwtService.BuildToken(new JwtRequest(dbUser));
+            var tokenData = await _jwtService.BuildToken(new JwtRequest(dbUser!));
             return new SignInResponse(tokenData, new UserData(
                 dbUser!.Id,
                 dbUser.Email,
@@ -87,8 +87,8 @@ public class AuthService : IAuthService
         _logger.Log(LogLevel.Trace, $"{logPath} started.");
         var isEmail = EmailHelper.IsValidEmail(emailOrPhone);
         DbUser? dbUser = isEmail
-            ? _dataService.Users.GetByEmail(emailOrPhone)
-            : _dataService.Users.GetByPhone(PhoneHelper.CleanPhone(emailOrPhone));
+            ? await _dataService.Users.GetByEmailAsync(emailOrPhone)
+            : await _dataService.Users.GetByPhoneAsync(PhoneHelper.CleanPhone(emailOrPhone));
 
         if (dbUser != null)
         {
@@ -122,7 +122,7 @@ public class AuthService : IAuthService
         {
             throw new AirSoftBaseException(ErrorCodes.AuthService.CreatedUserIsNull, "Созданный пользователь пустой");
         }
-        _logger.Log(LogLevel.Information, $"{logPath} User created: {created?.Id}.");
+        _logger.Log(LogLevel.Information, $"{logPath} User created: {created!.Id}.");
         var tokenData = await _jwtService.BuildToken(new JwtRequest(created));
         await this._dataService.SaveAsync();
         return new SignUpResponse(tokenData, new UserData(created!.Id, created.Email, created.Phone));

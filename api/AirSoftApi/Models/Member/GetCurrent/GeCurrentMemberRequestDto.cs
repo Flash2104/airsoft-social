@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AirSoftApi.Models.Profile.Get;
+namespace AirSoftApi.Models.Member.GetCurrent;
 
-public class GetProfileRequestDto : IValidatableObject
+public class GetCurrentMemberRequestDto : IValidatableObject
 {
-    public GetProfileRequestDto()
+    public GetCurrentMemberRequestDto()
     {
     }
-    
+
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         return new List<ValidationResult>();

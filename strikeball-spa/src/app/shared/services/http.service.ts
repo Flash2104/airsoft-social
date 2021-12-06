@@ -7,6 +7,7 @@ import { ISignInRequest } from './dto-models/auth/sign-in/sign-in-request';
 import { ISignInResponse } from './dto-models/auth/sign-in/sign-in-response';
 import { ISignUpRequest } from './dto-models/auth/sign-up/sign-up-request';
 import { ISignUpResponse } from './dto-models/auth/sign-up/sign-up-response';
+import { IGetCurrentProfileResponse } from './dto-models/profile/get-current/get-current-profile-response';
 import { IServerResponse } from './dto-models/server-response';
 
 @Injectable({ providedIn: 'root' })
@@ -33,6 +34,16 @@ export class HttpService {
 
   /* #endregion */
 
+  /* #region  Profile*/
+
+  profileGetCurrent(): Observable<IServerResponse<IGetCurrentProfileResponse>> {
+    return of('api/member/get-current').pipe(
+      mergeMap((url) => this.httpGet<IGetCurrentProfileResponse>(url))
+    );
+  }
+
+  /* #endregion */
+
   private getAuthHttpHeaders(): Observable<HttpHeaders> {
     return this._authRepo.token$.pipe(
       take(1),
@@ -42,7 +53,7 @@ export class HttpService {
           'content-type': 'application/json',
         };
         if (token != null) {
-          headersObj.Authorization = token;
+          headersObj.Authorization = 'Bearer ' + token;
         }
         return new HttpHeaders(headersObj);
       })

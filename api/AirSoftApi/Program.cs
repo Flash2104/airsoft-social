@@ -1,3 +1,4 @@
+using System.Net;
 using AirSoft.Data;
 using AirSoft.Service.Common;
 using AirSoft.Service.Contracts;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using AirSoft.Service.Contracts.Auth;
 using AirSoft.Service.Contracts.Member;
@@ -15,6 +17,9 @@ using AirSoft.Service.Implementations.Auth;
 using AirSoft.Service.Implementations.Jwt;
 using AirSoft.Service.Implementations.Member;
 using AirSoftApi.Filters;
+using AirSoftApi.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,14 +41,47 @@ builder.Host.UseNLog();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = context =>
+            {
+                var userId = context.Principal.Identity.Name;
+
+                // var user = userService.GetById(userId);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    // return unauthorized if user no longer exists
+                    context.Fail("Unauthorized");
+                }
+                return Task.CompletedTask;
+            },
+            OnForbidden = async context =>
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                var response = new ServerResponseDto(new ErrorDto(403, "Недостаточно прав"));
+                await HttpResponseWritingExtensions.WriteAsync(context.Response, JsonConvert.SerializeObject(response, new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }));
+            },
+            OnAuthenticationFailed = async context =>
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                var response = new ServerResponseDto(new ErrorDto(401, "Неавторизованный запрос"));
+                await HttpResponseWritingExtensions.WriteAsync(context.Response, JsonConvert.SerializeObject(response, new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }));
+            }
+        };
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = appSettings.Jwt?.Issuer,
-            ValidAudience = appSettings.Jwt?.Issuer,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Jwt?.Key ?? throw new ApplicationException("Jwt settings in null")))
         };
     });
@@ -63,7 +101,11 @@ builder.Services.AddControllers();
 builder.Services.AddMvc(opt =>
 {
     opt.Filters.Add<CorrelationInitializeActionFilter>();
-}).AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+}).AddJsonOptions(x =>
+{
+    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    x.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -94,8 +136,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

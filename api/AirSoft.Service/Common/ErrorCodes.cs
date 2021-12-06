@@ -21,6 +21,12 @@ public class ErrorCodes
         public const int CreatedUserIsNull = 82008;
     }
 
+    public sealed class MemberService
+    {
+        public const int EmptyUserId = 82101;
+        public const int UserNotFound = 82102;
+    }
+
     public sealed class UserRepository
     {
         public const int MoreThanOneUserByPhone = 82101;

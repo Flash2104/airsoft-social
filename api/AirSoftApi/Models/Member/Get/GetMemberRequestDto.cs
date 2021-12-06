@@ -1,12 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AirSoftApi.Models.Profile.Get;
+namespace AirSoftApi.Models.Member.Get;
 
-public class GetProfileResponseDto
+public class GetMemberRequestDto : IValidatableObject
 {
-    public GetProfileResponseDto()
+    public GetMemberRequestDto(string id)
     {
+        Id = id;
     }
+
+    [Required]
+    public string Id { get; }
     
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

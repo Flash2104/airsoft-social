@@ -1,5 +1,26 @@
-<div class="profile-container">
-  <button mat-raised-button class="submit-button" (click)="onSubmit()">
-    Вышел из профиля
-  </button>
+<div class="container h-100">
+  <div
+    *ngIf="(loading$ | async) === false; else elseTemplate"
+    class="row h-100"
+  >
+    <div class="col">
+      <div class="row"></div>
+      <div class="row">
+        <div class="col-4"></div>
+        <div class="col-8"></div>
+      </div>
+      <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+          <button mat-raised-button class="submit-button">
+            Вышел из профиля
+          </button>
+        </div>
+        <div class="col-4"></div>
+      </div>
+    </div>
+  </div>
 </div>
+<ng-template #elseTemplate>
+  <loader> </loader>
+</ng-template>

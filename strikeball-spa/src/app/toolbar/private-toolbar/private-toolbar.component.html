@@ -1,9 +1,32 @@
-<div class="toolbar">
-  <h1>
-    User's Toolbar
-  </h1>
-  <div class="flex-stretch"></div>
-  <button mat-raised-button class="submit-button" (click)="onSubmit()">
-    Вышел нахуй
-  </button>
+<div class="">
+  <div class="row">
+    <div class="col-2"><h1>User's Toolbar</h1></div>
+    <div class="col-8"></div>
+    <div class="col-2 text-end">
+      <div></div>
+      <button
+        mat-stroked-button
+        class="p-1"
+        [matMenuTriggerFor]="menu"
+        aria-label="Home button"
+      >
+        <img mat-card-avatar class="me-3" [src]="(profile$ | async)?.avatarData" />
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Настройки</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>help_outline</mat-icon>
+          <span>Помощь</span>
+        </button>
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>logout</mat-icon>
+          <span>Выйти</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
 </div>

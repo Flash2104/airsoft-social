@@ -1,3 +1,4 @@
+import { MatCardModule } from '@angular/material/card';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,6 +17,7 @@ import { RootModule } from './root/root.module';
 import { SharedModule } from './shared/shared.module';
 import { PrivateToolbarComponent } from './toolbar/private-toolbar/private-toolbar.component';
 import { PublicToolbarComponent } from './toolbar/public-toolbar/public-toolbar.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [AppComponent, PublicToolbarComponent, PrivateToolbarComponent],
@@ -34,6 +36,8 @@ import { PublicToolbarComponent } from './toolbar/public-toolbar/public-toolbar.
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatMenuModule,
+    MatCardModule,
     MatSlideToggleModule,
     BrowserAnimationsModule,
   ],

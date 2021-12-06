@@ -14,7 +14,7 @@ import {
 } from 'rxjs';
 import { HttpService } from './http.service';
 import { SnackbarService } from './snackbar.service';
-import { authPersist, AuthRepository } from '../repository/auth.repository';
+import { AuthRepository } from '../repository/auth.repository';
 import { ISignInData } from '../../public/auth/auth-container/sign-in/sign-in.component';
 import { ISignUpData } from '../../public/auth/auth-container/sign-up/sign-up.component';
 

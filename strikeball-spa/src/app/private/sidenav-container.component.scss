@@ -1,29 +1,26 @@
-$topPadding: 100px;
+$topPadding: 68px;
 @mixin fill {
   min-height: 100%;
   height: 100%;
 }
 .sidenav-container {
   @include fill;
-}
-
-.sidenav-content {
-  @include fill;
+  // margin-top: $topPadding;
 }
 
 .sidenav-nav {
   width: 200px;
   user-select: none;
-  padding-top: $topPadding;
+  margin-top: $topPadding;
 }
 
 .sidenav-body {
   @include fill;
+  padding-top: $topPadding;
 }
 
 .sidenav-card {
   @include fill;
-  padding-top: $topPadding;
 }
 
 .sidenav-card-content {

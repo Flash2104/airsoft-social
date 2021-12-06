@@ -16,9 +16,9 @@ public class DbMemberRole
 public enum MemberRoleType
 {
     None = 0,
-    Leader = 1,
-    Deputy = 2,
-    Private = 3
+    Командир = 1,
+    Заместитель = 2,
+    Рядовой = 3
 }
 
 internal sealed class DbMemberRolesMapping

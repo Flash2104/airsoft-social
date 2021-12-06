@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, EMPTY, mapTo, Observable, of, switchMap, tap } from 'rxjs';
-import { HttpService } from '../../../shared/services/http.service';
-import { SnackbarService } from '../../../shared/services/snackbar.service';
-import { ProfileRepository } from './profile.repository';
+import { HttpService } from './http.service';
+import { SnackbarService } from './snackbar.service';
+import { ProfileRepository } from '../repository/profile.repository';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProfileService {
   constructor(
     private _http: HttpService,

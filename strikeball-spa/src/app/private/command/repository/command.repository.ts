@@ -1,58 +1,60 @@
-// import { Injectable } from '@angular/core';
-// import { createState, select, Store, withProps } from '@ngneat/elf';
-// import { localStorageStrategy, persistState } from '@ngneat/elf-persist-state';
-// import { Observable } from 'rxjs';
-// import { ITokenData } from '../../../shared/services/dto-models/auth/token-data';
-// import { IUserData } from '../../../shared/services/dto-models/auth/user-data';
+import { Injectable } from '@angular/core';
+import { createState, select, Store, withProps } from '@ngneat/elf';
+import { Observable } from 'rxjs';
+import { v1 as uuidv1 } from 'uuid';
 
-// export interface ICommandState {
-//   command: ICommandData | null;
-//   loading: boolean;
-// }
+export interface ITeamState {
+  team: unknown;
+  loading: boolean;
+}
 
-// const { state, config } = createState(
-//   withProps<ICommandState>({ command: null, loading: false })
-// );
+@Injectable()
+export class TeamRepository {
+  _state: {
+    state: ITeamState;
+    config: undefined;
+  } = createState(
+    withProps<ITeamState>({
+      team: null,
+      loading: false,
+    })
+  );
 
-// const name = 'auth';
+  _name: string = `team-${uuidv1().substr(-8)}`;
 
-// const authStore = new Store({ state, name, config });
+  teamStore: Store<
+    { state: ITeamState; name: string; config: undefined },
+    ITeamState
+  > = new Store({
+    state: this._state.state,
+    name: this._name,
+    config: this._state.config,
+  });
 
-// export const authPersist = persistState(authStore, {
-//   source: (st) => st.pipe(select((s) => ({ token: s.token }))),
-//   key: name,
-//   storage: localStorageStrategy,
-// });
+  team$: Observable<unknown | null> = this.teamStore.pipe(
+    select((st) => st.team)
+  );
 
-// @Injectable({ providedIn: 'root' })
-// export class AuthRepository {
-//   user$: Observable<IUserData | null> = authStore.pipe(
-//     select((state) => state.user)
-//   );
+  loading$: Observable<boolean> = this.teamStore.pipe(
+    select((st) => st.loading)
+  );
 
-//   token$: Observable<ITokenData | null> = authStore.pipe(
-//     select((state) => state.token)
-//   );
+  setLoading(loading: ITeamState['loading']): void {
+    this.teamStore.update((state) => ({
+      ...state,
+      loading,
+    }));
+  }
 
-//   loading$: Observable<boolean> = authStore.pipe(
-//     select((state) => state.loading)
-//   );
+  setProfile(team: ITeamState['team']): void {
+    this.teamStore.update((st) => ({
+      ...st,
+      team,
+    }));
+  }
 
-//   setLoading(loading: IAuthState['loading']): void {
-//     authStore.update((state) => ({
-//       ...state,
-//       loading,
-//     }));
-//   }
-
-//   updateUserToken(
-//     user: IAuthState['user'] | null,
-//     token: IAuthState['token']
-//   ): void {
-//     authStore.update((state) => ({
-//       ...state,
-//       user,
-//       token,
-//     }));
-//   }
-// }
+  destroy(): void {
+    this.teamStore.complete();
+    this.teamStore.destroy();
+  }
+}

@@ -91,7 +91,7 @@ internal sealed class DbMemberMapping
             x => x.HasData(new DbMembersToRoles()
             {
                 MemberId = memberId,
-                RoleId = (int)MemberRoleType.Leader
+                RoleId = (int)MemberRoleType.Командир
             })
             );
     }

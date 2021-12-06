@@ -25,7 +25,7 @@ public class DbTeam : DbEntity<Guid>
         set => _members = value;
     }
 
-    public DbMember? Leader => Members?.FirstOrDefault(x => x.MemberRoles?.Select(y => y.Id).Contains((int)MemberRoleType.Leader) ?? false);
+    public DbMember? Leader => Members?.FirstOrDefault(x => x.MemberRoles?.Select(y => y.Id).Contains((int)MemberRoleType.Командир) ?? false);
 }
 
 internal sealed class DbTeamMapping

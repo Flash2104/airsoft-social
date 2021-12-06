@@ -18,7 +18,9 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
+import { ProfileRepository } from './shared/repository/profile.repository';
 import { AuthService } from './shared/services/auth.service';
+import { ProfileService } from './shared/services/profile.service';
 
 export const slideInAnimation = trigger('routeAnimations', [
   transition('PrivatePages <=> PublicPages', [
@@ -63,10 +65,14 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private _overlay: OverlayContainer,
     private _renderer: Renderer2,
-    public authService: AuthService
+    public authService: AuthService,
+    private _profileService: ProfileService,
+    private _profileRepo: ProfileRepository
   ) {}
 
   ngOnInit(): void {
+    this._profileService.loadCurrentProfile().subscribe();
+
     this.form.controls['toggleControl'].valueChanges.subscribe((lightMode) => {
       const lightClassName = 'light-theme';
       if (lightMode) {
@@ -82,6 +88,8 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
+
+    this._profileRepo.destroy();
   }
 
   prepareRoute(outlet: RouterOutlet): string {

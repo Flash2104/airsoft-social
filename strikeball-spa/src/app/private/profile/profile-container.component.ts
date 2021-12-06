@@ -7,17 +7,16 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
 import { IProfileData } from './../../shared/services/dto-models/profile/profile-data';
-import { ProfileRepository } from './repository/profile.repository';
-import { ProfileService } from './repository/profile.service';
+import { ProfileRepository } from '../../shared/repository/profile.repository';
+import { ProfileService } from '../../shared/services/profile.service';
 
 @Component({
   selector: 'air-profile-container',
   templateUrl: './profile-container.component.html',
   styleUrls: ['./profile-container.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ProfileRepository, ProfileService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProfileContainerComponent implements OnInit, OnDestroy {
+export class ProfileContainerComponent implements OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
 
   public loading$: Observable<boolean> = this._profileRepo.loading$.pipe(
@@ -37,18 +36,12 @@ export class ProfileContainerComponent implements OnInit, OnDestroy {
     );
 
   constructor(
-    private _profileService: ProfileService,
     private _profileRepo: ProfileRepository,
     private _sanitizer: DomSanitizer
   ) {}
 
-  ngOnInit(): void {
-    this._profileService.loadCurrentProfile().subscribe();
-  }
-
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
-    this._profileRepo.destroy();
   }
 }

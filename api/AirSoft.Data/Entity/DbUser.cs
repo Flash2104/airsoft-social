@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirSoft.Data.Entity;
 
@@ -35,6 +36,8 @@ public class DbUser
 
     public string? Phone { get; set; }
 
+    public UserStatus Status { get; set; }
+
     public string? PasswordHash { get; set; }
 
     public ICollection<DbUserRole>? UserRoles
@@ -61,6 +64,13 @@ public class DbUser
     }
 }
 
+public enum UserStatus
+{
+    None = 0, 
+    New = 1,
+    Confirmed = 2
+}
+
 internal sealed class DbUserMapping
 {
     public void Map(EntityTypeBuilder<DbUser> builder, Guid userId)
@@ -72,6 +82,15 @@ internal sealed class DbUserMapping
         builder.Property(x => x.CreatedDate).IsRequired().HasMaxLength(50);
         builder.Property(x => x.ModifiedDate).IsRequired().HasMaxLength(50);
 
+        var converter = new ValueConverter<UserStatus, string>(
+            v => v.ToString(),
+            v => (UserStatus)Enum.Parse(typeof(UserStatus), v));
+
+        builder
+            .Property(e => e.Status)
+            .IsRequired()
+            .HasConversion(converter);
+
         var admin = new DbUser
         {
             Id = userId,
@@ -81,7 +100,8 @@ internal sealed class DbUserMapping
             ModifiedBy = userId,
             Email = "khoruzhenko.work@gmail.com",
             PasswordHash = "AQAAAAEAACcQAAAAEMQnvSxDqgyc+KNNzIFjcuST/qZGfHVSLT9P+Z3revJP2Q9Tctz8PIeDxj2k7aJkLg==",
-            Phone = "89266762453"
+            Phone = "89266762453",
+            Status = UserStatus.Confirmed
         };
         builder.HasData(admin);
         builder.HasMany(x => x.UserRoles).WithMany(x => x.Users).UsingEntity<DbUsersToRoles>(

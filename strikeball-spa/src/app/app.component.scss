@@ -1,7 +1,3 @@
-.flex-stretch {
-  flex: 1;
-}
-
 .air-app {
   min-height: 100%;
   height: 100%;
@@ -12,4 +8,32 @@ a {
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+}
+
+@mixin fill {
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  z-index: 120;
+  margin: 0 auto;
+}
+
+.main {
+  @include fill;
+}
+
+.footer {
+  position: fixed;
+  max-height: 48px;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  z-index: 120;
+  margin: 0 auto;
 }

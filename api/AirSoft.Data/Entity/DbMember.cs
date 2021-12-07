@@ -27,6 +27,10 @@ public class DbMember : DbEntity<Guid>
 
     public string? Surname { get; set; }
 
+    public string? City { get; set; }
+
+    public DateTime? BirthDate { get; set; }
+
     public byte[] Avatar { get; set; } = null!;
 
     public Guid? TeamId { get; set; }
@@ -62,7 +66,7 @@ internal sealed class DbMemberMapping
 
         builder.HasKey(x => new { x.Id });
         builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
-        builder.Property(x => x.Surname).IsRequired().HasMaxLength(255);
+        builder.Property(x => x.Surname).HasMaxLength(255);
         builder.Property(x => x.Avatar);
 
         builder.Property(x => x.CreatedDate).IsRequired().HasMaxLength(50);
@@ -82,6 +86,8 @@ internal sealed class DbMemberMapping
             ModifiedBy = userId,
             Name = "Кирилл",
             Surname = "Хоруженко",
+            BirthDate = new DateTime(1993, 4, 21),
+            City = "Москва",
             TeamId = teamId,
             UserId = userId,
             Avatar = File.ReadAllBytes(root + "\\InitialData\\photo.jpg")

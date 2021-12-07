@@ -1,8 +1,10 @@
-﻿namespace AirSoft.Service.Contracts.Models;
+﻿using AirSoft.Service.Contracts.Models;
 
-public class MemberData
+namespace AirSoft.Service.Contracts.Member.Update;
+
+public class UpdateMemberRequest
 {
-    public MemberData(Guid id, string? name, string? surname, DateTime? birthDate, string? city, string? email, string? phone, byte[]? avatar, ReferenceData<Guid>? team, List<ReferenceData<int>>? roles)
+    public UpdateMemberRequest(Guid id, string? name, string? surname, DateTime? birthDate, string? city, string? email, string? phone, byte[]? avatar, ReferenceData<Guid>? team, List<ReferenceData<int>>? roles)
     {
         Id = id;
         Name = name;

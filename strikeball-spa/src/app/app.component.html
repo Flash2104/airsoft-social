@@ -1,21 +1,19 @@
 <div class="air-app">
   <div class="header">
     <mat-toolbar>
-      <a [routerLink]="['/private/home']" class=""> AirSoft Events </a>
-      <div class="container flex-stretch">
-        <ng-container *ngIf="(authService.checkUserLoggedIn() | async); else elseTemplate">
+      <!-- <div>
+        <a [routerLink]="['/private/profile']" class=""> AirSoft Events </a>
+      </div> -->
+      <div class="container">
+        <ng-container
+          *ngIf="authService.checkUserLoggedIn() | async; else elseTemplate"
+        >
           <air-private-toolbar></air-private-toolbar>
         </ng-container>
         <ng-template #elseTemplate>
           <air-public-toolbar></air-public-toolbar>
         </ng-template>
       </div>
-      <mat-icon class="me-3">bedtime</mat-icon>
-      <form [formGroup]="form">
-        <mat-slide-toggle formControlName="toggleControl" class="me-3">
-        </mat-slide-toggle>
-      </form>
-      <mat-icon>brightness_5</mat-icon>
     </mat-toolbar>
   </div>
 

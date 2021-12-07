@@ -38,9 +38,9 @@ public class JwtService : IJwtService
         var roleClaims = request?.User?.UserRoles?.Select(r => new Claim(ClaimTypes.Role, r.Role)) ?? new List<Claim>();
         var claims = roleClaims.Concat(new List<Claim>()
         {
-            new(ClaimTypes.Actor, userId),
-            new(ClaimTypes.Name, userId),
-            new(ClaimTypes.NameIdentifier, userId),
+            new(ClaimTypes.Actor, userId!),
+            new(ClaimTypes.Name, userId!),
+            new(ClaimTypes.NameIdentifier, userId!),
             new(ClaimTypes.Expired, expiresStamp)
         }).ToList();
         var tokenDescriptor = new SecurityTokenDescriptor

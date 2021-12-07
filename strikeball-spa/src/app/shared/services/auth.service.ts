@@ -105,7 +105,6 @@ export class AuthService {
         const expireDate = new Date(token.expiryDate ?? '');
         const currentDate = new Date();
         if (expireDate < currentDate) {
-          this.signOut().subscribe();
           return false;
         }
         return true;

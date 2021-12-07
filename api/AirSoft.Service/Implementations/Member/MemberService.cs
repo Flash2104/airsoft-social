@@ -2,7 +2,11 @@
 using AirSoft.Service.Common;
 using AirSoft.Service.Contracts;
 using AirSoft.Service.Contracts.Member;
+using AirSoft.Service.Contracts.Member.Create;
+using AirSoft.Service.Contracts.Member.Delete;
+using AirSoft.Service.Contracts.Member.Get;
 using AirSoft.Service.Contracts.Member.GetCurrent;
+using AirSoft.Service.Contracts.Member.Update;
 using AirSoft.Service.Contracts.Models;
 using AirSoft.Service.Exceptions;
 using Microsoft.Extensions.Logging;
@@ -22,10 +26,10 @@ public class MemberService : IMemberService
         _dataService = dataService;
     }
 
-    public async Task<GetCurrentMemberResponse> GetCurrentMember()
+    public async Task<GetCurrentMemberResponse> GetCurrent()
     {
         var userId = _correlationService.GetUserId();
-        var logPath = $"{userId} {nameof(MemberService)} {nameof(GetCurrentMember)}. | ";
+        var logPath = $"{userId} {nameof(MemberService)} {nameof(GetCurrent)}. | ";
         _logger.Log(LogLevel.Trace, $"{logPath} started.");
         if (!userId.HasValue)
         {
@@ -42,11 +46,33 @@ public class MemberService : IMemberService
             dbMember.Id,
             dbMember.Name,
             dbMember.Surname,
+            dbMember.BirthDate,
+            dbMember.City,
             dbMember.User?.Email,
             dbMember.User?.Phone,
             dbMember.Avatar.ToArray(),
-            dbMember.TeamId,
+            dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
             dbMember.MemberRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList()
         ));
+    }
+
+    public Task<GetByIdMemberResponse> Get(GetByIdMemberRequest request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<CreateMemberResponse> Create(CreateMemberRequest request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<UpdateMemberResponse> Update(UpdateMemberRequest request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task Delete(DeleteMemberRequest request)
+    {
+        throw new NotImplementedException();
     }
 }

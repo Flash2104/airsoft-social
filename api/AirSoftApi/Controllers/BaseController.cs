@@ -53,6 +53,33 @@ namespace AirSoftApi.Controllers
             }
         }
 
+        protected async Task<ServerResponseDto<TResponseDto>> HandleGetRequest<TServiceRequest, TServiceResponse, TResponseDto>(
+            Func<TServiceRequest, Task<TServiceResponse>> serviceFunction,
+            Func<TServiceRequest> requestMap,
+            Func<TServiceResponse, TResponseDto> responseMap,
+            string logPath)
+        {
+            _logger.Log(LogLevel.Trace, $"{logPath} started.");
+            try
+            {
+                var serviceRequest = requestMap();
+                var serviceResponse = await serviceFunction(serviceRequest);
+                var responseDto = responseMap(serviceResponse);
+                _logger.Log(LogLevel.Trace, $"{logPath} ended.");
+                return new ServerResponseDto<TResponseDto>(responseDto);
+            }
+            catch (AirSoftBaseException baseEx)
+            {
+                _logger.LogError(baseEx, $"{logPath} AirSoft Exception.");
+                return new ServerResponseDto<TResponseDto>(new ErrorDto(baseEx.Code, baseEx.Message));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{logPath} Common Exception.");
+                return new ServerResponseDto<TResponseDto>(new ErrorDto(ErrorCodes.CommonError, ex.Message));
+            }
+        }
+
         protected async Task<ServerResponseDto<TResponseDto>> HandleRequest<TServiceResponse, TResponseDto>(
             Func<Task<TServiceResponse>> serviceFunction,
             Func<TServiceResponse, TResponseDto> responseMap,

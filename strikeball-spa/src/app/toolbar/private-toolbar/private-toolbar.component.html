@@ -1,32 +1,37 @@
-<div class="">
-  <div class="row">
-    <div class="col-2"><h1>User's Toolbar</h1></div>
-    <div class="col-8"></div>
-    <div class="col-2 text-end">
-      <div></div>
-      <button
-        mat-stroked-button
-        class="p-1"
-        [matMenuTriggerFor]="menu"
-        aria-label="Home button"
-      >
-        <img mat-card-avatar class="me-3" [src]="(profile$ | async)?.avatarData" />
-        <mat-icon>expand_more</mat-icon>
+<div class="d-flex">
+  <div><h1>AirSoft Events</h1></div>
+  <div class="flex-stretch"></div>
+  <div>
+    <div></div>
+    <button
+      mat-stroked-button
+      class="p-1"
+      [matMenuTriggerFor]="menu"
+      aria-label="Home button"
+    >
+      <img
+        mat-card-avatar
+        class="me-3"
+        [src]="(profile$ | async)?.avatarData"
+      />
+      <mat-icon>expand_more</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Настройки</span>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <mat-icon>settings</mat-icon>
-          <span>Настройки</span>
+      <form [formGroup]="form">
+        <button mat-menu-item (click)="onToggle()">
+          <mat-slide-toggle [checked]="form.controls['toggleControl'].value">
+            <span>Тема</span>
+          </mat-slide-toggle>
         </button>
-        <button mat-menu-item disabled>
-          <mat-icon>help_outline</mat-icon>
-          <span>Помощь</span>
-        </button>
-        <button mat-menu-item (click)="onLogout()">
-          <mat-icon>logout</mat-icon>
-          <span>Выйти</span>
-        </button>
-      </mat-menu>
-    </div>
+      </form>
+      <button mat-menu-item (click)="onLogout()">
+        <mat-icon>logout</mat-icon>
+        <span>Выйти</span>
+      </button>
+    </mat-menu>
   </div>
 </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,18 +6,18 @@ import {
   OnInit,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
+import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { IProfileData } from './../../shared/services/dto-models/profile/profile-data';
 import { ProfileRepository } from '../../shared/repository/profile.repository';
-import { ProfileService } from '../../shared/services/profile.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'air-profile-container',
   templateUrl: './profile-container.component.html',
   styleUrls: ['./profile-container.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileContainerComponent implements OnDestroy {
+export class ProfileContainerComponent implements OnInit, OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
 
   public loading$: Observable<boolean> = this._profileRepo.loading$.pipe(
@@ -39,6 +40,9 @@ export class ProfileContainerComponent implements OnDestroy {
     private _profileRepo: ProfileRepository,
     private _sanitizer: DomSanitizer
   ) {}
+
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this._destroy$.next();

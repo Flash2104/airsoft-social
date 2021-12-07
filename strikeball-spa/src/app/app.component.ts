@@ -17,7 +17,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil, filter, switchMap } from 'rxjs';
+import { AuthRepository } from './shared/repository/auth.repository';
 import { ProfileRepository } from './shared/repository/profile.repository';
 import { AuthService } from './shared/services/auth.service';
 import { ProfileService } from './shared/services/profile.service';
@@ -30,20 +31,14 @@ export const slideInAnimation = trigger('routeAnimations', [
         position: 'absolute',
         top: 0,
         left: 0,
-        width: '100%'
-      })
+        width: '100%',
+      }),
     ]),
-    query(':enter', [
-      style({ left: '-100%' })
-    ]),
+    query(':enter', [style({ left: '-100%' })]),
     query(':leave', animateChild()),
     group([
-      query(':leave', [
-        animate('400ms ease-out', style({ left: '100%' }))
-      ]),
-      query(':enter', [
-        animate('400ms ease-out', style({ left: '0%' }))
-      ])
+      query(':leave', [animate('400ms ease-out', style({ left: '100%' }))]),
+      query(':enter', [animate('400ms ease-out', style({ left: '0%' }))]),
     ]),
     query(':enter', animateChild()),
   ]),
@@ -63,26 +58,20 @@ export class AppComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private _overlay: OverlayContainer,
-    private _renderer: Renderer2,
     public authService: AuthService,
+    private _authRepo: AuthRepository,
     private _profileService: ProfileService,
     private _profileRepo: ProfileRepository
   ) {}
 
   ngOnInit(): void {
-    this._profileService.loadCurrentProfile().subscribe();
-
-    this.form.controls['toggleControl'].valueChanges.subscribe((lightMode) => {
-      const lightClassName = 'light-theme';
-      if (lightMode) {
-        this._renderer.addClass(document.body, lightClassName);
-        this._overlay.getContainerElement().classList.add(lightClassName);
-      } else {
-        this._renderer.removeClass(document.body, lightClassName);
-        this._overlay.getContainerElement().classList.remove(lightClassName);
-      }
-    });
+    this._authRepo.token$
+      .pipe(
+        filter((t) => t != null),
+        switchMap(() => this._profileService.loadCurrentProfile()),
+        takeUntil(this._destroy$)
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {

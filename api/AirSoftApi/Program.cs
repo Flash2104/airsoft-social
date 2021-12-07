@@ -45,13 +45,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             OnTokenValidated = context =>
             {
-                var userId = context.Principal.Identity.Name;
+                var userId = context?.Principal?.Identity?.Name;
 
                 // var user = userService.GetById(userId);
                 if (string.IsNullOrEmpty(userId))
                 {
                     // return unauthorized if user no longer exists
-                    context.Fail("Unauthorized");
+                    context!.Fail("Unauthorized");
                 }
                 return Task.CompletedTask;
             },

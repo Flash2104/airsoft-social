@@ -1,5 +1,6 @@
 ﻿using AirSoft.Service.Contracts;
 using AirSoft.Service.Contracts.Member;
+using AirSoft.Service.Contracts.Member.Get;
 using AirSoftApi.Models;
 using AirSoftApi.Models.Member;
 using AirSoftApi.Models.Member.GetCurrent;
@@ -30,19 +31,47 @@ namespace AirSoftApi.Controllers
         {
             var logPath = $"{_correlationService.GetUserId()}.{nameof(MemberController)} {nameof(GetCurrent)} | ";
             return await HandleRequest(
-                _memberService.GetCurrentMember,
+                _memberService.GetCurrent,
                 res => new GetCurrentMemberResponseDto(
                      new MemberDataDto(
                          res.MemberData.Id,
                          res.MemberData.Name,
                          res.MemberData.Surname,
+                         res.MemberData.BirthDate,
+                         res.MemberData.City,
                          res.MemberData.Email,
                          res.MemberData.Phone,
                          res.MemberData.Avatar?.ToArray(),
-                         res.MemberData.TeamId,
+                         res.MemberData.Team,
                          res.MemberData.Roles
                          )
                     ),
+                logPath
+            );
+        }
+
+        [HttpGet("get/{id}")]
+        [Authorize]
+        public async Task<ServerResponseDto<GetCurrentMemberResponseDto>> Get(string id)
+        {
+            var logPath = $"{_correlationService.GetUserId()}.{nameof(MemberController)} {nameof(Get)} | ";
+            return await HandleGetRequest(
+                _memberService.Get,
+                () => new GetByIdMemberRequest(id),
+                res => new GetCurrentMemberResponseDto(
+                    new MemberDataDto(
+                        res.MemberData.Id,
+                        res.MemberData.Name,
+                        res.MemberData.Surname,
+                        res.MemberData.BirthDate,
+                        res.MemberData.City,
+                        res.MemberData.Email,
+                        res.MemberData.Phone,
+                        res.MemberData.Avatar?.ToArray(),
+                        res.MemberData.Team,
+                        res.MemberData.Roles
+                    )
+                ),
                 logPath
             );
         }

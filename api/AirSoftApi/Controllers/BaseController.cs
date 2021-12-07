@@ -20,21 +20,21 @@ namespace AirSoftApi.Controllers
             TRequestDto requestDto,
             Func<TRequestDto, TServiceRequest> requestMap,
             Func<TServiceResponse, TResponseDto> responseMap,
-            string logPath) where TRequestDto : IValidatableObject
+            string logPath)// where TRequestDto : IValidatableObject
         {
             _logger.Log(LogLevel.Trace, $"{logPath} started.");
             try
             {
-                var validationResults = new List<ValidationResult>();
-                if (!Validator.TryValidateObject(requestDto, new ValidationContext(requestDto), validationResults) || validationResults.Count > 0)
-                {
-                    var message = "";
-                    if (validationResults.Count > 0)
-                    {
-                        message = string.Join("\r\n", validationResults.Select(vr => vr.ErrorMessage));
-                    }
-                    throw new AirSoftBaseException(ErrorCodes.InvalidParameters, "Invalid Parameters. \r\n" + message);
-                }
+                //var validationResults = new List<ValidationResult>();
+                //if (!Validator.TryValidateObject(requestDto, new ValidationContext(requestDto), validationResults) || validationResults.Count > 0)
+                //{
+                //    var message = "";
+                //    if (validationResults.Count > 0)
+                //    {
+                //        message = string.Join("\r\n", validationResults.Select(vr => vr.ErrorMessage));
+                //    }
+                //    throw new AirSoftBaseException(ErrorCodes.InvalidParameters, "Invalid Parameters. \r\n" + message);
+                //}
                 var serviceRequest = requestMap(requestDto);
                 var serviceResponse = await serviceFunction(serviceRequest);
                 var responseDto = responseMap(serviceResponse);

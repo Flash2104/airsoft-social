@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirSoft.Data.Migrations
 {
     [DbContext(typeof(AirSoftDbContext))]
-    [Migration("20211207204224_Initial")]
+    [Migration("20211207223219_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,6 @@ namespace AirSoft.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("Avatar")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime?>("BirthDate")
@@ -49,6 +48,9 @@ namespace AirSoft.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Deleted")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModifiedBy")
                         .HasMaxLength(50)
@@ -110,6 +112,21 @@ namespace AirSoft.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Deleted")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -123,16 +140,22 @@ namespace AirSoft.Data.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "Командир"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "Заместитель"
                         },
                         new
                         {
                             Id = 3,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "Рядовой"
                         });
                 });
@@ -174,6 +197,9 @@ namespace AirSoft.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Deleted")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ModifiedBy")
                         .HasMaxLength(50)
                         .HasColumnType("uniqueidentifier");
@@ -212,9 +238,13 @@ namespace AirSoft.Data.Migrations
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Deleted")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -222,7 +252,8 @@ namespace AirSoft.Data.Migrations
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("datetime2");
 
@@ -265,6 +296,21 @@ namespace AirSoft.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Deleted")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -278,36 +324,50 @@ namespace AirSoft.Data.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "Creator"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "Administrator"
                         },
                         new
                         {
                             Id = 3,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "User"
                         },
                         new
                         {
                             Id = 4,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "Organizer"
                         },
                         new
                         {
                             Id = 5,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "TeamLeader"
                         },
                         new
                         {
                             Id = 6,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "Sponsor"
                         },
                         new
                         {
                             Id = 7,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "Merchant"
                         });
                 });

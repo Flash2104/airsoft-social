@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirSoft.Data.Entity;
 
-public class DbUser
+public class DbUser: DbEntity<Guid>
 {
     public DbUser()
     {
@@ -21,16 +21,6 @@ public class DbUser
     private ILazyLoader LazyLoader { get; set; } = null!;
 
     private ICollection<DbUserRole>? _userRoles;
-
-    public Guid Id { get; set; }
-
-    public Guid CreatedBy { get; set; }
-
-    public Guid ModifiedBy { get; set; }
-
-    public DateTime CreatedDate { get; set; }
-
-    public DateTime ModifiedDate { get; set; }
 
     public string? Email { get; set; }
 

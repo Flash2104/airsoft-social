@@ -1,10 +1,13 @@
 ﻿using System.Linq.Expressions;
 using AirSoft.Data;
+using AirSoft.Data.Entity;
+using AirSoft.Service.Common;
+using AirSoft.Service.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirSoft.Service.Repositories;
 
-public class GenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity> where TEntity : class, IDbEntity
 {
     protected readonly IDbContext? _context;
     protected readonly DbSet<TEntity>? _dbSet;
@@ -15,7 +18,7 @@ public class GenericRepository<TEntity> where TEntity : class
         this._dbSet = context.Set<TEntity>();
     }
 
-    public virtual async Task<IEnumerable<TEntity>> GetAsync(
+    public virtual async Task<IEnumerable<TEntity>> ListAsync(
         Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "")
@@ -23,8 +26,39 @@ public class GenericRepository<TEntity> where TEntity : class
         IQueryable<TEntity>? query = _dbSet;
         if (query == null)
         {
-            return Enumerable.Empty<TEntity>();
+            throw new AirSoftBaseException(ErrorCodes.CommonError, "Пустой датасет.");
         }
+
+        query = query.Where(x => x.Deleted == null);
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+
+        foreach (var includeProperty in includeProperties.Split
+                     (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        {
+            query = query.Include(includeProperty);
+        }
+
+        if (orderBy != null)
+        {
+            return await orderBy(query).ToListAsync();
+        }
+        return await query.ToListAsync();
+    }
+
+    public virtual async Task<TEntity?> GetAsync(
+        Expression<Func<TEntity, bool>>? filter = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        string includeProperties = "")
+    {
+        IQueryable<TEntity>? query = _dbSet;
+        if (query == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.CommonError, "Пустой датасет.");
+        }
+        query = query.Where(x => x.Deleted == null);
         if (filter != null)
         {
             query = query.Where(filter);
@@ -38,14 +72,9 @@ public class GenericRepository<TEntity> where TEntity : class
 
         if (orderBy != null)
         {
-            return await orderBy(query).ToListAsync();
+            return await orderBy(query).SingleOrDefaultAsync();
         }
-        return await query.ToListAsync();
-    }
-
-    public virtual async Task<TEntity?> GetByIdAsync(object id)
-    {
-        return await _dbSet!.FindAsync(id);
+        return await query.SingleOrDefaultAsync();
     }
 
     public virtual TEntity? Insert(TEntity entity)
@@ -60,22 +89,39 @@ public class GenericRepository<TEntity> where TEntity : class
         {
             return;
         }
-        Delete(entityToDelete);
+        if (_context == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.CommonError, "Пустой датасет.");
+        }
+        entityToDelete.Deleted = DateTime.UtcNow.ToLongDateString();
+        _context.Entry(entityToDelete).State = EntityState.Modified;
+
+        //Delete(entityToDelete);
     }
 
     public virtual void Delete(TEntity entityToDelete)
     {
-        if (_context?.Entry(entityToDelete).State == EntityState.Detached)
+        //if (_context?.Entry(entityToDelete).State == EntityState.Detached)
+        //{
+        //    _dbSet?.Attach(entityToDelete);
+        //}
+        _dbSet?.Attach(entityToDelete);
+        if (_context == null)
         {
-            _dbSet?.Attach(entityToDelete);
+            throw new AirSoftBaseException(ErrorCodes.CommonError, "Пустой датасет.");
         }
-        _dbSet?.Remove(entityToDelete);
+        entityToDelete.Deleted = DateTime.UtcNow.ToLongDateString();
+        _context.Entry(entityToDelete).State = EntityState.Modified;
+        //_dbSet?.Remove(entityToDelete);
     }
 
     public virtual void Update(TEntity entityToUpdate)
     {
         _dbSet?.Attach(entityToUpdate);
-        if (_context == null) return;
+        if (_context == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.CommonError, "Пустой датасет.");
+        }
         _context.Entry(entityToUpdate).State = EntityState.Modified;
     }
 }

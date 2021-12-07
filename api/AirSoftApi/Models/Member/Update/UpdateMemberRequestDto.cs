@@ -1,10 +1,10 @@
 ﻿using AirSoft.Service.Contracts.Models;
 
-namespace AirSoft.Service.Contracts.Member.Update;
+namespace AirSoftApi.Models.Member.Update;
 
-public class UpdateMemberRequest
+public class UpdateMemberRequestDto
 {
-    public UpdateMemberRequest(Guid id, string? name, string? surname, DateTime? birthDate, string? city, byte[]? avatar, ReferenceData<Guid>? team)
+    public UpdateMemberRequestDto(Guid id, string? name, string? surname, DateTime? birthDate, string? city, byte[]? avatar, ReferenceData<Guid>? team)
     {
         Id = id;
         Name = name;
@@ -28,5 +28,4 @@ public class UpdateMemberRequest
     public byte[]? Avatar { get; }
 
     public ReferenceData<Guid>? Team { get; }
-    
 }

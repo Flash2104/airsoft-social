@@ -24,7 +24,7 @@ public class ErrorCodes
     public sealed class MemberService
     {
         public const int EmptyUserId = 82101;
-        public const int UserNotFound = 82102;
+        public const int NotFound = 82102;
         public const int AlreadyExist = 82103;
     }
 

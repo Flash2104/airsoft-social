@@ -13,7 +13,7 @@ public class UserRepository: GenericRepository<DbUser>
 
     public async Task<DbUser?> GetByPhoneAsync(string phone)
     {
-        var users = await GetAsync(e => e.Phone == phone);
+        var users = await ListAsync(e => e.Phone == phone);
         var dbUsers = users.ToList();
         if (dbUsers.Count > 1)
         {
@@ -26,12 +26,12 @@ public class UserRepository: GenericRepository<DbUser>
 
     public async Task<DbUser?> GetByEmailAsync(string email)
     {
-        var users = await GetAsync(e => e.Email == email);
+        var users = await ListAsync(e => e.Email == email);
         var dbUsers = users.ToList();
         if (dbUsers.Count > 1)
         {
-            throw new AirSoftBaseException(ErrorCodes.UserRepository.MoreThanOneUserByPhone,
-                "В базе больше одного пользователя по данному номеру телефона.");
+            throw new AirSoftBaseException(ErrorCodes.UserRepository.MoreThanOneUserByEmail,
+                "В базе больше одного пользователя по данному email.");
         }
 
         return dbUsers.FirstOrDefault();

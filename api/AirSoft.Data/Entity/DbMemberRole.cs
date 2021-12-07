@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AirSoft.Data.Entity;
 
-public class DbMemberRole
+public class DbMemberRole: DbEntity<int>
 {
-    public int Id { get; set; }
-
     public string Role { get; set; } = null!;
 
     public virtual List<DbMember>? Members { get; set; }

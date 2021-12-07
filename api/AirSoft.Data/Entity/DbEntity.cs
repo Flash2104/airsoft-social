@@ -13,6 +13,8 @@ public interface IDbEntity
     public DateTime? CreatedDate { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
+
+    public string? Deleted { get; set; }
 }
 
 public interface IDbEntity<T>: IDbEntity
@@ -30,6 +32,7 @@ public abstract class DbEntity : IDbEntity
 
     public DateTime? ModifiedDate { get; set; }
 
+    public string? Deleted { get; set; }
 }
 
 public abstract class DbEntity<T> : DbEntity, IDbEntity<T>

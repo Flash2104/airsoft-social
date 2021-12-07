@@ -40,7 +40,7 @@ public class MemberService : IMemberService
 
         if (dbMember == null)
         {
-            throw new AirSoftBaseException(ErrorCodes.MemberService.UserNotFound, "Профиль не найден");
+            throw new AirSoftBaseException(ErrorCodes.MemberService.NotFound, "Профиль не найден");
         }
 
         return new GetCurrentMemberResponse(new MemberData(
@@ -51,7 +51,7 @@ public class MemberService : IMemberService
             dbMember.City,
             dbMember.User?.Email,
             dbMember.User?.Phone,
-            dbMember.Avatar.ToArray(),
+            dbMember.Avatar?.ToArray(),
             dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
             dbMember.MemberRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList()
         ));
@@ -65,8 +65,9 @@ public class MemberService : IMemberService
     public async Task<CreateMemberResponse> Create(CreateMemberRequest request)
     {
         var logPath = $"{request.UserId} {nameof(MemberService)} {nameof(Create)}. | ";
-        DbMember? dbMember = await _dataService.Member.GetByUserAsync(request.UserId);
+        _logger.Log(LogLevel.Trace, $"{logPath} started.");
 
+        DbMember? dbMember = await _dataService.Member.GetByUserAsync(request.UserId);
         if (dbMember != null)
         {
             throw new AirSoftBaseException(ErrorCodes.MemberService.AlreadyExist, "Профиль уже существует");
@@ -83,7 +84,7 @@ public class MemberService : IMemberService
             CreatedDate = DateTime.UtcNow,
             ModifiedDate = DateTime.UtcNow,
             UserId = request.UserId,
-            Avatar = await File.ReadAllBytesAsync(root + "\\InitialData\\photo.jpg")
+            Avatar = await File.ReadAllBytesAsync(root + "\\InitialData\\warrior.png")
         };
         var created = this._dataService.Member.Insert(dbMember);
         if (created == null)
@@ -106,13 +107,63 @@ public class MemberService : IMemberService
             ));
     }
 
-    public Task<UpdateMemberResponse> Update(UpdateMemberRequest request)
+    public async Task<UpdateMemberResponse> Update(UpdateMemberRequest request)
     {
-        throw new NotImplementedException();
+        var userId = _correlationService.GetUserId();
+        var logPath = $"{userId} {nameof(MemberService)} {nameof(Update)}. | ";
+        _logger.Log(LogLevel.Trace, $"{logPath} started.");
+        if (!userId.HasValue)
+        {
+            throw new AirSoftBaseException(ErrorCodes.MemberService.EmptyUserId, "Пустой идентификатор пользователя");
+        }
+        DbMember? dbMember = await _dataService.Member.GetAsync(x => x.UserId == userId && x.Id == request.Id);
+
+        if (dbMember == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.MemberService.NotFound, "Профиль не найден");
+        }
+        dbMember.Avatar = request.Avatar?.ToArray();
+        dbMember.BirthDate = request.BirthDate;
+        dbMember.City = request.City;
+        dbMember.Name = request.Name;
+        dbMember.Surname = request.Surname;
+        dbMember.TeamId = request.Team?.Id;
+        
+        this._dataService.Member.Update(dbMember);
+
+        _logger.Log(LogLevel.Information, $"{logPath} Member updated: {dbMember!.Id}.");
+        return new UpdateMemberResponse(new MemberData(
+            dbMember.Id,
+            dbMember.Name,
+            dbMember.Surname,
+            dbMember.BirthDate,
+            dbMember.City,
+            dbMember.User?.Email,
+            dbMember.User?.Phone,
+            dbMember.Avatar?.ToArray(),
+            dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
+            dbMember.MemberRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList()
+        ));
     }
 
-    public Task Delete(DeleteMemberRequest request)
+    public async Task Delete(DeleteMemberRequest request)
     {
-        throw new NotImplementedException();
+        var userId = _correlationService.GetUserId();
+        var logPath = $"{userId} {nameof(MemberService)} {nameof(Update)}. | ";
+        _logger.Log(LogLevel.Trace, $"{logPath} started.");
+        if (!userId.HasValue)
+        {
+            throw new AirSoftBaseException(ErrorCodes.MemberService.EmptyUserId, "Пустой идентификатор пользователя");
+        }
+        DbMember? dbMember = await _dataService.Member.GetAsync(x => x.UserId == userId && x.Id == request.Id);
+
+        if (dbMember == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.MemberService.NotFound, "Профиль не найден");
+        }
+
+        this._dataService.Member.Delete(dbMember);
+
+        _logger.Log(LogLevel.Information, $"{logPath} Member deleted: {request!.Id}.");
     }
 }

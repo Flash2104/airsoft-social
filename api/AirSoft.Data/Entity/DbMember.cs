@@ -31,7 +31,7 @@ public class DbMember : DbEntity<Guid>
 
     public DateTime? BirthDate { get; set; }
 
-    public byte[] Avatar { get; set; } = null!;
+    public byte[]? Avatar { get; set; }
 
     public Guid? TeamId { get; set; }
 

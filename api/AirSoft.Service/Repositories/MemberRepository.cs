@@ -11,7 +11,7 @@ public class MemberRepository: GenericRepository<DbMember>
 
     public async Task<DbMember?> GetByUserAsync(Guid userId)
     {
-        var dbMembers = await GetAsync(e => e.UserId == userId);
-        return dbMembers.FirstOrDefault();
+        var dbMember = await GetAsync(e => e.UserId == userId);
+        return dbMember;
     }
 }

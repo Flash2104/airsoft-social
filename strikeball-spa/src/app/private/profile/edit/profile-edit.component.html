@@ -3,7 +3,8 @@
     <div *ngIf="profile$ | async as profile">
       <div class="row mb-3">
         <div class="col text-end">
-          <button mat-raised-button class="submit-button" [routerLink]="['/private/profile/edit']">Редактировать</button>
+          <button mat-raised-button class="submit-button me-2" [routerLink]="['/private/profile']">Назад</button>
+          <button mat-raised-button class="submit-button">Сохранить </button>
         </div>
       </div>
       <div class="row mb-3">
@@ -14,10 +15,20 @@
         </div>
         <div class="col-8">
           <mat-card class="main-info-card">
-            <mat-card-header>
-              <mat-card-title
+            <mat-card-header class="flex-column">
+              <!-- <mat-card-title
                 >{{ profile.name }} {{ profile.surname }}</mat-card-title
-              >
+              > -->
+              <mat-form-field class="" appearance="fill">
+                <mat-label>Имя</mat-label>
+                <input matInput placeholder="{{ profile.name }}" value="{{ profile.name }}">
+              </mat-form-field>
+
+              <mat-form-field class="" appearance="fill">
+                <mat-label>Фамилия</mat-label>
+                <input matInput placeholder="{{ profile.surname }}" value="{{ profile.surname }}">
+              </mat-form-field>
+
               <mat-card-subtitle
                 ><span
                   *ngIf="profile.roles != null && profile.roles.length > 0"
@@ -34,7 +45,10 @@
                     *ngIf="profile.team != null; else emptyTemplate"
                     class="mat-cell"
                   >
-                    {{ profile.team.title }}
+                  <mat-form-field class="" appearance="fill">
+                    <mat-label>Команда</mat-label>
+                    <input matInput placeholder="{{ profile.team.title }}" value="{{ profile.team.title }}">
+                  </mat-form-field>
                   </td>
                 </tr>
                 <tr class="mat-row py-3">
@@ -43,7 +57,10 @@
                     *ngIf="profile.city != null; else emptyTemplate"
                     class="mat-cell"
                   >
-                    {{ profile.city }}
+                  <mat-form-field class="" appearance="fill">
+                    <mat-label>Город</mat-label>
+                    <input matInput placeholder="{{ profile.city }}" value="{{ profile.city }}">
+                  </mat-form-field>
                   </td>
                 </tr>
                 <tr class="mat-row py-3">
@@ -52,6 +69,12 @@
                     *ngIf="profile.city != null; else emptyTemplate"
                     class="mat-cell"
                   >
+                  <!-- <mat-form-field appearance="fill">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field> -->
                     {{ profile.birthDate | date : 'dd-MM-yyyy'}}
                   </td>
                 </tr>

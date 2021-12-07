@@ -1,4 +1,5 @@
-﻿using AirSoft.Data.Entity;
+﻿using System.Reflection;
+using AirSoft.Data.Entity;
 using AirSoft.Service.Common;
 using AirSoft.Service.Contracts;
 using AirSoft.Service.Contracts.Member;
@@ -61,9 +62,48 @@ public class MemberService : IMemberService
         throw new NotImplementedException();
     }
 
-    public Task<CreateMemberResponse> Create(CreateMemberRequest request)
+    public async Task<CreateMemberResponse> Create(CreateMemberRequest request)
     {
-        throw new NotImplementedException();
+        var logPath = $"{request.UserId} {nameof(MemberService)} {nameof(Create)}. | ";
+        DbMember? dbMember = await _dataService.Member.GetByUserAsync(request.UserId);
+
+        if (dbMember != null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.MemberService.AlreadyExist, "Профиль уже существует");
+        }
+        string? root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        dbMember = new DbMember()
+        {
+            Id = Guid.NewGuid(),
+            Name = request.Name ?? "Новенький",
+            Surname = request.Surname,
+            City = request.City,
+            CreatedBy = request.UserId,
+            ModifiedBy = request.UserId,
+            CreatedDate = DateTime.UtcNow,
+            ModifiedDate = DateTime.UtcNow,
+            UserId = request.UserId,
+            Avatar = await File.ReadAllBytesAsync(root + "\\InitialData\\photo.jpg")
+        };
+        var created = this._dataService.Member.Insert(dbMember);
+        if (created == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.AuthService.CreatedUserIsNull, "Созданный пользователь пустой");
+        }
+
+        _logger.Log(LogLevel.Information, $"{logPath} Member created: {created!.Id}.");
+        return new CreateMemberResponse(new MemberData(
+            created.Id,
+            created.Name,
+            created.Surname,
+            created.BirthDate,
+            created.City,
+            created.User?.Email,
+            created.User?.Phone,
+            created.Avatar,
+            null,
+            null
+            ));
     }
 
     public Task<UpdateMemberResponse> Update(UpdateMemberRequest request)

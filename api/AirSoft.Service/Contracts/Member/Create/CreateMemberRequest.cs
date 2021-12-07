@@ -14,6 +14,7 @@ public class CreateMemberRequest
     }
 
     public Guid UserId { get; }
+
     public string? Name { get; set; }
 
     public string? Surname { get; }

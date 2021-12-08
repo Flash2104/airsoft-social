@@ -1,4 +1,6 @@
-﻿namespace AirSoft.Service.Contracts.Models;
+﻿using AirSoft.Service.Contracts.Models;
+
+namespace AirSoft.Service.Contracts.Member;
 
 public class MemberData
 {

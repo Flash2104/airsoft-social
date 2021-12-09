@@ -4,10 +4,10 @@ namespace AirSoft.Service.Contracts.Team.Create;
 
 public class CreateTeamResponse
 {
-    public CreateTeamResponse(MemberData memberData)
+    public CreateTeamResponse(TeamData teamData)
     {
-        MemberData = memberData;
+        TeamData = teamData;
     }
     
-    public MemberData MemberData { get; }
+    public TeamData TeamData { get; }
 }

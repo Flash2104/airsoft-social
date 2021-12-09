@@ -10,4 +10,8 @@
     <ProjectReference Include="..\AirSoft.Data\AirSoft.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Implementations\Team\" />
+  </ItemGroup>
+
 </Project>

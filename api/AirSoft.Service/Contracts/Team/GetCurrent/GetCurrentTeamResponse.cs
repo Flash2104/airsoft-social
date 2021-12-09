@@ -1,13 +1,12 @@
-﻿using AirSoft.Service.Contracts.Member;
-
+﻿
 namespace AirSoft.Service.Contracts.Team.GetCurrent;
 
 public class GetCurrentTeamResponse
 {
-    public GetCurrentTeamResponse(MemberData memberData)
+    public GetCurrentTeamResponse(TeamData? teamData)
     {
-        MemberData = memberData;
+        TeamData = teamData;
     }
     
-    public MemberData MemberData { get; }
-}
+    public TeamData? TeamData { get; }
+} 

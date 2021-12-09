@@ -30,7 +30,12 @@ public class ErrorCodes
 
     public sealed class UserRepository
     {
-        public const int MoreThanOneUserByPhone = 82101;
-        public const int MoreThanOneUserByEmail = 82102;
+        public const int MoreThanOneUserByPhone = 82201;
+        public const int MoreThanOneUserByEmail = 82202;
+    }
+
+    public sealed class TeamRepository
+    {
+        public const int MemberNotFound = 82300;
     }
 }

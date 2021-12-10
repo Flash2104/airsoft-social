@@ -1,3 +1,4 @@
+import { of, switchMap } from 'rxjs';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {
   ChangeDetectionStrategy,
@@ -10,6 +11,7 @@ import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { IProfileData } from './../../shared/services/dto-models/profile/profile-data';
 import { ProfileRepository } from '../../shared/repository/profile.repository';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProfileService } from 'src/app/shared/services/profile.service';
 
 @Component({
   selector: 'air-profile-container',
@@ -38,11 +40,24 @@ export class ProfileContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     private _profileRepo: ProfileRepository,
+    private _profileService: ProfileService,
     private _sanitizer: DomSanitizer
   ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._profileRepo.profile$
+      .pipe(
+        switchMap((p) => {
+          if (p == null) {
+            return this._profileService.loadCurrentProfile();
+          }
+          return of(0);
+        }),
+        takeUntil(this._destroy$)
+      )
+      .subscribe();
+  }
 
   ngOnDestroy(): void {
     this._destroy$.next();

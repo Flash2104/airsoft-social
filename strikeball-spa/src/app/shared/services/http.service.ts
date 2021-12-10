@@ -10,12 +10,13 @@ import { ISignUpResponse } from './dto-models/auth/sign-up/sign-up-response';
 import { IGetCurrentProfileResponse } from './dto-models/profile/get-current-profile';
 import { IUpdateProfileRequest, IUpdateProfileResponse } from './dto-models/profile/update-profile';
 import { IServerResponse } from './dto-models/server-response';
+import { IGetCurrentTeamResponse } from './dto-models/team/get-current/get-current-team-response';
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
   constructor(private _http: HttpClient, private _authRepo: AuthRepository) {}
 
-  /* #region  Auth*/
+  /* #region Auth*/
 
   authSignIn(
     data: ISignInRequest
@@ -35,7 +36,7 @@ export class HttpService {
 
   /* #endregion */
 
-  /* #region  Profile*/
+  /* #region Profile*/
 
   profileGetCurrent(): Observable<IServerResponse<IGetCurrentProfileResponse>> {
     return of('api/member/get-current').pipe(
@@ -50,6 +51,16 @@ export class HttpService {
   }
 
   /* #endregion */
+
+    /* #region Team*/
+
+    teamGetCurrent(): Observable<IServerResponse<IGetCurrentTeamResponse>> {
+      return of('api/team/get-current').pipe(
+        mergeMap((url) => this.httpGet<IGetCurrentTeamResponse>(url))
+      );
+    }
+
+    /* #endregion */
 
   private getAuthHttpHeaders(): Observable<HttpHeaders> {
     return this._authRepo.token$.pipe(

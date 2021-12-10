@@ -81,15 +81,17 @@ public class AirSoftDbContext : DbContext, IDbContext
         var userId = Guid.Parse("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3");
         var memberId = Guid.Parse("703405e5-9cc1-434e-8c18-d19bb7fbd9f2");
         var teamId = Guid.Parse("be955114-80ca-4b6c-9295-022c2460d48f");
+        var teamRoleIds = new Dictionary<int, Guid>(Enum.GetValues<DefaultMemberRoleType>().Select(x => new KeyValuePair<int, Guid>((int)x, Guid.NewGuid())));
 
         new DbUserRolesMapping().Map(modelBuilder.Entity<DbUserRole>());
         new DbUsersToRolesMapping().Map(modelBuilder.Entity<DbUsersToRoles>());
         new DbUserMapping().Map(modelBuilder.Entity<DbUser>(), userId);
 
-        new DbMemberMapping().Map(modelBuilder.Entity<DbMember>(), userId, memberId, teamId);
+        new DbMemberMapping().Map(modelBuilder.Entity<DbMember>(), userId, memberId, teamId, teamRoleIds);
         new DbMemberRolesMapping().Map(modelBuilder.Entity<DbMemberRole>());
-        new DbMembersToRolesMapping().Map(modelBuilder.Entity<DbMembersToRoles>());
         new DbTeamMapping().Map(modelBuilder.Entity<DbTeam>(), userId, memberId, teamId);
+        new DbTeamRolesMapping().Map(modelBuilder.Entity<DbTeamRole>(), teamId, teamRoleIds);
 
+        new DbTeamRolesToMembersMapping().Map(modelBuilder.Entity<DbTeamRolesToMembers>());
     }
 }

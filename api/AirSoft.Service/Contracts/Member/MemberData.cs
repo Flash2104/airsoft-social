@@ -4,7 +4,18 @@ namespace AirSoft.Service.Contracts.Member;
 
 public class MemberData
 {
-    public MemberData(Guid id, string? name, string? surname, DateTime? birthDate, string? city, string? email, string? phone, byte[]? avatar, ReferenceData<Guid>? team, List<ReferenceData<int>>? roles)
+    public MemberData(
+        Guid id,
+        string? name,
+        string? surname,
+        DateTime? birthDate,
+        string? city,
+        string? email,
+        string? phone,
+        byte[]? avatar,
+        ReferenceData<Guid>? team,
+        List<ReferenceData<Guid>>? roles
+        )
     {
         Id = id;
         Name = name;
@@ -36,5 +47,5 @@ public class MemberData
 
     public ReferenceData<Guid>? Team { get; }
 
-    public List<ReferenceData<int>>? Roles { get; }
+    public List<ReferenceData<Guid>>? Roles { get; }
 }

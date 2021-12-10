@@ -4,12 +4,13 @@ namespace AirSoft.Service.Contracts.Team;
 
 public class TeamData
 {
-    public TeamData(Guid id, string? title, string? city, byte[]? avatar, List<MemberViewData> members)
+    public TeamData(Guid id, string? title, string? city, byte[]? avatar, List<MemberViewData>? members, List<ReferenceData<Guid>>? teamRoles)
     {
         Id = id;
         Title = title;
         Avatar = avatar;
         Members = members;
+        TeamRoles = teamRoles;
         City = city;
     }
 
@@ -21,17 +22,20 @@ public class TeamData
 
     public byte[]? Avatar { get; }
 
-    public List<MemberViewData> Members { get; }
+    public List<ReferenceData<Guid>>? TeamRoles { get; }
+
+    public List<MemberViewData>? Members { get; }
 }
 
 public class MemberViewData
 {
-    public MemberViewData(Guid id, string? name, string? surname, string? city, byte[]? avatar, List<ReferenceData<int>>? roles)
+    public MemberViewData(Guid id, string? name, string? surname, string? city, byte[]? avatar, bool? isLeader, List<ReferenceData<Guid>>? roles)
     {
         Id = id;
         Name = name;
         Surname = surname;
         Avatar = avatar;
+        IsLeader = isLeader;
         Roles = roles;
         City = city;
     }
@@ -46,5 +50,7 @@ public class MemberViewData
 
     public byte[]? Avatar { get; }
 
-    public List<ReferenceData<int>>? Roles { get; }
+    public bool? IsLeader { get; }
+
+    public List<ReferenceData<Guid>>? Roles { get; }
 }

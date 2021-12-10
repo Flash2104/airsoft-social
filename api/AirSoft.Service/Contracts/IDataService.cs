@@ -7,6 +7,7 @@ public interface IDataService
 {
     UserRepository Users { get; }
     MemberRepository Member { get; }
+    TeamRepository Team { get; }
 
     GenericRepository<DbUserRole>? UserRoles { get; }
     GenericRepository<DbMemberRole>? MemberRoles { get; }

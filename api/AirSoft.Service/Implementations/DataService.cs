@@ -11,6 +11,7 @@ public class DataService : IDataService
 
     private UserRepository? _users;
     private MemberRepository? _members;
+    private TeamRepository? _teams;
     private GenericRepository<DbUserRole>? _userRoles;
     private GenericRepository<DbMemberRole>? _memberRoles;
 
@@ -22,6 +23,8 @@ public class DataService : IDataService
     public UserRepository Users => _users ??= new UserRepository(_dbContext);
 
     public MemberRepository Member => _members ??= new MemberRepository(_dbContext);
+
+    public TeamRepository Team => _teams ??= new TeamRepository(_dbContext);
 
     public GenericRepository<DbUserRole>? UserRoles => _userRoles ??= new GenericRepository<DbUserRole>(_dbContext);
 

@@ -19,7 +19,7 @@ public class DbMember : DbEntity<Guid>
 
     private ILazyLoader LazyLoader { get; set; } = null!;
 
-    private List<DbMemberRole>? _memberRoles;
+    private List<DbTeamRole>? _teamMemberRoles;
     private DbTeam? _team;
     private DbUser? _user;
 
@@ -35,6 +35,8 @@ public class DbMember : DbEntity<Guid>
 
     public Guid? TeamId { get; set; }
 
+    public bool? IsTeamLeader { get; set; }
+
     public DbTeam? Team
     {
         get => LazyLoader.Load(this, ref _team);
@@ -49,18 +51,18 @@ public class DbMember : DbEntity<Guid>
         set => _user = value;
     }
 
-    public List<DbMemberRole>? MemberRoles
+    public List<DbTeamRole>? TeamMemberRoles
     {
-        get => LazyLoader.Load(this, ref _memberRoles);
-        set => _memberRoles = value;
+        get => LazyLoader.Load(this, ref _teamMemberRoles);
+        set => _teamMemberRoles = value;
     }
 
-    public virtual List<DbMembersToRoles>? MembersToRoles { get; set; }
+    public virtual List<DbTeamRolesToMembers>? TeamRolesToMembers { get; set; }
 }
 
 internal sealed class DbMemberMapping
 {
-    public void Map(EntityTypeBuilder<DbMember> builder, Guid userId, Guid memberId, Guid teamId)
+    public void Map(EntityTypeBuilder<DbMember> builder, Guid userId, Guid memberId, Guid teamId, Dictionary<int, Guid> teamRoleIds)
     {
         builder.ToTable("Members");
 
@@ -90,14 +92,15 @@ internal sealed class DbMemberMapping
             City = "Москва",
             TeamId = teamId,
             UserId = userId,
-            Avatar = File.ReadAllBytes(root + "\\InitialData\\photo.jpg")
+            Avatar = File.ReadAllBytes(root + "\\InitialData\\admin.png"),
+            IsTeamLeader = true
         };
         builder.HasData(adminProfile);
-        builder.HasMany(x => x.MemberRoles).WithMany(x => x.Members).UsingEntity<DbMembersToRoles>(
-            x => x.HasData(new DbMembersToRoles()
+        builder.HasMany(x => x.TeamMemberRoles).WithMany(x => x.TeamMembers).UsingEntity<DbTeamRolesToMembers>(
+            x => x.HasData(new DbTeamRolesToMembers()
             {
                 MemberId = memberId,
-                RoleId = (int)MemberRoleType.Командир
+                TeamRoleId = teamRoleIds[(int)DefaultMemberRoleType.Командир]
             })
             );
     }

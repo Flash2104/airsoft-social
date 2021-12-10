@@ -3,17 +3,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AirSoft.Data.Entity;
 
-public class DbMemberRole: DbEntity<int>
+public class DbMemberRole : DbEntity<int>
 {
-    public string Role { get; set; } = null!;
+    public string Title { get; set; } = null!;
 
-    public virtual List<DbMember>? Members { get; set; }
-    public virtual List<DbMembersToRoles>? MembersToRoles { get; set; }
+    public virtual List<DbTeamRole>? TeamRoles { get; set; }
 }
 
-public enum MemberRoleType
+public enum DefaultMemberRoleType
 {
-    None = 0,
     Командир = 1,
     Заместитель = 2,
     Рядовой = 3
@@ -26,10 +24,15 @@ internal sealed class DbMemberRolesMapping
         builder.ToTable("MemberRoles");
 
         builder.HasKey(x => new { x.Id });
-        builder.Property(x => x.Role).IsRequired().HasMaxLength(255);
-        builder.HasMany(x => x.Members).WithMany(x => x.MemberRoles).UsingEntity<DbMembersToRoles>();
+        builder.Property(x => x.Title).IsRequired().HasMaxLength(255);
 
-        var roles = Enum.GetValues<MemberRoleType>().Where(x => x != MemberRoleType.None).Select(v => new DbMemberRole { Id = (int)v, Role = v.ToString() })
+        var roles = Enum.GetValues<DefaultMemberRoleType>().Select(v => new DbMemberRole
+        {
+            Id = (int)v,
+            Title = v.ToString(),
+            CreatedDate = new DateTime(2021, 12, 02, 1, 50, 00),
+            ModifiedDate = new DateTime(2021, 12, 02, 1, 50, 00),
+        })
             .ToArray();
         builder.HasData(roles);
     }

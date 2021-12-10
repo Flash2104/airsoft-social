@@ -15,7 +15,7 @@ export interface ILink {
 export class SideNavContainerComponent {
   public links: ILink[] = [
     { path: '/private/profile', title: 'Профиль', icon: 'person' },
-    { path: '/private/command', title: 'Команда', icon: 'groups' },
+    { path: '/private/team', title: 'Команда', icon: 'groups' },
     { path: '/private/events', title: 'События', icon: 'calendar_view_month' },
   ];
 

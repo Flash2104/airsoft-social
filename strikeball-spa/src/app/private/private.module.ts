@@ -1,32 +1,32 @@
-import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatListModule} from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {RouterModule, Routes} from '@angular/router';
-import {SharedModule} from '../shared/shared.module';
-import {СommandContainerComponent} from './command/command-container.component';
-import {ProfileContainerComponent} from './profile/profile-container.component';
-import {SideNavContainerComponent} from './sidenav-container.component';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatTableModule} from '@angular/material/table';
-import {ProfileEditComponent} from './profile/edit/profile-edit.component';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
+import { TeamContainerComponent } from './team/team-container.component';
+import { ProfileContainerComponent } from './profile/profile-container.component';
+import { SideNavContainerComponent } from './sidenav-container.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table';
+import { ProfileEditComponent } from './profile/edit/profile-edit.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      {path: '*', redirectTo: '/', pathMatch: 'full'},
+      { path: '*', redirectTo: '/', pathMatch: 'full' },
       {
         path: '',
         component: SideNavContainerComponent,
         children: [
-          {path: '', redirectTo: 'profile', pathMatch: 'full'},
+          { path: '', redirectTo: 'profile', pathMatch: 'full' },
           {
             path: 'profile',
             component: ProfileContainerComponent,
@@ -40,12 +40,12 @@ const routes: Routes = [
             component: ProfileEditComponent,
           },
           {
-            path: 'command',
-            component: СommandContainerComponent,
+            path: 'team',
+            component: TeamContainerComponent,
           },
           {
             path: 'events',
-            component: СommandContainerComponent,
+            component: TeamContainerComponent,
           },
         ],
       },
@@ -57,8 +57,8 @@ const routes: Routes = [
   declarations: [
     SideNavContainerComponent,
     ProfileContainerComponent,
-    СommandContainerComponent,
-    ProfileEditComponent
+    TeamContainerComponent,
+    ProfileEditComponent,
   ],
   imports: [
     MatButtonModule,
@@ -77,5 +77,4 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
 })
-export class PrivateModule {
-}
+export class PrivateModule {}

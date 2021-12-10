@@ -53,7 +53,12 @@ public class MemberService : IMemberService
             dbMember.User?.Phone,
             dbMember.Avatar?.ToArray(),
             dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
-            dbMember.MemberRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList()
+            dbMember.TeamMemberRoles?.Select(x =>
+                new ReferenceData<Guid>(
+                    x.Id,
+                    x.Role?.Title ?? throw new AirSoftBaseException(ErrorCodes.CommonError, "Пустое имя роли члена команды"),
+                    x.Rank))
+                .ToList()
         ));
     }
 
@@ -84,7 +89,7 @@ public class MemberService : IMemberService
             CreatedDate = DateTime.UtcNow,
             ModifiedDate = DateTime.UtcNow,
             UserId = request.UserId,
-            Avatar = await File.ReadAllBytesAsync(root + "\\InitialData\\warrior.png")
+            Avatar = await File.ReadAllBytesAsync(root + "\\InitialData\\member-default.png")
         };
         var created = this._dataService.Member.Insert(dbMember);
         if (created == null)
@@ -128,7 +133,7 @@ public class MemberService : IMemberService
         dbMember.Name = request.Name;
         dbMember.Surname = request.Surname;
         dbMember.TeamId = request.Team?.Id;
-        
+
         this._dataService.Member.Update(dbMember);
 
         _logger.Log(LogLevel.Information, $"{logPath} Member updated: {dbMember!.Id}.");
@@ -142,7 +147,7 @@ public class MemberService : IMemberService
             dbMember.User?.Phone,
             dbMember.Avatar?.ToArray(),
             dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
-            dbMember.MemberRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList()
+            dbMember.TeamMemberRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Role.Title, x.Rank)).ToList()
         ));
     }
 

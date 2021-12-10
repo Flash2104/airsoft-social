@@ -9,5 +9,5 @@ export interface IProfileData {
   email: string | null | undefined;
   phone: string | null | undefined;
   team: IReferenceData<string> | null | undefined;
-  roles: IReferenceData<number>[] | null | undefined;
+  roles: IReferenceData<string>[] | null | undefined;
 }

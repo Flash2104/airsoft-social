@@ -1,10 +1,11 @@
+import { ITeamData, IMemberViewData } from './../../../shared/services/dto-models/team/team-data';
 import { Injectable } from '@angular/core';
 import { createState, select, Store, withProps } from '@ngneat/elf';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { v1 as uuidv1 } from 'uuid';
 
 export interface ITeamState {
-  team: unknown;
+  team: ITeamData | null;
   loading: boolean;
 }
 
@@ -31,8 +32,15 @@ export class TeamRepository {
     config: this._state.config,
   });
 
-  team$: Observable<unknown | null> = this.teamStore.pipe(
+  team$: Observable<ITeamData | null> = this.teamStore.pipe(
     select((st) => st.team)
+  );
+
+  teamLeader$: Observable<IMemberViewData | null | undefined> = this.teamStore.pipe(
+    select((st) => st.team?.members),
+    map(v => {
+      return v?.find(m => m.isLeader);
+    })
   );
 
   loading$: Observable<boolean> = this.teamStore.pipe(
@@ -46,7 +54,7 @@ export class TeamRepository {
     }));
   }
 
-  setProfile(team: ITeamState['team']): void {
+  setTeam(team: ITeamState['team']): void {
     this.teamStore.update((st) => ({
       ...st,
       team,

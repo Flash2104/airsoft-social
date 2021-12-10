@@ -4,7 +4,18 @@ namespace AirSoftApi.Models.Member;
 
 public class MemberDataDto
 {
-    public MemberDataDto(Guid id, string? name, string? surname, DateTime? birthDate, string? city, string? email, string? phone, byte[]? avatar, ReferenceData<Guid>? team, List<ReferenceData<int>>? roles)
+    public MemberDataDto(
+        Guid id, 
+        string? name, 
+        string? surname, 
+        DateTime? birthDate, 
+        string? city, 
+        string? email, 
+        string? phone, 
+        byte[]? avatar, 
+        ReferenceData<Guid>? team, 
+        List<ReferenceData<Guid>>? roles
+        )
     {
         Id = id;
         Name = name;
@@ -32,7 +43,7 @@ public class MemberDataDto
 
     public string? Phone { get; }
 
-    public List<ReferenceData<int>>? Roles { get; }
+    public List<ReferenceData<Guid>>? Roles { get; }
 
     public string? AvatarData { get; }
 

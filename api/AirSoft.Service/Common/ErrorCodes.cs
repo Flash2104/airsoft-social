@@ -38,4 +38,12 @@ public class ErrorCodes
     {
         public const int MemberNotFound = 82300;
     }
+
+    public sealed class TeamService
+    {
+        public const int EmptyUserId = 82310;
+        public const int NotFound = 82311;
+        public const int EmptyRoleTitle = 82312;
+        public const int AlreadyExist = 82312;
+    }
 }

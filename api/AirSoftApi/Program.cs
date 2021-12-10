@@ -12,10 +12,12 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using AirSoft.Service.Contracts.Auth;
 using AirSoft.Service.Contracts.Member;
+using AirSoft.Service.Contracts.Team;
 using AirSoft.Service.Implementations;
 using AirSoft.Service.Implementations.Auth;
 using AirSoft.Service.Implementations.Jwt;
 using AirSoft.Service.Implementations.Member;
+using AirSoft.Service.Implementations.Team;
 using AirSoftApi.Filters;
 using AirSoftApi.Models;
 using Newtonsoft.Json;
@@ -96,6 +98,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDataService, DataService>();
 builder.Services.AddScoped<ICorrelationService, CorrelationService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<ITeamService, TeamService>();
 
 builder.Services.AddControllers();
 builder.Services.AddMvc(opt =>

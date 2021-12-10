@@ -7,7 +7,8 @@ import { ISignInRequest } from './dto-models/auth/sign-in/sign-in-request';
 import { ISignInResponse } from './dto-models/auth/sign-in/sign-in-response';
 import { ISignUpRequest } from './dto-models/auth/sign-up/sign-up-request';
 import { ISignUpResponse } from './dto-models/auth/sign-up/sign-up-response';
-import { IGetCurrentProfileResponse } from './dto-models/profile/get-current/get-current-profile-response';
+import { IGetCurrentProfileResponse } from './dto-models/profile/get-current-profile';
+import { IUpdateProfileRequest, IUpdateProfileResponse } from './dto-models/profile/update-profile';
 import { IServerResponse } from './dto-models/server-response';
 
 @Injectable({ providedIn: 'root' })
@@ -39,6 +40,12 @@ export class HttpService {
   profileGetCurrent(): Observable<IServerResponse<IGetCurrentProfileResponse>> {
     return of('api/member/get-current').pipe(
       mergeMap((url) => this.httpGet<IGetCurrentProfileResponse>(url))
+    );
+  }
+
+  profileUpdate(data: IUpdateProfileRequest): Observable<IServerResponse<IUpdateProfileResponse>> {
+    return of('api/member/update').pipe(
+      mergeMap((url) => this.httpPut<IUpdateProfileResponse>(url, data))
     );
   }
 
@@ -77,6 +84,19 @@ export class HttpService {
     return this.getAuthHttpHeaders().pipe(
       mergeMap((headers) =>
         this._http.post<IServerResponse<T>>(environment.proxyUrl + path, body, {
+          headers,
+        })
+      )
+    );
+  }
+
+  private httpPut<T>(
+    path: string,
+    body: unknown
+  ): Observable<IServerResponse<T>> {
+    return this.getAuthHttpHeaders().pipe(
+      mergeMap((headers) =>
+        this._http.put<IServerResponse<T>>(environment.proxyUrl + path, body, {
           headers,
         })
       )

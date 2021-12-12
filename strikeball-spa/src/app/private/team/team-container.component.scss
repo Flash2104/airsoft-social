@@ -33,3 +33,28 @@
 td {
   padding: 5px 0;
 }
+
+.members-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.member-card {
+  max-width: 300px;
+}
+
+
+.member-avatar {
+  height: 300px;
+  width: 240px;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.member-avatar img {
+  object-fit: contain; /*this makes the image in src fit to the size specified below*/
+  width: 100%; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
+  // height: 80%;
+}

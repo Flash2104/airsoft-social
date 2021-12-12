@@ -16,23 +16,20 @@
           <mat-card class="main-info-card">
             <mat-card-header>
               <mat-card-title>{{ team.title }} </mat-card-title>
-              <!-- <mat-card-subtitle
-                ><span
-                  *ngIf="profile.roles != null && profile.roles.length > 0"
-                  >{{ profile.roles[0].title }}</span
-                ></mat-card-subtitle
-              > -->
             </mat-card-header>
             <mat-divider class="mb-2"></mat-divider>
             <mat-card-content>
               <table class="mat-table w-100 my-3">
-                <tr  class="mat-row py-3">
+                <tr class="mat-row py-3">
                   <td class="mat-cell">Командир</td>
                   <td
-                  *ngIf="(teamLeader$ | async) as teamLeader; else emptyTemplate"
+                    *ngIf="
+                      teamLeader$ | async as teamLeader;
+                      else emptyTemplate
+                    "
                     class="mat-cell"
                   >
-                    {{ teamLeader.name }} {{teamLeader.surname}}
+                    {{ teamLeader.name }} {{ teamLeader.surname }}
                   </td>
                 </tr>
                 <tr class="mat-row py-3">
@@ -49,11 +46,37 @@
           </mat-card>
         </div>
       </div>
-      <!-- <div class="row">
+      <div class="row mb-3">
         <div class="col">
-          <mat-card class="main-info-card"> </mat-card>
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Члены команды</mat-card-title>
+            </mat-card-header>
+            <div class="members-container">
+              <mat-card *ngFor="let member of team.members" class="member-card">
+                <mat-card-header>
+                  <mat-card-title
+                    >{{ member.name }} {{ member.surname }}</mat-card-title
+                  >
+                  <mat-card-subtitle
+                    ><span
+                      *ngIf="member.roles != null && member.roles.length > 0"
+                      >{{ member.roles[0].title }}</span
+                    ></mat-card-subtitle
+                  >
+                </mat-card-header>
+                <div class="member-avatar">
+                  <img mat-card-image [src]="member.avatar" alt="Аватар" />
+                </div>
+                <mat-card-actions class="text-end">
+                  <button mat-button>Профиль</button>
+                  <button mat-button>Сообщение</button>
+                </mat-card-actions>
+              </mat-card>
+            </div>
+          </mat-card>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>

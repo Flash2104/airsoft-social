@@ -3,7 +3,13 @@
     <div *ngIf="profile$ | async as profile">
       <div class="row mb-3">
         <div class="col text-end">
-          <button mat-raised-button class="submit-button" [routerLink]="['/private/profile/edit']">Редактировать</button>
+          <button
+            mat-raised-button
+            class="submit-button"
+            [routerLink]="['/private/profile/edit']"
+          >
+            Редактировать
+          </button>
         </div>
       </div>
       <div class="row mb-3">
@@ -52,7 +58,7 @@
                     *ngIf="profile.birthDate != null; else emptyTemplate"
                     class="mat-cell"
                   >
-                    {{ profile.birthDate | date : 'dd-MM-yyyy'}}
+                    {{ profile.birthDate | date: "dd-MM-yyyy" }}
                   </td>
                 </tr>
               </table>

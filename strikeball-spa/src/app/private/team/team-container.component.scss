@@ -1,4 +1,6 @@
-
+// @use "@angular/material" as mat;
+// $sb-primary: mat.define-palette(mat.$gray-palette, 500, 100, 900);
+// $sb-accent: mat.define-palette(mat.$blue-grey-palette, 500, 100, 900);
 .team-container {
   display: flex;
 }
@@ -41,6 +43,7 @@ td {
 }
 
 .member-card {
+  // background-color: mat.get-color-from-palette($sb-primary, 'default');
   max-width: 300px;
 }
 
@@ -58,3 +61,20 @@ td {
   width: 100%; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
   // height: 80%;
 }
+
+.leader-card {
+  // background-color: mat.get-color-from-palette($sb-accent, 'default');
+}
+
+// .mat-card-header{
+//   background-color: $lighter-gray !important;
+//   padding:5px !important;
+// }
+
+//  .mat-card{
+//   padding:0 !important;
+// }
+
+// .mat-card-content{
+//   padding:5px !important;
+// }

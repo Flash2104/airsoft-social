@@ -53,7 +53,7 @@
               <mat-card-title>Члены команды</mat-card-title>
             </mat-card-header>
             <div class="members-container">
-              <mat-card *ngFor="let member of team.members" class="member-card">
+              <mat-card *ngFor="let member of team.members" class="member-card" [ngClass]="{'leader-card': member.isLeader}">
                 <mat-card-header>
                   <mat-card-title
                     >{{ member.name }} {{ member.surname }}</mat-card-title
@@ -70,7 +70,7 @@
                 </div>
                 <mat-card-actions class="text-end">
                   <button mat-button>Профиль</button>
-                  <button mat-button>Сообщение</button>
+                  <!-- <button mat-button>Сообщение</button> -->
                 </mat-card-actions>
               </mat-card>
             </div>

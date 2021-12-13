@@ -3,6 +3,7 @@ export interface IProfileData {
   id: string | null | undefined;
   name: string | null | undefined;
   surname: string | null | undefined;
+  about: string | null | undefined;
   birthDate: string | null | undefined;
   city: string | null | undefined;
   avatarData: string | null | undefined;

@@ -20,7 +20,7 @@ public class DbUser: DbEntity<Guid>
 
     private ILazyLoader LazyLoader { get; set; } = null!;
 
-    private ICollection<DbUserRole>? _userRoles;
+    private List<DbUserRole>? _userRoles;
 
     public string? Email { get; set; }
 
@@ -30,7 +30,7 @@ public class DbUser: DbEntity<Guid>
 
     public string? PasswordHash { get; set; }
 
-    public ICollection<DbUserRole>? UserRoles
+    public List<DbUserRole>? UserRoles
     {
         get => LazyLoader.Load(this, ref _userRoles);
         set => _userRoles = value;
@@ -95,10 +95,28 @@ internal sealed class DbUserMapping
         };
         builder.HasData(admin);
         builder.HasMany(x => x.UserRoles).WithMany(x => x.Users).UsingEntity<DbUsersToRoles>(
-            x => x.HasData(new DbUsersToRoles()
+            x => x.HasData(new List<DbUsersToRoles>()
             {
-                UserId = userId,
-                RoleId = (int) UserRoleType.Creator
+                new DbUsersToRoles()
+                {
+                    UserId = userId,
+                    RoleId = (int) UserRoleType.Creator
+                },
+                new DbUsersToRoles()
+                {
+                    UserId = userId,
+                    RoleId = (int) UserRoleType.Administrator
+                },
+                new DbUsersToRoles()
+                {
+                    UserId = userId,
+                    RoleId = (int) UserRoleType.Player
+                },
+                new DbUsersToRoles()
+                {
+                    UserId = userId,
+                    RoleId = (int) UserRoleType.TeamLeader
+                }
             })
             );
     }

@@ -8,7 +8,10 @@ public class DbUserRole: DbEntity<int>
     public string Role { get; set; } = null!;
 
     public virtual List<DbUser>? Users { get; set; }
+
     public virtual List<DbUsersToRoles>? UsersToRoles { get; set; }
+    
+    public virtual DbUserNavigation? UserNavigation { get; set; }
 }
 
 public enum UserRoleType
@@ -16,7 +19,7 @@ public enum UserRoleType
     None = 0,
     Creator = 1,
     Administrator = 2,
-    User = 3,
+    Player = 3,
     Organizer = 4,
     TeamLeader = 5,
     Sponsor = 6,

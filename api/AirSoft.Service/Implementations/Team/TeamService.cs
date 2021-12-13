@@ -53,15 +53,16 @@ public class TeamService : ITeamService
                     x.Name,
                     x.Surname,
                     x.City,
+                    x.About,
                     x.Avatar,
                     x.IsTeamLeader,
                     x.TeamMemberRoles?.Select(y => new ReferenceData<Guid>(
                         y.Id,
-                        y.Role?.Title ?? throw new AirSoftBaseException(ErrorCodes.TeamService.EmptyRoleTitle, "Пустое имя роли члена команды"),
+                        y.Title ?? throw new AirSoftBaseException(ErrorCodes.TeamService.EmptyRoleTitle, "Пустое имя роли члена команды"),
                         y.Rank)
                     ).ToList()))
                 .ToList(),
-            dbTeam.TeamRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Role.Title, x.Rank)).ToList()
+            dbTeam.TeamRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Title, x.Rank)).ToList()
         ));
     }
 

@@ -88,10 +88,12 @@ public class AirSoftDbContext : DbContext, IDbContext
         new DbUserMapping().Map(modelBuilder.Entity<DbUser>(), userId);
 
         new DbMemberMapping().Map(modelBuilder.Entity<DbMember>(), userId, memberId, teamId, teamRoleIds);
-        new DbMemberRolesMapping().Map(modelBuilder.Entity<DbMemberRole>());
         new DbTeamMapping().Map(modelBuilder.Entity<DbTeam>(), userId, memberId, teamId);
         new DbTeamRolesMapping().Map(modelBuilder.Entity<DbTeamRole>(), teamId, teamRoleIds);
-
         new DbTeamRolesToMembersMapping().Map(modelBuilder.Entity<DbTeamRolesToMembers>());
+
+        new DbUserNavigationMapping().Map(modelBuilder.Entity<DbUserNavigation>());
+        new DbNavigationItemsMapping().Map(modelBuilder.Entity<DbNavigationItem>());
+        new DbNavigationsToNavigationItemsMapping().Map(modelBuilder.Entity<DbNavigationsToNavigationItems>());
     }
 }

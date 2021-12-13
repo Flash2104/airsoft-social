@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using AirSoft.Service.Contracts.Auth;
 using AirSoft.Service.Contracts.Member;
+using AirSoft.Service.Contracts.Navigation;
 using AirSoft.Service.Contracts.Team;
 using AirSoft.Service.Implementations;
 using AirSoft.Service.Implementations.Auth;
@@ -99,6 +100,7 @@ builder.Services.AddScoped<IDataService, DataService>();
 builder.Services.AddScoped<ICorrelationService, CorrelationService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<INavigationService, NavigationService>();
 
 builder.Services.AddControllers();
 builder.Services.AddMvc(opt =>

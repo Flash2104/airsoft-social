@@ -100,7 +100,7 @@ public class AuthService : IAuthService
             throw new AirSoftBaseException(ErrorCodes.AuthService.AlreadyExist, "Пользователь с таким телефоном или почтой уже существует");
         }
 
-        var dbUserRole = await _dataService.UserRoles!.GetAsync(x => x.Id == (int)UserRoleType.User);
+        var dbUserRole = await _dataService.UserRoles!.GetAsync(x => x.Id == (int)UserRoleType.Player);
         if (dbUserRole == null)
         {
             throw new AirSoftBaseException(ErrorCodes.AuthService.UserRoleNotFound, "Не найдена пользовательская роль");

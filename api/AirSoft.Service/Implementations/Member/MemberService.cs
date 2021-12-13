@@ -56,7 +56,7 @@ public class MemberService : IMemberService
             dbMember.TeamMemberRoles?.Select(x =>
                 new ReferenceData<Guid>(
                     x.Id,
-                    x.Role?.Title ?? throw new AirSoftBaseException(ErrorCodes.CommonError, "Пустое имя роли члена команды"),
+                    x.Title ?? throw new AirSoftBaseException(ErrorCodes.CommonError, "Пустое имя роли члена команды"),
                     x.Rank))
                 .ToList()
         ));
@@ -147,7 +147,7 @@ public class MemberService : IMemberService
             dbMember.User?.Phone,
             dbMember.Avatar?.ToArray(),
             dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
-            dbMember.TeamMemberRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Role.Title, x.Rank)).ToList()
+            dbMember.TeamMemberRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Title, x.Rank)).ToList()
         ));
     }
 

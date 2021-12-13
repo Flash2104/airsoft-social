@@ -3,19 +3,20 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTableModule } from '@angular/material/table';
+import { MatTreeModule } from '@angular/material/tree';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { TeamContainerComponent } from './team/team-container.component';
-import { ProfileContainerComponent } from './profile/profile-container.component';
-import { SideNavContainerComponent } from './sidenav-container.component';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatTableModule } from '@angular/material/table';
 import { ProfileEditComponent } from './profile/edit/profile-edit.component';
+import { ProfileContainerComponent } from './profile/profile-main.component';
+import { SideNavContainerComponent } from './sidenav-container.component';
+import { TeamContainerComponent } from './team/team-main.component';
 
 const routes: Routes = [
   {
@@ -72,6 +73,7 @@ const routes: Routes = [
     MatInputModule,
     FormsModule,
     MatDividerModule,
+    MatTreeModule,
     ReactiveFormsModule,
     SharedModule,
     RouterModule.forChild(routes),

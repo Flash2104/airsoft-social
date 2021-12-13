@@ -10,7 +10,8 @@ public interface IDataService
     TeamRepository Team { get; }
 
     GenericRepository<DbUserRole>? UserRoles { get; }
-    GenericRepository<DbMemberRole>? MemberRoles { get; }
+
+    GenericRepository<DbUserNavigation>? UserNavigations { get; }
 
     Task<bool> SaveAsync();
 }

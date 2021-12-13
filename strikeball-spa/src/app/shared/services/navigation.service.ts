@@ -1,26 +1,28 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, EMPTY, mapTo, Observable, of, switchMap, tap } from 'rxjs';
-import { HttpService } from 'src/app/shared/services/http.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { TeamRepository } from './team.repository';
+import { NavigationRepository } from '../repository/navigation.repository';
+import { HttpService } from './http.service';
+import { SnackbarService } from './snackbar.service';
 
-@Injectable()
-export class TeamService {
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
   constructor(
     private _http: HttpService,
-    private _teamRepo: TeamRepository,
+    private _router: Router,
+    private _navRepo: NavigationRepository,
     private _snackBarService: SnackbarService
   ) {}
 
-  loadCurrentTeam(): Observable<void> {
+  loadUserNavigation(): Observable<void> {
     return of(0).pipe(
       tap(() => {
-        this._teamRepo.setLoading(true);
+        this._navRepo.setLoading(true);
       }),
-      switchMap(() => this._http.teamGetCurrent()),
+      switchMap(() => this._http.getUserNavigation()),
       tap((resp) => {
         if (resp.isSuccess && resp.data != null) {
-          this._teamRepo.setTeam(resp.data?.teamData ?? null);
+          this._navRepo.setData(resp.data.data ?? null);
         } else {
           let message = 'Произошла ошибка';
           if (resp.errors != null && resp.errors[0] != null) {
@@ -28,10 +30,10 @@ export class TeamService {
           }
           this._snackBarService.showError(message, 'Ошибка');
         }
-        this._teamRepo.setLoading(false);
+        this._navRepo.setLoading(false);
       }),
       catchError((err) => {
-        this._teamRepo.setLoading(false);
+        this._navRepo.setLoading(false);
         this._snackBarService.showError(err.Message, 'Ошибка');
         return EMPTY;
       }),

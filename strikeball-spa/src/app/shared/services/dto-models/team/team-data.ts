@@ -7,6 +7,7 @@ export interface IMemberViewData {
   city: string | null | undefined;
   avatar: string | null | undefined;
   isLeader: boolean | null | undefined;
+  about: string | null | undefined;
   roles: IReferenceData<string>[] | null | undefined;
 }
 
@@ -18,4 +19,3 @@ export interface ITeamData {
   teamRoles: IReferenceData<string>[] | null | undefined;
   members: IMemberViewData[] | null | undefined;
 }
-

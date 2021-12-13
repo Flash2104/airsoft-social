@@ -7,8 +7,12 @@ import { ISignInRequest } from './dto-models/auth/sign-in/sign-in-request';
 import { ISignInResponse } from './dto-models/auth/sign-in/sign-in-response';
 import { ISignUpRequest } from './dto-models/auth/sign-up/sign-up-request';
 import { ISignUpResponse } from './dto-models/auth/sign-up/sign-up-response';
+import { INavigationDataResponse } from './dto-models/navigations/navigation-data';
 import { IGetCurrentProfileResponse } from './dto-models/profile/get-current-profile';
-import { IUpdateProfileRequest, IUpdateProfileResponse } from './dto-models/profile/update-profile';
+import {
+  IUpdateProfileRequest,
+  IUpdateProfileResponse,
+} from './dto-models/profile/update-profile';
 import { IServerResponse } from './dto-models/server-response';
 import { IGetCurrentTeamResponse } from './dto-models/team/get-current/get-current-team-response';
 
@@ -44,7 +48,9 @@ export class HttpService {
     );
   }
 
-  profileUpdate(data: IUpdateProfileRequest): Observable<IServerResponse<IUpdateProfileResponse>> {
+  profileUpdate(
+    data: IUpdateProfileRequest
+  ): Observable<IServerResponse<IUpdateProfileResponse>> {
     return of('api/member/update').pipe(
       mergeMap((url) => this.httpPut<IUpdateProfileResponse>(url, data))
     );
@@ -52,15 +58,25 @@ export class HttpService {
 
   /* #endregion */
 
-    /* #region Team*/
+  /* #region Team*/
 
-    teamGetCurrent(): Observable<IServerResponse<IGetCurrentTeamResponse>> {
-      return of('api/team/get-current').pipe(
-        mergeMap((url) => this.httpGet<IGetCurrentTeamResponse>(url))
-      );
-    }
+  teamGetCurrent(): Observable<IServerResponse<IGetCurrentTeamResponse>> {
+    return of('api/team/get-current').pipe(
+      mergeMap((url) => this.httpGet<IGetCurrentTeamResponse>(url))
+    );
+  }
 
-    /* #endregion */
+  /* #endregion */
+
+  /* #region Navigation*/
+
+  getUserNavigation(): Observable<IServerResponse<INavigationDataResponse>> {
+    return of('api/navigation/get').pipe(
+      mergeMap((url) => this.httpGet<INavigationDataResponse>(url))
+    );
+  }
+
+  /* #endregion */
 
   private getAuthHttpHeaders(): Observable<HttpHeaders> {
     return this._authRepo.token$.pipe(

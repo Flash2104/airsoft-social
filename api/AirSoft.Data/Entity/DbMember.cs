@@ -35,6 +35,8 @@ public class DbMember : DbEntity<Guid>
 
     public Guid? TeamId { get; set; }
 
+    public string? About { get; set; }
+
     public bool? IsTeamLeader { get; set; }
 
     public DbTeam? Team
@@ -93,14 +95,23 @@ internal sealed class DbMemberMapping
             TeamId = teamId,
             UserId = userId,
             Avatar = File.ReadAllBytes(root + "\\InitialData\\admin.png"),
-            IsTeamLeader = true
+            IsTeamLeader = true,
+            About = "Создатель приложения"
         };
         builder.HasData(adminProfile);
         builder.HasMany(x => x.TeamMemberRoles).WithMany(x => x.TeamMembers).UsingEntity<DbTeamRolesToMembers>(
-            x => x.HasData(new DbTeamRolesToMembers()
+            x => x.HasData(new List<DbTeamRolesToMembers>()
             {
-                MemberId = memberId,
-                TeamRoleId = teamRoleIds[(int)DefaultMemberRoleType.Командир]
+                new DbTeamRolesToMembers()
+                {
+                    MemberId = memberId,
+                    TeamRoleId = teamRoleIds[(int)DefaultMemberRoleType.Командир]
+                },
+                new DbTeamRolesToMembers()
+                {
+                    MemberId = memberId,
+                    TeamRoleId = teamRoleIds[(int)DefaultMemberRoleType.Рядовой]
+                },
             })
             );
     }

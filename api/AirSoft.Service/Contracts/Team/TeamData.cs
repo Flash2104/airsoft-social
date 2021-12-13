@@ -29,7 +29,16 @@ public class TeamData
 
 public class MemberViewData
 {
-    public MemberViewData(Guid id, string? name, string? surname, string? city, byte[]? avatar, bool? isLeader, List<ReferenceData<Guid>>? roles)
+    public MemberViewData(
+        Guid id,
+        string? name,
+        string? surname,
+        string? city,
+        string? about,
+        byte[]? avatar,
+        bool? isLeader,
+        List<ReferenceData<Guid>>? roles
+        )
     {
         Id = id;
         Name = name;
@@ -38,6 +47,7 @@ public class MemberViewData
         IsLeader = isLeader;
         Roles = roles;
         City = city;
+        About = about;
     }
 
     public Guid Id { get; }
@@ -45,8 +55,10 @@ public class MemberViewData
     public string? Name { get; set; }
 
     public string? Surname { get; }
-    
+
     public string? City { get; }
+
+    public string? About { get; }
 
     public byte[]? Avatar { get; }
 

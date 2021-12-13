@@ -16,15 +16,7 @@ public class DbTeamRole : DbEntity<Guid>
 
     private ILazyLoader LazyLoader { get; set; } = null!;
 
-    private DbMemberRole? _role;
-
-    public int RoleId { get; set; }
-
-    public DbMemberRole? Role
-    {
-        get => LazyLoader.Load(this, ref _role);
-        set => _role = value;
-    }
+    public string Title { get; set; }
 
     public int Rank { get; set; }
 
@@ -37,6 +29,12 @@ public class DbTeamRole : DbEntity<Guid>
     public virtual List<DbMember>? TeamMembers { get; set; }
 }
 
+public enum DefaultMemberRoleType
+{
+    Командир = 1,
+    Заместитель = 2,
+    Рядовой = 3
+}
 
 internal sealed class DbTeamRolesMapping
 {
@@ -45,14 +43,14 @@ internal sealed class DbTeamRolesMapping
         builder.ToTable("TeamRoles");
 
         builder.HasKey(x => new { x.Id });
+        builder.Property(x => x.Title).IsRequired().HasMaxLength(255);
         builder.Property(x => x.Rank).IsRequired().HasMaxLength(255);
-        builder.HasOne(x => x.Role).WithMany(x => x.TeamRoles).HasForeignKey(c => c.RoleId);
         builder.HasOne(x => x.Team).WithMany(x => x.TeamRoles).HasForeignKey(c => c.TeamId);
 
         var roles = Enum.GetValues<DefaultMemberRoleType>().Select(v => new DbTeamRole
         {
             Id = ids[(int)v],
-            RoleId = (int)v,
+            Title = v.ToString(),
             CreatedDate = new DateTime(2021, 12, 02, 1, 50, 00),
             ModifiedDate = new DateTime(2021, 12, 02, 1, 50, 00),
             Rank = (int)v,

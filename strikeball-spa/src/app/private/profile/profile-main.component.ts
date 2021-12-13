@@ -1,4 +1,3 @@
-import { of, switchMap } from 'rxjs';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {
   ChangeDetectionStrategy,
@@ -7,16 +6,23 @@ import {
   OnInit,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
-import { IProfileData } from './../../shared/services/dto-models/profile/profile-data';
-import { ProfileRepository } from '../../shared/repository/profile.repository';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  filter,
+  map,
+  Observable,
+  of,
+  Subject,
+  switchMap,
+  takeUntil,
+} from 'rxjs';
 import { ProfileService } from 'src/app/shared/services/profile.service';
+import { ProfileRepository } from '../../shared/repository/profile.repository';
+import { IProfileData } from '../../shared/services/dto-models/profile/profile-data';
 
 @Component({
-  selector: 'air-profile-container',
-  templateUrl: './profile-container.component.html',
-  styleUrls: ['./profile-container.component.scss'],
+  selector: 'air-profile-main',
+  templateUrl: './profile-main.component.html',
+  styleUrls: ['./profile-main.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileContainerComponent implements OnInit, OnDestroy {

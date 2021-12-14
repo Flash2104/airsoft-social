@@ -185,41 +185,52 @@ namespace AirSoft.Data.Migrations
                         {
                             Id = 3,
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Icon = "people",
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Order = 1,
+                            ParentId = 2,
+                            Path = "/private/team/players",
+                            Title = "Игроки"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Icon = "edit",
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Order = 2,
+                            ParentId = 2,
+                            Path = "/private/team/edit",
+                            Title = "Редактировать"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Icon = "group_add",
+                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Order = 3,
+                            ParentId = 4,
+                            Path = "/private/team/requests",
+                            Title = "Заявки"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Disabled = true,
                             Icon = "calendar_view_month",
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Order = 3,
                             Path = "/private/events",
                             Title = "События"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Icon = "check",
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Order = 2,
-                            ParentId = 2,
-                            Path = "/private/team/requests",
-                            Title = "Заявки"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Icon = "edit",
-                            ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Order = 1,
-                            ParentId = 2,
-                            Path = "/private/team/edit",
-                            Title = "Редактировать"
                         });
                 });
 
             modelBuilder.Entity("AirSoft.Data.Entity.DbNavigationsToNavigationItems", b =>
                 {
-                    b.Property<int>("NavigationId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("NavigationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("NavigationItemId")
                         .HasColumnType("int");
@@ -233,43 +244,53 @@ namespace AirSoft.Data.Migrations
                     b.HasData(
                         new
                         {
-                            NavigationId = 5,
+                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
                             NavigationItemId = 1
                         },
                         new
                         {
-                            NavigationId = 5,
+                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
                             NavigationItemId = 2
                         },
                         new
                         {
-                            NavigationId = 5,
+                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
                             NavigationItemId = 3
                         },
                         new
                         {
-                            NavigationId = 5,
+                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
                             NavigationItemId = 4
                         },
                         new
                         {
-                            NavigationId = 5,
+                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
                             NavigationItemId = 5
                         },
                         new
                         {
-                            NavigationId = 3,
+                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
+                            NavigationItemId = 6
+                        },
+                        new
+                        {
+                            NavigationId = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
                             NavigationItemId = 1
                         },
                         new
                         {
-                            NavigationId = 3,
+                            NavigationId = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
                             NavigationItemId = 2
                         },
                         new
                         {
-                            NavigationId = 3,
+                            NavigationId = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
                             NavigationItemId = 3
+                        },
+                        new
+                        {
+                            NavigationId = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
+                            NavigationItemId = 6
                         });
                 });
 
@@ -297,6 +318,9 @@ namespace AirSoft.Data.Migrations
                     b.Property<string>("Deleted")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("FoundationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("ModifiedBy")
                         .HasMaxLength(50)
                         .HasColumnType("uniqueidentifier");
@@ -323,6 +347,7 @@ namespace AirSoft.Data.Migrations
                             City = "Москва",
                             CreatedBy = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
+                            FoundationDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3"),
                             ModifiedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             Title = "AirSoft Events"
@@ -371,7 +396,7 @@ namespace AirSoft.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3db733c3-49af-4315-9593-d3958263723a"),
+                            Id = new Guid("e4025e20-166a-454e-bd81-4cc7ee7b3b29"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -382,7 +407,7 @@ namespace AirSoft.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("af530e7b-a3c1-4a86-964d-f074872d5032"),
+                            Id = new Guid("580a0bff-e83a-49f8-b498-66bc6a494a7e"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -393,7 +418,7 @@ namespace AirSoft.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5413dc40-e7fb-4da7-9c6c-6824bef2f5a2"),
+                            Id = new Guid("78c5c419-a994-4cd5-9b8b-6816028cd044"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -422,12 +447,12 @@ namespace AirSoft.Data.Migrations
                         new
                         {
                             MemberId = new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"),
-                            TeamRoleId = new Guid("3db733c3-49af-4315-9593-d3958263723a")
+                            TeamRoleId = new Guid("e4025e20-166a-454e-bd81-4cc7ee7b3b29")
                         },
                         new
                         {
                             MemberId = new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"),
-                            TeamRoleId = new Guid("5413dc40-e7fb-4da7-9c6c-6824bef2f5a2")
+                            TeamRoleId = new Guid("78c5c419-a994-4cd5-9b8b-6816028cd044")
                         });
                 });
 
@@ -492,11 +517,9 @@ namespace AirSoft.Data.Migrations
 
             modelBuilder.Entity("AirSoft.Data.Entity.DbUserNavigation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -507,46 +530,51 @@ namespace AirSoft.Data.Migrations
                     b.Property<string>("Deleted")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserNavigations", "dbo");
 
                     b.HasData(
                         new
                         {
-                            Id = 5,
+                            Id = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            CreatedDate = new DateTime(2021, 12, 13, 16, 51, 6, 817, DateTimeKind.Utc).AddTicks(9455),
+                            CreatedDate = new DateTime(2021, 12, 14, 15, 46, 21, 427, DateTimeKind.Utc).AddTicks(7508),
+                            IsDefault = true,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            ModifiedDate = new DateTime(2021, 12, 13, 16, 51, 6, 817, DateTimeKind.Utc).AddTicks(9452),
-                            RoleId = 5,
-                            Title = "Навигация Командира"
+                            ModifiedDate = new DateTime(2021, 12, 14, 15, 46, 21, 427, DateTimeKind.Utc).AddTicks(7508),
+                            Title = "Навигация менеджера команды",
+                            UserId = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3")
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            CreatedDate = new DateTime(2021, 12, 13, 16, 51, 6, 817, DateTimeKind.Utc).AddTicks(9459),
+                            CreatedDate = new DateTime(2021, 12, 14, 15, 46, 21, 427, DateTimeKind.Utc).AddTicks(7515),
+                            IsDefault = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            ModifiedDate = new DateTime(2021, 12, 13, 16, 51, 6, 817, DateTimeKind.Utc).AddTicks(9459),
-                            RoleId = 3,
-                            Title = "Навигация Игрока"
+                            ModifiedDate = new DateTime(2021, 12, 14, 15, 46, 21, 427, DateTimeKind.Utc).AddTicks(7515),
+                            Title = "Навигация Игрока",
+                            UserId = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3")
                         });
                 });
 
@@ -616,7 +644,7 @@ namespace AirSoft.Data.Migrations
                             Id = 5,
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Role = "TeamLeader"
+                            Role = "TeamManager"
                         },
                         new
                         {
@@ -631,6 +659,73 @@ namespace AirSoft.Data.Migrations
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Role = "Merchant"
+                        });
+                });
+
+            modelBuilder.Entity("AirSoft.Data.Entity.DbUserRolesToNavigationItems", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NavigationItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoleId", "NavigationItemId");
+
+                    b.HasIndex("NavigationItemId");
+
+                    b.ToTable("UserRolesToNavigationItems", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 5,
+                            NavigationItemId = 1
+                        },
+                        new
+                        {
+                            RoleId = 5,
+                            NavigationItemId = 2
+                        },
+                        new
+                        {
+                            RoleId = 5,
+                            NavigationItemId = 3
+                        },
+                        new
+                        {
+                            RoleId = 5,
+                            NavigationItemId = 4
+                        },
+                        new
+                        {
+                            RoleId = 5,
+                            NavigationItemId = 5
+                        },
+                        new
+                        {
+                            RoleId = 5,
+                            NavigationItemId = 6
+                        },
+                        new
+                        {
+                            RoleId = 3,
+                            NavigationItemId = 1
+                        },
+                        new
+                        {
+                            RoleId = 3,
+                            NavigationItemId = 2
+                        },
+                        new
+                        {
+                            RoleId = 3,
+                            NavigationItemId = 3
+                        },
+                        new
+                        {
+                            RoleId = 3,
+                            NavigationItemId = 6
                         });
                 });
 
@@ -663,11 +758,6 @@ namespace AirSoft.Data.Migrations
                         {
                             UserId = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3"),
                             RoleId = 3
-                        },
-                        new
-                        {
-                            UserId = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3"),
-                            RoleId = 5
                         });
                 });
 
@@ -735,11 +825,28 @@ namespace AirSoft.Data.Migrations
 
             modelBuilder.Entity("AirSoft.Data.Entity.DbUserNavigation", b =>
                 {
-                    b.HasOne("AirSoft.Data.Entity.DbUserRole", "Role")
-                        .WithOne("UserNavigation")
-                        .HasForeignKey("AirSoft.Data.Entity.DbUserNavigation", "RoleId")
+                    b.HasOne("AirSoft.Data.Entity.DbUser", "User")
+                        .WithMany("UserNavigations")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AirSoft.Data.Entity.DbUserRolesToNavigationItems", b =>
+                {
+                    b.HasOne("AirSoft.Data.Entity.DbNavigationItem", "NavigationItem")
+                        .WithMany("UserRolesToNavigationItems")
+                        .HasForeignKey("NavigationItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("AirSoft.Data.Entity.DbUserRole", "Role")
+                        .WithMany("UserRolesToNavigationItems")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NavigationItem");
 
                     b.Navigation("Role");
                 });
@@ -771,6 +878,8 @@ namespace AirSoft.Data.Migrations
             modelBuilder.Entity("AirSoft.Data.Entity.DbNavigationItem", b =>
                 {
                     b.Navigation("NavigationsToNavigationItems");
+
+                    b.Navigation("UserRolesToNavigationItems");
                 });
 
             modelBuilder.Entity("AirSoft.Data.Entity.DbTeam", b =>
@@ -789,6 +898,8 @@ namespace AirSoft.Data.Migrations
                 {
                     b.Navigation("Member");
 
+                    b.Navigation("UserNavigations");
+
                     b.Navigation("UsersToRoles");
                 });
 
@@ -799,7 +910,7 @@ namespace AirSoft.Data.Migrations
 
             modelBuilder.Entity("AirSoft.Data.Entity.DbUserRole", b =>
                 {
-                    b.Navigation("UserNavigation");
+                    b.Navigation("UserRolesToNavigationItems");
 
                     b.Navigation("UsersToRoles");
                 });

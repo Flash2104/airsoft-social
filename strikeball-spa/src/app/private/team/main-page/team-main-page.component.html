@@ -1,0 +1,76 @@
+<div *ngIf="(loading$ | async) === false; else loadingTemplate">
+  <div *ngIf="team$ | async as team">
+    <div class="row mb-3">
+      <div class="col-4">
+        <mat-card class="card-avatar">
+          <img mat-card-image [src]="team.avatar" alt="Аватар" />
+        </mat-card>
+      </div>
+      <div class="col-8">
+        <mat-card class="main-info-card">
+          <span [ngSwitch]="isEditing$ | async">
+          <p *ngSwitchCase="true">
+            <air-team-main-info-edit [loading]="(loading$ | async)" [team]="mapMainInfoTeamData(team)"></air-team-main-info-edit>
+          </p>
+          <p *ngSwitchCase="false">
+            <air-team-main-info [loading]="(loading$ | async)" [team]="mapMainInfoTeamData(team)"></air-team-main-info>
+          </p>
+          <p *ngSwitchDefault>
+            <air-team-main-info [loading]="(loading$ | async)" [team]="mapMainInfoTeamData(team)"></air-team-main-info>
+          </p>
+          </span>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Члены команды</mat-card-title>
+          </mat-card-header>
+          <div class="members-container">
+            <mat-card *ngFor="let member of team.members" class="member-card">
+              <mat-card-header class="mb-3">
+                <button
+                  mat-icon-button
+                  aria-label="Example icon button with a open in new tab icon"
+                >
+                  <mat-icon>open_in_new</mat-icon>
+                </button>
+                <mat-card-title
+                  >{{ member.name }} {{ member.surname }}
+                </mat-card-title>
+                <mat-card-subtitle>
+                  <span
+                    class="d-flex align-items-center justify-content-between"
+                    *ngIf="member.roles != null && member.roles.length > 0"
+                  >
+                    {{ member.roles[0].title }}
+                    <mat-icon class="ms-2" *ngIf="member.isLeader"
+                      >psychology</mat-icon
+                    >
+                  </span></mat-card-subtitle
+                >
+              </mat-card-header>
+              <div class="member-avatar">
+                <img mat-card-image [src]="member.avatar" alt="Аватар" />
+              </div>
+              <mat-card-content>
+                <p>
+                  Звания:
+                  <span>{{ getRolesString(member.roles) }}.</span>
+                </p>
+              </mat-card-content>
+              <mat-card-actions class="text-end">
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <loader> </loader>
+</ng-template>

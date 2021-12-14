@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { createState, select, Store, withProps } from '@ngneat/elf';
 import { Observable } from 'rxjs';
-import { IRolesNavigationData } from '../services/dto-models/navigations/navigation-data';
+import { IUserNavigationData } from '../services/dto-models/navigations/navigation-data';
 
 export interface INavigationState {
-  data: IRolesNavigationData[] | null | undefined;
+  data: IUserNavigationData[] | null | undefined;
   loading: boolean;
 }
 
@@ -21,7 +21,7 @@ const profileStore = new Store({ state, name, config });
 
 @Injectable({ providedIn: 'root' })
 export class NavigationRepository {
-  navData$: Observable<IRolesNavigationData[] | null | undefined> =
+  navData$: Observable<IUserNavigationData[] | null | undefined> =
     profileStore.pipe(select((st) => st.data));
 
   loading$: Observable<boolean> = profileStore.pipe(select((st) => st.loading));

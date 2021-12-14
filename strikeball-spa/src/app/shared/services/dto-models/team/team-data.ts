@@ -15,6 +15,7 @@ export interface ITeamData {
   id: string | null | undefined;
   title: string | null | undefined;
   city: string | null | undefined;
+  foundationDate: string | null | undefined;
   avatar: string | null | undefined;
   teamRoles: IReferenceData<string>[] | null | undefined;
   members: IMemberViewData[] | null | undefined;

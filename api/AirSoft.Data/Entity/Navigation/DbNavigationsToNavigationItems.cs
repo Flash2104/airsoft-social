@@ -6,7 +6,7 @@ namespace AirSoft.Data.Entity;
 
 public class DbNavigationsToNavigationItems
 {
-    public int NavigationId { get; set; }
+    public Guid NavigationId { get; set; }
     public virtual DbUserNavigation? Navigation { get; set; }
 
     public int NavigationItemId { get; set; }

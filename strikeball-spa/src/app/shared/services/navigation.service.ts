@@ -22,7 +22,7 @@ export class NavigationService {
       switchMap(() => this._http.getUserNavigation()),
       tap((resp) => {
         if (resp.isSuccess && resp.data != null) {
-          this._navRepo.setData(resp.data.data ?? null);
+          this._navRepo.setData(resp.data.navigations ?? null);
         } else {
           let message = 'Произошла ошибка';
           if (resp.errors != null && resp.errors[0] != null) {

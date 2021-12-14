@@ -6,26 +6,17 @@ import {
   OnInit,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import {
-  filter,
-  map,
-  Observable,
-  of,
-  Subject,
-  switchMap,
-  takeUntil,
-} from 'rxjs';
-import { ProfileService } from 'src/app/shared/services/profile.service';
-import { ProfileRepository } from '../../shared/repository/profile.repository';
-import { IProfileData } from '../../shared/services/dto-models/profile/profile-data';
+import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
+import { ProfileRepository } from '../../../shared/repository/profile.repository';
+import { IProfileData } from '../../../shared/services/dto-models/profile/profile-data';
 
 @Component({
-  selector: 'air-profile-main',
-  templateUrl: './profile-main.component.html',
-  styleUrls: ['./profile-main.component.scss'],
+  selector: 'air-profile-main-info-edit',
+  templateUrl: './profile-main-info-edit.component.html',
+  styleUrls: ['./profile-main-info-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileContainerComponent implements OnInit, OnDestroy {
+export class ProfileMainInfoEditComponent implements OnInit, OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
 
   public loading$: Observable<boolean> = this._profileRepo.loading$.pipe(
@@ -46,24 +37,11 @@ export class ProfileContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     private _profileRepo: ProfileRepository,
-    private _profileService: ProfileService,
     private _sanitizer: DomSanitizer
   ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {
-    this._profileRepo.profile$
-      .pipe(
-        switchMap((p) => {
-          if (p == null) {
-            return this._profileService.loadCurrentProfile();
-          }
-          return of(0);
-        }),
-        takeUntil(this._destroy$)
-      )
-      .subscribe();
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this._destroy$.next();

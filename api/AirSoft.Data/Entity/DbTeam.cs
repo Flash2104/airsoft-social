@@ -24,6 +24,8 @@ public class DbTeam : DbEntity<Guid>
 
     public string? City { get; set; }
 
+    public DateTime? FoundationDate { get; set; }
+
     public byte[]? Avatar { get; set; }
 
     public List<DbMember>? Members
@@ -43,7 +45,7 @@ public class DbTeam : DbEntity<Guid>
 
 internal sealed class DbTeamMapping
 {
-    public void Map(EntityTypeBuilder<DbTeam> builder, Guid userId, Guid memberId, Guid teamId)
+    public void Map(EntityTypeBuilder<DbTeam> builder, Guid userId, Guid teamId)
     {
         builder.ToTable("Teams");
 
@@ -64,6 +66,7 @@ internal sealed class DbTeamMapping
             ModifiedBy = userId,
             Title = "AirSoft Events",
             City = "Москва",
+            FoundationDate = new DateTime(2021, 12, 02, 1, 50, 00),
             Avatar = File.ReadAllBytes(root + "\\InitialData\\team.png")
         };
         builder.HasData(team);

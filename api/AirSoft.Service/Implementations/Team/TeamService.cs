@@ -46,6 +46,7 @@ public class TeamService : ITeamService
             dbTeam.Id,
             dbTeam.Title,
             dbTeam.City,
+            dbTeam.FoundationDate,
             dbTeam.Avatar,
             dbTeam.Members?
                 .Select(x => new MemberViewData(

@@ -6,30 +6,28 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
-import {
-  IMemberViewData,
-  ITeamData,
-} from 'src/app/shared/services/dto-models/team/team-data';
-import { IReferenceData } from '../../shared/services/dto-models/reference-data';
-import { TeamRepository } from './repository/team.repository';
-import { TeamService } from './repository/team.service';
+import { ITeamData } from 'src/app/shared/services/dto-models/team/team-data';
+import { IReferenceData } from '../../../shared/services/dto-models/reference-data';
+import { ITeamMainInfo, TeamRepository } from '../repository/team.repository';
+import { TeamService } from '../repository/team.service';
+import { IMemberViewData } from './../../../shared/services/dto-models/team/team-data';
 
 @Component({
-  selector: 'air-team-main',
-  templateUrl: './team-main.component.html',
-  styleUrls: ['./team-main.component.scss'],
+  selector: 'air-team-main-page',
+  templateUrl: './team-main-page.component.html',
+  styleUrls: ['./team-main-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TeamService, TeamRepository],
 })
-export class TeamContainerComponent implements OnInit, OnDestroy {
+export class TeamMainPageComponent implements OnInit, OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
 
   public loading$: Observable<boolean> = this._teamRepo.loading$.pipe(
     takeUntil(this._destroy$)
   );
 
-  public teamLeader$: Observable<IMemberViewData | null | undefined> =
-    this._teamRepo.teamLeader$.pipe(takeUntil(this._destroy$));
+  public isEditing$: Observable<boolean> = this._teamRepo.isEditing$.pipe(
+    takeUntil(this._destroy$)
+  );
 
   public team$: Observable<ITeamData | null> = this._teamRepo.team$.pipe(
     filter((p) => p != null),
@@ -71,6 +69,16 @@ export class TeamContainerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
+  }
+
+  mapMainInfoTeamData(teamData: ITeamData): ITeamMainInfo {
+    return {
+      id: teamData.id,
+      city: teamData.city,
+      foundationDate: teamData.foundationDate,
+      teamLeader: teamData.members?.find((x) => x.isLeader),
+      title: teamData.title,
+    };
   }
 
   getRolesString(roles: IReferenceData<string>[] | null | undefined): string {

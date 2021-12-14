@@ -9,9 +9,11 @@ public interface IDataService
     MemberRepository Member { get; }
     TeamRepository Team { get; }
 
-    GenericRepository<DbUserRole>? UserRoles { get; }
+    GenericRepository<DbUserRole> UserRoles { get; }
 
-    GenericRepository<DbUserNavigation>? UserNavigations { get; }
+    GenericRepository<DbUserNavigation> UserNavigations { get; }
+
+    GenericRepository<DbNavigationItem> NavigationItems { get; }
 
     Task<bool> SaveAsync();
 }

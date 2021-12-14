@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AirSoft.Data.Entity;
 
-public class DbUserNavigation: DbEntity<int>
+public class DbUserNavigation: DbEntity<Guid>
 {
     public DbUserNavigation()
     {
@@ -20,9 +20,11 @@ public class DbUserNavigation: DbEntity<int>
 
     public string Title { get; set; }
 
-    public int RoleId { get; set; }
+    public bool IsDefault { get; set; }
 
-    public virtual DbUserRole? Role { get; set; }
+    public Guid? UserId { get; set; }
+
+    public virtual DbUser? User { get; set; }
 
     public virtual List<DbNavigationItem>? NavigationItems
     {
@@ -35,30 +37,37 @@ public class DbUserNavigation: DbEntity<int>
 
 internal sealed class DbUserNavigationMapping
 {
-    public void Map(EntityTypeBuilder<DbUserNavigation> builder)
+    public void Map(EntityTypeBuilder<DbUserNavigation> builder, Guid userId, Dictionary<int, Guid> roleNavIds)
     {
         builder.ToTable("UserNavigations");
 
         builder.HasKey(x => new { x.Id });
-        builder.HasOne(x => x.Role).WithOne(x => x.UserNavigation).HasForeignKey<DbUserNavigation>(x => x.RoleId);
+        builder.Property(x => x.Title).IsRequired().HasMaxLength(255);
+        builder.Property(x => x.IsDefault).IsRequired();
+        builder
+            .HasOne(x => x.User)
+            .WithMany(x => x.UserNavigations)
+            .HasForeignKey(x => x.UserId );
 
         builder.HasData(new List<DbUserNavigation>()
         {
             new DbUserNavigation()
             {
-                Id = (int) UserRoleType.TeamLeader,
-                Title = "Навигация Командира",
+                Id = roleNavIds[(int)UserRoleType.TeamManager],
+                Title = "Навигация менеджера команды",
                 ModifiedDate = DateTime.UtcNow,
                 CreatedDate = DateTime.UtcNow,
-                RoleId = (int) UserRoleType.TeamLeader
+                UserId = userId,
+                IsDefault = true
             },
             new DbUserNavigation()
             {
-                Id = (int) UserRoleType.Player,
+                Id = roleNavIds[(int)UserRoleType.Player],
                 Title = "Навигация Игрока",
                 ModifiedDate = DateTime.UtcNow,
                 CreatedDate = DateTime.UtcNow,
-                RoleId = (int) UserRoleType.Player
+                UserId = userId,
+                IsDefault = false
             }
         });
     }

@@ -1,11 +1,35 @@
-import { ITeamData, IMemberViewData } from './../../../shared/services/dto-models/team/team-data';
 import { Injectable } from '@angular/core';
 import { createState, select, Store, withProps } from '@ngneat/elf';
-import { Observable, map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { v1 as uuidv1 } from 'uuid';
+import {
+  IMemberViewData,
+  ITeamData,
+} from '../../../shared/services/dto-models/team/team-data';
+
+export interface ITeamMemberMainInfo {
+  id: string | null | undefined;
+  name: string | null | undefined;
+  surname: string | null | undefined;
+  city: string | null | undefined;
+  isLeader: boolean | null | undefined;
+}
+
+export interface ITeamMainInfo {
+  id: string | null | undefined;
+  teamLeader: ITeamMemberMainInfo | null | undefined;
+  city: string | null | undefined;
+  title: string | null | undefined;
+  foundationDate: string | null | undefined;
+}
 
 export interface ITeamState {
   team: ITeamData | null;
+  teamMainInfo: {
+    data: ITeamMainInfo | null;
+    isEditing: boolean;
+    loading: boolean;
+  };
   loading: boolean;
 }
 
@@ -18,10 +42,15 @@ export class TeamRepository {
     withProps<ITeamState>({
       team: null,
       loading: false,
+      teamMainInfo: {
+        data: null,
+        isEditing: false,
+        loading: false,
+      },
     })
   );
 
-  _name: string = `team-${uuidv1().substr(-8)}`;
+  _name: string = `team-${uuidv1().substring(0, 8)}`;
 
   teamStore: Store<
     { state: ITeamState; name: string; config: undefined },
@@ -36,12 +65,17 @@ export class TeamRepository {
     select((st) => st.team)
   );
 
-  teamLeader$: Observable<IMemberViewData | null | undefined> = this.teamStore.pipe(
-    select((st) => st.team?.members),
-    map(v => {
-      return v?.find(m => m.isLeader);
-    })
+  isEditing$: Observable<boolean> = this.teamStore.pipe(
+    select((st) => st.teamMainInfo.isEditing)
   );
+
+  teamLeader$: Observable<IMemberViewData | null | undefined> =
+    this.teamStore.pipe(
+      select((st) => st.team?.members),
+      map((v) => {
+        return v?.find((m) => m.isLeader);
+      })
+    );
 
   loading$: Observable<boolean> = this.teamStore.pipe(
     select((st) => st.loading)
@@ -58,6 +92,17 @@ export class TeamRepository {
     this.teamStore.update((st) => ({
       ...st,
       team,
+    }));
+  }
+
+  editingTeamMainInfo(isEditing: boolean): void {
+    this.teamStore.update((st) => ({
+      ...st,
+      teamMainInfo: {
+        ...st.teamMainInfo,
+        isEditing,
+        loading: st.teamMainInfo.loading,
+      },
     }));
   }
 

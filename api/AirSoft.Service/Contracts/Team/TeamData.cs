@@ -4,7 +4,7 @@ namespace AirSoft.Service.Contracts.Team;
 
 public class TeamData
 {
-    public TeamData(Guid id, string? title, string? city, byte[]? avatar, List<MemberViewData>? members, List<ReferenceData<Guid>>? teamRoles)
+    public TeamData(Guid id, string? title, string? city, DateTime? foundationDate, byte[]? avatar, List<MemberViewData>? members, List<ReferenceData<Guid>>? teamRoles)
     {
         Id = id;
         Title = title;
@@ -12,6 +12,7 @@ public class TeamData
         Members = members;
         TeamRoles = teamRoles;
         City = city;
+        FoundationDate = foundationDate;
     }
 
     public Guid Id { get; }
@@ -19,6 +20,8 @@ public class TeamData
     public string? Title { get; set; }
 
     public string? City { get; }
+
+    public DateTime? FoundationDate { get; }
 
     public byte[]? Avatar { get; }
 

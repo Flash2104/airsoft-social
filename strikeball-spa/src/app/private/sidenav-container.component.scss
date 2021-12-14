@@ -41,9 +41,12 @@ $topPadding: 68px;
 
 .link-button-content {
   display: flex;
-  width: 250px;
   align-items: center;
   justify-content: space-between;
+}
+
+.link-button > span + .mat-button-wrapper {
+  width: 100%;
 }
 
 .tree-invisible {

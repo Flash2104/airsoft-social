@@ -32,7 +32,7 @@ namespace AirSoftApi.Controllers
             var logPath = $"{_correlationService.GetUserId()}.{nameof(NavigationController)} {nameof(GetUserNavigations)} | ";
             return await HandleRequest(
                 _navigationService.GetUserNavigations,
-                res => new UserNavigationResponseDto(res.Data.ToList()),
+                res => new UserNavigationResponseDto(res.Navigations),
                 logPath
             );
         }

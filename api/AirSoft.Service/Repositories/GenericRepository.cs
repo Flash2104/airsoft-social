@@ -18,7 +18,7 @@ public class GenericRepository<TEntity> where TEntity : class, IDbEntity
         this._dbSet = context.Set<TEntity>();
     }
 
-    public virtual async Task<IEnumerable<TEntity>> ListAsync(
+    public virtual async Task<List<TEntity>> ListAsync(
         Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "")

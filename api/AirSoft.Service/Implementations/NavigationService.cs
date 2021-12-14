@@ -35,46 +35,59 @@ public class NavigationService : INavigationService
         {
             throw new AirSoftBaseException(ErrorCodes.NavigationService.EmptyUserId, "Пустой идентификатор пользователя");
         }
-        List<DbUserRole> dbUserRoles = await _dataService.Users.GetRolesWithNavigationsAsync(userId.GetValueOrDefault());
-
-        if (dbUserRoles == null)
+        DbUser? user = await _dataService.Users.GetAsync(x => userId.GetValueOrDefault() == x.Id);
+        if (user == null)
         {
-            throw new AirSoftBaseException(ErrorCodes.NavigationService.UserRolesNotFound, "Не найдены роли пользователя");
+            throw new AirSoftBaseException(ErrorCodes.NavigationService.UserNotFound, "Пользователь не найден");
+        }
+        if (user.UserRoles == null || user.UserRoles.Count == 0)
+        {
+            throw new AirSoftBaseException(ErrorCodes.NavigationService.UserRolesNotFound, "Роли пользователя не найдены");
         }
 
-        return MapTreeToResponse(dbUserRoles!);
+        List<int> roleIds = user.UserRoles.Select(x => x.Id).ToList();
+        List<DbUserNavigation> dbNavigations = await _dataService.UserNavigations.ListAsync(x => userId.GetValueOrDefault() == x.UserId)!;
+        List<DbNavigationItem> dbAvailableItems =
+            await _dataService.NavigationItems
+                .ListAsync(x => x.Roles!.Any(r => roleIds.Contains(r.Id)), null, "Roles");
+        if (dbNavigations.Count == 0)
+        {
+            throw new AirSoftBaseException(ErrorCodes.NavigationService.NavigationNotFound, "Не найдены навигации пользователя");
+        }
+
+        return MapTreeToResponse(dbNavigations, dbAvailableItems.Select(x => x.Id).ToList());
     }
 
-    private UserNavigationDataResponse MapTreeToResponse(List<DbUserRole?> dbRoles)
+    private UserNavigationDataResponse MapTreeToResponse(List<DbUserNavigation> dbNavigations, List<int> dbAvailableItemIds)
     {
-        var data = new List<RolesNavigationData>();
-        bool containsTeamLead = dbRoles.Any(x => x.Id == (int)UserRoleType.TeamLeader);
-        foreach (var dbRole in dbRoles)
+        var data = new List<UserNavigationData>();
+        foreach (var dbNavigation in dbNavigations)
         {
-            if (containsTeamLead && dbRole.Id == (int)UserRoleType.Player)
+            if (dbNavigation?.NavigationItems == null || dbNavigation?.NavigationItems.Count == 0)
             {
-                continue;
+                continue; // ToDO: throw new AirSoftBaseException(ErrorCodes.NavigationService.NavigationNotFound, "Навигация не содержит элементов");
             }
             var navTree = new Dictionary<int, List<NavigationItem>>()
             {
                 {0, new List<NavigationItem>()}
             };
-            if (dbRole?.UserNavigation == null || dbRole.UserNavigation!.NavigationItems == null)
+
+            foreach (var dbNavItem in dbNavigation!.NavigationItems)
             {
-                continue; // ToDO: throw new AirSoftBaseException(ErrorCodes.NavigationService.NavigationNotFound, "Навигация для роли пользователя не найдена");
-            }
-            foreach (var dbNavItem in dbRole.UserNavigation!.NavigationItems)
-            {
+                if (!dbAvailableItemIds.Contains(dbNavItem.Id))
+                {
+                    continue;
+                }
                 var parentId = dbNavItem.ParentId ?? 0;
                 if (!navTree.ContainsKey(dbNavItem.Id))
                 {
                     navTree[dbNavItem.Id] = new List<NavigationItem>();
                 }
                 var item = new NavigationItem(dbNavItem.Id, dbNavItem.Path, dbNavItem.Title, dbNavItem.Icon,
-                    dbNavItem.Order, navTree[dbNavItem.Id]);
+                    dbNavItem.Order, navTree[dbNavItem.Id], dbNavItem.Disabled);
                 navTree[parentId].Add(item);
             }
-            data.Add(new RolesNavigationData(new ReferenceData<int>(dbRole.Id, dbRole.Role), navTree[0]));
+            data.Add(new UserNavigationData(dbNavigation.Id, dbNavigation.Title, navTree[0], dbNavigation.IsDefault));
         }
 
         return new UserNavigationDataResponse(data);

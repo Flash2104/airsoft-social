@@ -11,13 +11,6 @@ import { NavigationRepository } from '../shared/repository/navigation.repository
 import { INavigationItem } from '../shared/services/dto-models/navigations/navigation-data';
 import { NavigationService } from '../shared/services/navigation.service';
 
-export interface ILink {
-  path: string;
-  title: string;
-  icon: string;
-  children?: ILink[] | null;
-}
-
 @Component({
   selector: 'air-sidenav-container',
   templateUrl: './sidenav-container.component.html',
@@ -44,7 +37,9 @@ export class SideNavContainerComponent implements OnInit, OnDestroy {
       .pipe(
         tap((navData) => {
           if (navData != null) {
-            this.dataSource.data = [...navData[0].navItems];
+            const defaultData = navData.find((x) => x.isDefault)?.navItems;
+            const data = defaultData != null ? this.sortItems(defaultData) : [];
+            this.dataSource.data = [...data];
           }
         }),
         takeUntil(this._destroy$)
@@ -57,10 +52,20 @@ export class SideNavContainerComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  hasChild: (a: number, b: ILink) => boolean = (_: number, node: ILink) =>
-    !!node.children && node.children.length > 0;
+  hasChild(a: number, node: INavigationItem): boolean {
+    return !!node.children && node.children.length > 0;
+  }
 
   onRouterLinkActive(active: boolean, node: INavigationItem): void {
-    active ? this.treeControl.expand(node) : void 0;
+    active ? this.treeControl.expandDescendants(node) : void 0;
+  }
+
+  sortItems(items: INavigationItem[]): INavigationItem[] {
+    items.forEach((element) => {
+      if (element.children != null) {
+        element.children = this.sortItems(element.children);
+      }
+    });
+    return items.sort((a, b) => a.order - b.order);
   }
 }

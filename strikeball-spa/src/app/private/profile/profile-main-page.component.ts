@@ -6,19 +6,26 @@ import {
   OnInit,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { filter, map, Observable, Subject, takeUntil, tap } from 'rxjs';
-
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {IProfileData} from '../../../shared/services/dto-models/profile/profile-data';
-import {ProfileRepository} from '../../../shared/repository/profile.repository';
+import {
+  filter,
+  map,
+  Observable,
+  of,
+  Subject,
+  switchMap,
+  takeUntil,
+} from 'rxjs';
+import { ProfileService } from 'src/app/shared/services/profile.service';
+import { ProfileRepository } from '../../shared/repository/profile.repository';
+import { IProfileData } from '../../shared/services/dto-models/profile/profile-data';
 
 @Component({
-  selector: 'air-profile-edit',
-  templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.scss'],
+  selector: 'air-profile-main-page',
+  templateUrl: './profile-main-page.component.html',
+  styleUrls: ['./profile-main-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileEditComponent implements OnInit, OnDestroy {
+export class ProfileMainPageComponent implements OnInit, OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
 
   public loading$: Observable<boolean> = this._profileRepo.loading$.pipe(
@@ -39,11 +46,24 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private _profileRepo: ProfileRepository,
+    private _profileService: ProfileService,
     private _sanitizer: DomSanitizer
   ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._profileRepo.profile$
+      .pipe(
+        switchMap((p) => {
+          if (p == null) {
+            return this._profileService.loadCurrentProfile();
+          }
+          return of(0);
+        }),
+        takeUntil(this._destroy$)
+      )
+      .subscribe();
+  }
 
   ngOnDestroy(): void {
     this._destroy$.next();

@@ -39,6 +39,8 @@ public class DbUser: DbEntity<Guid>
     public virtual List<DbUsersToRoles>? UsersToRoles { get; set; }
 
     public virtual DbMember? Member { get; set; }
+    
+    public virtual List<DbUserNavigation>? UserNavigations { get; set; }
 
     public string HashPassword(string password)
     {
@@ -112,11 +114,11 @@ internal sealed class DbUserMapping
                     UserId = userId,
                     RoleId = (int) UserRoleType.Player
                 },
-                new DbUsersToRoles()
-                {
-                    UserId = userId,
-                    RoleId = (int) UserRoleType.TeamLeader
-                }
+                //new DbUsersToRoles()
+                //{
+                //    UserId = userId,
+                //    RoleId = (int) UserRoleType.TeamManager
+                //}
             })
             );
     }

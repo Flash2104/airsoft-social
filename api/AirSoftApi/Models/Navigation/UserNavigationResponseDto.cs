@@ -4,10 +4,10 @@ namespace AirSoftApi.Models.Navigation;
 
 public class UserNavigationResponseDto
 {
-    public List<RolesNavigationData> Data { get; }
+    public List<UserNavigationData> Navigations { get; }
 
-    public UserNavigationResponseDto(List<RolesNavigationData>? data)
+    public UserNavigationResponseDto(List<UserNavigationData>? navigations)
     {
-        Data = data ?? new List<RolesNavigationData>();
+        Navigations = navigations ?? new List<UserNavigationData>();
     }
 }

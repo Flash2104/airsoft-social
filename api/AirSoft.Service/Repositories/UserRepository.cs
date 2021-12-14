@@ -38,20 +38,6 @@ public class UserRepository : GenericRepository<DbUser>
         return dbUsers.FirstOrDefault();
     }
 
-    public async Task<List<DbUserRole>> GetRolesWithNavigationsAsync(Guid userId)
-    {
-        var dbUser = await _context!.Users!
-            .Include(x => x.UserRoles)!
-            .ThenInclude(x => x.UserNavigation)
-            .FirstOrDefaultAsync(x => x.Id == userId);
-        if (dbUser == null )
-        {
-            throw new AirSoftBaseException(ErrorCodes.UserRepository.UserNotFound,
-                "Пользователь не найден.");
-        }
-        return dbUser.UserRoles!.ToList();
-    }
-
     public DbUser? CreateDbUser(DbUser user)
     {
         return Insert(user);

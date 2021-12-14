@@ -14,6 +14,7 @@ public class DataService : IDataService
     private TeamRepository? _teams;
     private GenericRepository<DbUserRole>? _userRoles;
     private GenericRepository<DbUserNavigation>? _userNavigations;
+    private GenericRepository<DbNavigationItem>? _navigationItems;
 
     public DataService(IDbContext dbContext)
     {
@@ -29,6 +30,7 @@ public class DataService : IDataService
     public GenericRepository<DbUserRole> UserRoles => _userRoles ??= new GenericRepository<DbUserRole>(_dbContext);
 
     public GenericRepository<DbUserNavigation> UserNavigations => _userNavigations ??= new GenericRepository<DbUserNavigation>(_dbContext);
+    public GenericRepository<DbNavigationItem> NavigationItems => _navigationItems ??= new GenericRepository<DbNavigationItem>(_dbContext);
 
     public async Task<bool> SaveAsync()
     {

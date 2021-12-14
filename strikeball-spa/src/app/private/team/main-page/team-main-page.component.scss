@@ -25,12 +25,6 @@
   height: 100%;
   width: 100%;
 }
-.team-main-form {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  padding: 10px;
-}
 
 td {
   padding: 5px 0;
@@ -46,6 +40,10 @@ td {
   // background-color: mat.get-color-from-palette($sb-primary, 'default');
   max-width: 300px;
 }
+
+// .member-card:hover {
+//   background-color: red;
+// }
 
 
 .member-avatar {

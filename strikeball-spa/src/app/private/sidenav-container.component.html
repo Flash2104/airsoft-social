@@ -1,19 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav class="sidenav-nav" mode="side" opened="true">
-    <!-- <mat-nav-list class="sidenav-list">
-      <button
-        *ngFor="let link of links"
-        mat-raised-button
-        [routerLink]="link.path"
-        routerLinkActive="mat-accent"
-        class="link-button"
-      >
-        <div class="d-flex align-items-center">
-          <mat-icon class="ms-3" mat-list-icon>{{ link.icon }}</mat-icon>
-          <div class="ms-3">{{ link.title }}</div>
-        </div>
-      </button>
-    </mat-nav-list> -->
     <mat-tree
       [dataSource]="dataSource"
       [treeControl]="treeControl"
@@ -26,6 +12,7 @@
           [routerLink]="node.path"
           routerLinkActive="mat-accent"
           class="link-button"
+          [disabled]="node.disabled"
         >
           <div class="d-flex align-items-center">
             <mat-icon class="ms-3" mat-list-icon>{{ node.icon }}</mat-icon>
@@ -67,10 +54,8 @@
   </mat-sidenav>
 
   <div class="sidenav-body">
-    <!-- <div class="sidenav-card">
-      <div class="sidenav-card-content"> -->
-    <router-outlet></router-outlet>
-    <!-- </div>
-    </div> -->
+    <div class="container h-100">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </mat-sidenav-container>

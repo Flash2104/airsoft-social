@@ -1,26 +1,32 @@
-﻿using AirSoft.Service.Contracts.Models;
-
+﻿
 namespace AirSoft.Service.Contracts.Navigation;
 
 public class UserNavigationDataResponse
 {
-    public List<RolesNavigationData> Data { get; }
+    public List<UserNavigationData> Navigations { get; }
 
-    public UserNavigationDataResponse(List<RolesNavigationData>? data)
+    public UserNavigationDataResponse(List<UserNavigationData>? navigations)
     {
-        Data = data ?? new List<RolesNavigationData>();
+        Navigations = navigations ?? new List<UserNavigationData>();
     }
 }
 
-public class RolesNavigationData
+public class UserNavigationData
 {
-    public ReferenceData<int>? Role { get; }
+    public Guid Id { get; }
+
+    public string Title { get; }
+
+    public bool IsDefault { get; }
+
     public List<NavigationItem>? NavItems { get; }
 
-    public RolesNavigationData( ReferenceData<int>? role, List<NavigationItem>? navItems)
+    public UserNavigationData(Guid id, string title, List<NavigationItem>? navItems, bool isDefault)
     {
-        Role = role;
+        Id = id;
+        Title = title;
         NavItems = navItems;
+        IsDefault = isDefault;
     }
 }
 
@@ -32,15 +38,18 @@ public class NavigationItem
     public string? Icon { get; }
 
     public int Order { get; }
+
+    public bool? Disabled { get; }
     public List<NavigationItem> Children { get; }
 
-    public NavigationItem(int id, string path, string title, string? icon, int order, List<NavigationItem> children)
+    public NavigationItem(int id, string path, string title, string? icon, int order, List<NavigationItem> children, bool? disabled)
     {
         Id = id;
         Path = path;
         Title = title;
         Icon = icon;
         Children = children;
+        Disabled = disabled;
         Order = order;
     }
 }

@@ -3,15 +3,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AirSoft.Data.Entity;
 
-public class DbUserRole: DbEntity<int>
+public class DbUserRole : DbEntity<int>
 {
     public string Role { get; set; } = null!;
 
     public virtual List<DbUser>? Users { get; set; }
 
     public virtual List<DbUsersToRoles>? UsersToRoles { get; set; }
-    
-    public virtual DbUserNavigation? UserNavigation { get; set; }
+
+    public virtual List<DbNavigationItem>? NavigationItems { get; set; }
+
+    public virtual List<DbUserRolesToNavigationItems>? UserRolesToNavigationItems { get; set; }
+
 }
 
 public enum UserRoleType
@@ -21,7 +24,7 @@ public enum UserRoleType
     Administrator = 2,
     Player = 3,
     Organizer = 4,
-    TeamLeader = 5,
+    TeamManager = 5,
     Sponsor = 6,
     Merchant = 7
 }

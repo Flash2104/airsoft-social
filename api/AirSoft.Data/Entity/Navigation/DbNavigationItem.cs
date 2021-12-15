@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AirSoft.Data.InitialData;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AirSoft.Data.Entity;
@@ -29,17 +30,16 @@ internal sealed class DbNavigationItemsMapping
         builder.Property(x => x.Path).IsRequired().HasMaxLength(255);
         builder.Property(x => x.Title).IsRequired().HasMaxLength(255);
         builder.Property(x => x.Order).IsRequired().HasMaxLength(55);
-        var items = BuildItems(builder, roleNavIds);
-
-
+        BuildItems(builder, roleNavIds);
+        
         // Bond Navigation to NavItems
 
-        var joinedNavToNavItems = items.LeaderIds.Select(i => new DbNavigationsToNavigationItems()
+        var joinedNavToNavItems = RoleNavigationItemsConst.LeaderIds.Select(i => new DbNavigationsToNavigationItems()
         {
             NavigationId = roleNavIds[(int)UserRoleType.TeamManager],
             NavigationItemId = i
         }).Concat(
-            items.PlayerIds.Select(y => new DbNavigationsToNavigationItems()
+            RoleNavigationItemsConst.PlayerIds.Select(y => new DbNavigationsToNavigationItems()
             {
                 NavigationId = roleNavIds[(int)UserRoleType.Player],
                 NavigationItemId = y
@@ -56,12 +56,12 @@ internal sealed class DbNavigationItemsMapping
 
         // Bond User Roles to NavItems
 
-        var joinedRolesToNavItems = items.LeaderIds.Select(i => new DbUserRolesToNavigationItems()
+        var joinedRolesToNavItems = RoleNavigationItemsConst.LeaderIds.Select(i => new DbUserRolesToNavigationItems()
         {
             RoleId = (int)UserRoleType.TeamManager,
             NavigationItemId = i
         }).Concat(
-            items.PlayerIds.Select(y => new DbUserRolesToNavigationItems()
+            RoleNavigationItemsConst.PlayerIds.Select(y => new DbUserRolesToNavigationItems()
             {
                 RoleId = (int)UserRoleType.Player,
                 NavigationItemId = y
@@ -75,7 +75,7 @@ internal sealed class DbNavigationItemsMapping
                 ));
     }
 
-    private NavItems BuildItems(EntityTypeBuilder<DbNavigationItem> builder, Dictionary<int, Guid> roleNavIds)
+    private void BuildItems(EntityTypeBuilder<DbNavigationItem> builder, Dictionary<int, Guid> roleNavIds)
     {
         var items = new List<DbNavigationItem>()
         {
@@ -134,17 +134,5 @@ internal sealed class DbNavigationItemsMapping
 
         };
         builder.HasData(items);
-        var res = new NavItems()
-        {
-            PlayerIds = new List<int>() { 1, 2, 3, 6 },
-            LeaderIds = new List<int>() { 1, 2, 3, 4, 5, 6 },
-        };
-        return res;
-    }
-
-    class NavItems
-    {
-        public List<int> PlayerIds { get; init; } = null!;
-        public List<int> LeaderIds { get; init; } = null!;
     }
 }

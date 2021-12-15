@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using AirSoft.Data.Entity;
+using AirSoft.Data.InitialData;
 using AirSoft.Service.Common;
 using AirSoft.Service.Contracts;
 using AirSoft.Service.Contracts.Member;
@@ -91,6 +92,7 @@ public class MemberService : IMemberService
             UserId = request.UserId,
             Avatar = await File.ReadAllBytesAsync(root + "\\InitialData\\member-default.png")
         };
+        await this.CreateUserNavigation(request.UserId);
         var created = this._dataService.Member.Insert(dbMember);
         if (created == null)
         {
@@ -160,6 +162,7 @@ public class MemberService : IMemberService
         {
             throw new AirSoftBaseException(ErrorCodes.MemberService.EmptyUserId, "Пустой идентификатор пользователя");
         }
+
         DbMember? dbMember = await _dataService.Member.GetAsync(x => x.UserId == userId && x.Id == request.Id);
 
         if (dbMember == null)
@@ -170,5 +173,27 @@ public class MemberService : IMemberService
         this._dataService.Member.Delete(dbMember);
 
         _logger.Log(LogLevel.Information, $"{logPath} Member deleted: {request!.Id}.");
+    }
+
+    private async Task<DbUserNavigation> CreateUserNavigation(Guid userId)
+    {
+        DbUserNavigation? dbNavigation = new DbUserNavigation()
+        {
+            UserId = userId,
+            CreatedBy = userId,
+            ModifiedBy = userId,
+            CreatedDate = DateTime.UtcNow,
+            ModifiedDate = DateTime.UtcNow,
+            Id = Guid.NewGuid(),
+            Title = "Навигация пользователя",
+            IsDefault = true
+        };
+        dbNavigation.NavigationsToNavigationItems = RoleNavigationItemsConst.PlayerIds.Select(y => new DbNavigationsToNavigationItems()
+        {
+            NavigationId = dbNavigation.Id,
+            NavigationItemId = y
+        }).ToList();
+        _dataService.UserNavigations.Insert(dbNavigation);
+        return dbNavigation;
     }
 }

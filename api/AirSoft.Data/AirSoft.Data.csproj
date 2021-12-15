@@ -27,6 +27,9 @@
     <None Update="InitialData\admin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="InitialData\member-default.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="InitialData\team.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

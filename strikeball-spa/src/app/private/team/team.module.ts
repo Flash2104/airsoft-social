@@ -13,7 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTreeModule } from '@angular/material/tree';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
-import { TeamMainInfoEditComponent } from './main-page/edit/team-main-info-edit.component';
+import { TeamMainInfoEditComponent } from './main-page/edit-main-info/team-main-info-edit.component';
 import { TeamMainInfoComponent } from './main-page/main-info/team-main-info.component';
 import { TeamMainPageComponent } from './main-page/team-main-page.component';
 import { TeamMembersComponent } from './main-page/team-members/team-members.component';

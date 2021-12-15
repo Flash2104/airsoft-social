@@ -26,6 +26,7 @@ public class ErrorCodes
         public const int EmptyUserId = 82101;
         public const int NotFound = 82102;
         public const int AlreadyExist = 82103;
+        public const int NavigationAlreadyExist = 82104;
     }
 
     public sealed class UserRepository

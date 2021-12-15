@@ -45,7 +45,9 @@ public class ErrorCodes
         public const int EmptyUserId = 82310;
         public const int NotFound = 82311;
         public const int EmptyRoleTitle = 82312;
-        public const int AlreadyExist = 82312;
+        public const int AlreadyExist = 82313;
+
+        public const int LeaderNotInTeam = 82314;
     }
 
     public sealed class NavigationService

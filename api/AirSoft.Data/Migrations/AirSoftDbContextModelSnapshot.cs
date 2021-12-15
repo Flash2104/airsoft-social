@@ -53,9 +53,6 @@ namespace AirSoft.Data.Migrations
                     b.Property<string>("Deleted")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsTeamLeader")
-                        .HasColumnType("bit");
-
                     b.Property<Guid>("ModifiedBy")
                         .HasMaxLength(50)
                         .HasColumnType("uniqueidentifier");
@@ -100,7 +97,6 @@ namespace AirSoft.Data.Migrations
                             City = "Москва",
                             CreatedBy = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
-                            IsTeamLeader = true,
                             ModifiedBy = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3"),
                             ModifiedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             Name = "Кирилл",
@@ -244,52 +240,52 @@ namespace AirSoft.Data.Migrations
                     b.HasData(
                         new
                         {
-                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
+                            NavigationId = new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"),
                             NavigationItemId = 1
                         },
                         new
                         {
-                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
+                            NavigationId = new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"),
                             NavigationItemId = 2
                         },
                         new
                         {
-                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
+                            NavigationId = new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"),
                             NavigationItemId = 3
                         },
                         new
                         {
-                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
+                            NavigationId = new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"),
                             NavigationItemId = 4
                         },
                         new
                         {
-                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
+                            NavigationId = new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"),
                             NavigationItemId = 5
                         },
                         new
                         {
-                            NavigationId = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
+                            NavigationId = new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"),
                             NavigationItemId = 6
                         },
                         new
                         {
-                            NavigationId = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
+                            NavigationId = new Guid("8908731b-fe6e-4c23-9350-753292a550c4"),
                             NavigationItemId = 1
                         },
                         new
                         {
-                            NavigationId = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
+                            NavigationId = new Guid("8908731b-fe6e-4c23-9350-753292a550c4"),
                             NavigationItemId = 2
                         },
                         new
                         {
-                            NavigationId = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
+                            NavigationId = new Guid("8908731b-fe6e-4c23-9350-753292a550c4"),
                             NavigationItemId = 3
                         },
                         new
                         {
-                            NavigationId = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
+                            NavigationId = new Guid("8908731b-fe6e-4c23-9350-753292a550c4"),
                             NavigationItemId = 6
                         });
                 });
@@ -321,6 +317,10 @@ namespace AirSoft.Data.Migrations
                     b.Property<DateTime?>("FoundationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("LeaderId")
+                        .HasMaxLength(50)
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ModifiedBy")
                         .HasMaxLength(50)
                         .HasColumnType("uniqueidentifier");
@@ -348,6 +348,7 @@ namespace AirSoft.Data.Migrations
                             CreatedBy = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             FoundationDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
+                            LeaderId = new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"),
                             ModifiedBy = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3"),
                             ModifiedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             Title = "AirSoft Events"
@@ -396,7 +397,7 @@ namespace AirSoft.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e4025e20-166a-454e-bd81-4cc7ee7b3b29"),
+                            Id = new Guid("fec28bf5-1355-4335-97c0-96fbc18924d4"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -407,7 +408,7 @@ namespace AirSoft.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("580a0bff-e83a-49f8-b498-66bc6a494a7e"),
+                            Id = new Guid("090a79a3-4632-41ae-8350-4cf39522bd25"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -418,7 +419,7 @@ namespace AirSoft.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("78c5c419-a994-4cd5-9b8b-6816028cd044"),
+                            Id = new Guid("6cfabf42-e6aa-4dc0-a40e-e17e8167b1e3"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -447,12 +448,12 @@ namespace AirSoft.Data.Migrations
                         new
                         {
                             MemberId = new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"),
-                            TeamRoleId = new Guid("e4025e20-166a-454e-bd81-4cc7ee7b3b29")
+                            TeamRoleId = new Guid("fec28bf5-1355-4335-97c0-96fbc18924d4")
                         },
                         new
                         {
                             MemberId = new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"),
-                            TeamRoleId = new Guid("78c5c419-a994-4cd5-9b8b-6816028cd044")
+                            TeamRoleId = new Guid("6cfabf42-e6aa-4dc0-a40e-e17e8167b1e3")
                         });
                 });
 
@@ -556,23 +557,23 @@ namespace AirSoft.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ed71a55c-028d-4af2-a43a-77509afa4e49"),
+                            Id = new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            CreatedDate = new DateTime(2021, 12, 14, 15, 46, 21, 427, DateTimeKind.Utc).AddTicks(7508),
+                            CreatedDate = new DateTime(2021, 12, 15, 14, 31, 7, 736, DateTimeKind.Utc).AddTicks(7792),
                             IsDefault = true,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            ModifiedDate = new DateTime(2021, 12, 14, 15, 46, 21, 427, DateTimeKind.Utc).AddTicks(7508),
+                            ModifiedDate = new DateTime(2021, 12, 15, 14, 31, 7, 736, DateTimeKind.Utc).AddTicks(7788),
                             Title = "Навигация менеджера команды",
                             UserId = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3")
                         },
                         new
                         {
-                            Id = new Guid("b998b1e2-2c84-4d03-8aa8-09380f9ccd97"),
+                            Id = new Guid("8908731b-fe6e-4c23-9350-753292a550c4"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            CreatedDate = new DateTime(2021, 12, 14, 15, 46, 21, 427, DateTimeKind.Utc).AddTicks(7515),
+                            CreatedDate = new DateTime(2021, 12, 15, 14, 31, 7, 736, DateTimeKind.Utc).AddTicks(7795),
                             IsDefault = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            ModifiedDate = new DateTime(2021, 12, 14, 15, 46, 21, 427, DateTimeKind.Utc).AddTicks(7515),
+                            ModifiedDate = new DateTime(2021, 12, 15, 14, 31, 7, 736, DateTimeKind.Utc).AddTicks(7795),
                             Title = "Навигация Игрока",
                             UserId = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3")
                         });

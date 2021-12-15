@@ -24,6 +24,8 @@ public class DbTeam : DbEntity<Guid>
 
     public string? City { get; set; }
 
+    public Guid LeaderId { get; set; }
+
     public DateTime? FoundationDate { get; set; }
 
     public byte[]? Avatar { get; set; }
@@ -40,12 +42,12 @@ public class DbTeam : DbEntity<Guid>
         set => _teamRoles = value;
     }
 
-    public DbMember? Leader => Members?.FirstOrDefault(x => x.IsTeamLeader.GetValueOrDefault());
+    public DbMember? Leader => Members?.FirstOrDefault(x => x.Id == LeaderId);
 }
 
 internal sealed class DbTeamMapping
 {
-    public void Map(EntityTypeBuilder<DbTeam> builder, Guid userId, Guid teamId)
+    public void Map(EntityTypeBuilder<DbTeam> builder, Guid userId, Guid teamId, Guid memberId)
     {
         builder.ToTable("Teams");
 
@@ -55,6 +57,7 @@ internal sealed class DbTeamMapping
         builder.Property(x => x.ModifiedDate).IsRequired().HasMaxLength(50);
         builder.Property(x => x.CreatedBy).IsRequired().HasMaxLength(50);
         builder.Property(x => x.ModifiedBy).IsRequired().HasMaxLength(50);
+        builder.Property(x => x.LeaderId).IsRequired().HasMaxLength(50);
 
         string? root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         var team = new DbTeam
@@ -66,6 +69,7 @@ internal sealed class DbTeamMapping
             ModifiedBy = userId,
             Title = "AirSoft Events",
             City = "Москва",
+            LeaderId = memberId,
             FoundationDate = new DateTime(2021, 12, 02, 1, 50, 00),
             Avatar = File.ReadAllBytes(root + "\\InitialData\\team.png")
         };

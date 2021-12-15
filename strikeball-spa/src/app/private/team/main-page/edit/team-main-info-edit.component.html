@@ -18,50 +18,46 @@
   <mat-card-content class="main-info-content">
     <table class="mat-table w-100 my-3">
       <tr class="mat-row py-3">
-        <!-- <td class="mat-cell">Командир</td>
-        <td
-          *ngIf="team?.teamLeader != null; else emptyRowTemplate"
-          class="mat-cell"
-        >
-          {{ team?.teamLeader?.name }} {{ team?.teamLeader?.surname }}
-        </td> -->
+        <td class="mat-cell">Название</td>
         <td class="mat-cell">
-          <mat-form-field
-            *ngIf="team?.title != null"
-            class=""
-            appearance="fill"
-          >
-            <mat-label>Название</mat-label>
-            <input
-              matInput
-              placeholder="{{ team!.title }}"
-              value="{{ team!.title }}"
-            />
+          <mat-form-field class="w-100">
+            <mat-label></mat-label>
+            <input matInput [placeholder]="team?.title || ''" />
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr class="mat-row py-3">
+        <td class="mat-cell">Командир</td>
+        <td class="mat-cell">
+          <mat-form-field class="w-100">
+            <mat-label></mat-label>
+            <input matInput placeholder="{{team?.teamLeader?.name  || ''}} {{team?.teamLeader?.surname  || ''}}" />
           </mat-form-field>
         </td>
       </tr>
       <tr class="mat-row py-3">
         <td class="mat-cell">Город</td>
-        <td *ngIf="team?.city != null; else emptyRowTemplate" class="mat-cell">
-          {{ team?.city }}
+        <td class="mat-cell">
+          <mat-form-field class="w-100">
+            <mat-label></mat-label>
+            <input matInput [placeholder]="team?.city || ''" />
+          </mat-form-field>
         </td>
       </tr>
       <tr class="mat-row py-3">
         <td class="mat-cell">Дата основания</td>
         <td
-          *ngIf="team?.foundationDate != null; else emptyRowTemplate"
           class="mat-cell"
         >
-          {{ team?.foundationDate | date: "dd.MM.yyyyг." }}
+        <mat-form-field class="w-100">
+          <mat-label></mat-label>
+          <input matInput [placeholder]="(team?.foundationDate) || ''" />
+        </mat-form-field>
         </td>
       </tr>
     </table>
   </mat-card-content>
 </div>
-
-<ng-template #emptyRowTemplate>
-  <td class="mat-cell">Не указан(а)</td>
-</ng-template>
 <ng-template #loadingTemplate>
   <loader> </loader>
 </ng-template>

@@ -37,8 +37,6 @@ public class DbMember : DbEntity<Guid>
 
     public string? About { get; set; }
 
-    public bool? IsTeamLeader { get; set; }
-
     public DbTeam? Team
     {
         get => LazyLoader.Load(this, ref _team);
@@ -95,7 +93,6 @@ internal sealed class DbMemberMapping
             TeamId = teamId,
             UserId = userId,
             Avatar = File.ReadAllBytes(root + "\\InitialData\\admin.png"),
-            IsTeamLeader = true,
             About = "Создатель приложения"
         };
         builder.HasData(adminProfile);

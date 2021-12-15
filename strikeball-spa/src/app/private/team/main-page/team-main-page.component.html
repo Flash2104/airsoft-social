@@ -9,15 +9,24 @@
       <div class="col-8">
         <mat-card class="main-info-card">
           <span [ngSwitch]="isEditing$ | async">
-          <p *ngSwitchCase="true">
-            <air-team-main-info-edit [loading]="(loading$ | async)" [team]="mapMainInfoTeamData(team)"></air-team-main-info-edit>
-          </p>
-          <p *ngSwitchCase="false">
-            <air-team-main-info [loading]="(loading$ | async)" [team]="mapMainInfoTeamData(team)"></air-team-main-info>
-          </p>
-          <p *ngSwitchDefault>
-            <air-team-main-info [loading]="(loading$ | async)" [team]="mapMainInfoTeamData(team)"></air-team-main-info>
-          </p>
+            <p *ngSwitchCase="true">
+              <air-team-main-info-edit
+                [loading]="loading$ | async"
+                [team]="mapMainInfoTeamData(team)"
+              ></air-team-main-info-edit>
+            </p>
+            <p *ngSwitchCase="false">
+              <air-team-main-info
+                [loading]="loading$ | async"
+                [team]="mapMainInfoTeamData(team)"
+              ></air-team-main-info>
+            </p>
+            <p *ngSwitchDefault>
+              <air-team-main-info
+                [loading]="loading$ | async"
+                [team]="mapMainInfoTeamData(team)"
+              ></air-team-main-info>
+            </p>
           </span>
         </mat-card>
       </div>
@@ -29,41 +38,10 @@
             <mat-card-title>Члены команды</mat-card-title>
           </mat-card-header>
           <div class="members-container">
-            <mat-card *ngFor="let member of team.members" class="member-card">
-              <mat-card-header class="mb-3">
-                <button
-                  mat-icon-button
-                  aria-label="Example icon button with a open in new tab icon"
-                >
-                  <mat-icon>open_in_new</mat-icon>
-                </button>
-                <mat-card-title
-                  >{{ member.name }} {{ member.surname }}
-                </mat-card-title>
-                <mat-card-subtitle>
-                  <span
-                    class="d-flex align-items-center justify-content-between"
-                    *ngIf="member.roles != null && member.roles.length > 0"
-                  >
-                    {{ member.roles[0].title }}
-                    <mat-icon class="ms-2" *ngIf="member.isLeader"
-                      >psychology</mat-icon
-                    >
-                  </span></mat-card-subtitle
-                >
-              </mat-card-header>
-              <div class="member-avatar">
-                <img mat-card-image [src]="member.avatar" alt="Аватар" />
-              </div>
-              <mat-card-content>
-                <p>
-                  Звания:
-                  <span>{{ getRolesString(member.roles) }}.</span>
-                </p>
-              </mat-card-content>
-              <mat-card-actions class="text-end">
-              </mat-card-actions>
-            </mat-card>
+            <air-team-members
+              [teamMembers]="team.members"
+              [loading]="loading$ | async"
+            ></air-team-members>
           </div>
         </mat-card>
       </div>

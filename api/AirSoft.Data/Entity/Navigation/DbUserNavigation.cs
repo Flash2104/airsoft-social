@@ -18,7 +18,7 @@ public class DbUserNavigation: DbEntity<Guid>
 
     private List<DbNavigationItem>? _navigationItems;
 
-    public string Title { get; set; }
+    public string Title { get; set; } = null!;
 
     public bool IsDefault { get; set; }
 

@@ -91,7 +91,7 @@ public class AirSoftDbContext : DbContext, IDbContext
         new DbUserMapping().Map(modelBuilder.Entity<DbUser>(), userId);
 
         new DbMemberMapping().Map(modelBuilder.Entity<DbMember>(), userId, memberId, teamId, teamRoleIds);
-        new DbTeamMapping().Map(modelBuilder.Entity<DbTeam>(), userId, teamId);
+        new DbTeamMapping().Map(modelBuilder.Entity<DbTeam>(), userId, teamId, memberId);
         new DbTeamRolesMapping().Map(modelBuilder.Entity<DbTeamRole>(), teamId, teamRoleIds);
         new DbTeamRolesToMembersMapping().Map(modelBuilder.Entity<DbTeamRolesToMembers>());
 

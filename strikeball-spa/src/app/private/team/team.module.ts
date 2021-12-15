@@ -16,6 +16,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { TeamMainInfoEditComponent } from './main-page/edit/team-main-info-edit.component';
 import { TeamMainInfoComponent } from './main-page/main-info/team-main-info.component';
 import { TeamMainPageComponent } from './main-page/team-main-page.component';
+import { TeamMembersComponent } from './main-page/team-members/team-members.component';
 import { TeamRepository } from './repository/team.repository';
 import { TeamService } from './repository/team.service';
 
@@ -38,6 +39,7 @@ const routes: Routes = [
     TeamMainPageComponent,
     TeamMainInfoComponent,
     TeamMainInfoEditComponent,
+    TeamMembersComponent,
   ],
   imports: [
     MatButtonModule,

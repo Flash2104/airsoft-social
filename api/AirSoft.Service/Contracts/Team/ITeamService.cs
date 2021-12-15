@@ -2,7 +2,7 @@
 using AirSoft.Service.Contracts.Team.Delete;
 using AirSoft.Service.Contracts.Team.Get;
 using AirSoft.Service.Contracts.Team.GetCurrent;
-using AirSoft.Service.Contracts.Team.Update;
+using AirSoft.Service.Contracts.Team.UpdateMainInfo;
 
 namespace AirSoft.Service.Contracts.Team;
 
@@ -14,7 +14,7 @@ public interface ITeamService
 
     Task<CreateTeamResponse> Create(CreateTeamRequest request);
 
-    Task<UpdateTeamResponse> Update(UpdateTeamRequest request);
+    Task<UpdateTeamMainInfoResponse> UpdateMainInfo(UpdateTeamMainInfoRequest request);
 
     Task Delete(DeleteTeamRequest request);
 }

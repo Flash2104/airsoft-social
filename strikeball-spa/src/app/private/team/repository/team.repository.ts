@@ -25,6 +25,7 @@ export interface ITeamMainInfo {
 
 export interface ITeamState {
   team: ITeamData | null;
+  noTeam: boolean;
   teamMainInfo: {
     data: ITeamMainInfo | null;
     isEditing: boolean;
@@ -42,6 +43,7 @@ export class TeamRepository {
     withProps<ITeamState>({
       team: null,
       loading: false,
+      noTeam: true,
       teamMainInfo: {
         data: null,
         isEditing: false,
@@ -69,6 +71,10 @@ export class TeamRepository {
     select((st) => st.teamMainInfo.isEditing)
   );
 
+  isNoTeam$: Observable<boolean> = this.teamStore.pipe(
+    select((st) => st.noTeam)
+  );
+
   teamLeader$: Observable<IMemberViewData | null | undefined> =
     this.teamStore.pipe(
       select((st) => st.team?.members),
@@ -92,6 +98,7 @@ export class TeamRepository {
     this.teamStore.update((st) => ({
       ...st,
       team,
+      noTeam: false,
     }));
   }
 

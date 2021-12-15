@@ -14,9 +14,9 @@ public class DbTeamRole : DbEntity<Guid>
         LazyLoader = lazyLoader;
     }
 
-    private ILazyLoader LazyLoader { get; set; } = null!;
+    private ILazyLoader LazyLoader { get; } = null!;
 
-    public string Title { get; set; }
+    public string Title { get; set; } = null!;
 
     public int Rank { get; set; }
 

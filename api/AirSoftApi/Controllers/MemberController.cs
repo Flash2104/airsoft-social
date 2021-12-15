@@ -54,7 +54,7 @@ namespace AirSoftApi.Controllers
         }
 
         [HttpGet("get/{id}")]
-        [Authorize(Roles = RolesConst.God)]
+        [Authorize]
         public async Task<ServerResponseDto<GetCurrentMemberResponseDto>> Get(string id)
         {
             var logPath = $"{_correlationService.GetUserId()}.{nameof(MemberController)} {nameof(Get)} | ";

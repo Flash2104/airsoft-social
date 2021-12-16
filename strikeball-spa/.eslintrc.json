@@ -38,7 +38,7 @@
           {
             "type": "attribute",
             "prefix": "air",
-            "style": "kebab-case"
+            "style": "camelCase"
           }
         ],
         "@angular-eslint/component-selector": [

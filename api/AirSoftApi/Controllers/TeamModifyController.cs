@@ -26,7 +26,7 @@ namespace AirSoftApi.Controllers
             _correlationService = correlationService;
         }
 
-        [HttpPost("update-main-info")]
+        [HttpPut("update-main-info")]
         [Authorize]
         public async Task<ServerResponseDto<UpdateTeamMainInfoResponseDto>> UpdateMainInfo([FromBody] UpdateTeamMainInfoRequestDto requestDto)
         {

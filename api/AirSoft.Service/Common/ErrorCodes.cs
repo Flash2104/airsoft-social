@@ -21,6 +21,18 @@ public class ErrorCodes
         public const int CreatedUserIsNull = 82008;
     }
 
+    public sealed class UserService
+    {
+        public const int EmptyLoginOrPass = 83001;
+        public const int UserNotFound = 83003;
+        public const int EmptyPassword = 83004;
+
+        public const int AlreadyExist = 83005;
+        public const int PasswordsNotEqual = 83006;
+        public const int UserRoleNotFound = 82007;
+        public const int CreatedUserIsNull = 83008;
+    }
+
     public sealed class MemberService
     {
         public const int EmptyUserId = 82101;
@@ -34,11 +46,13 @@ public class ErrorCodes
         public const int MoreThanOneUserByPhone = 82201;
         public const int MoreThanOneUserByEmail = 82202;
         public const int UserNotFound = 82203;
+        public const int UserAlreadyHaveRole = 82204;
     }
 
     public sealed class TeamRepository
     {
         public const int MemberNotFound = 82300;
+        public const int CreatedTeamIsNull = 82301;
     }
 
     public sealed class TeamService
@@ -57,5 +71,10 @@ public class ErrorCodes
         public const int UserNotFound = 82321;
         public const int NavigationNotFound = 82322;
         public const int UserRolesNotFound = 82323;
+    }
+
+    public sealed class TeamRolesRepository
+    {
+        public const int AlreadyHasRoles = 82330;
     }
 }

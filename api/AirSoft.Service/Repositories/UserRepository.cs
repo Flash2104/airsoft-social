@@ -19,7 +19,7 @@ public class UserRepository : GenericRepository<DbUser>
         if (dbUsers.Count > 1)
         {
             throw new AirSoftBaseException(ErrorCodes.UserRepository.MoreThanOneUserByPhone,
-                "В базе больше одного пользователя по данному номеру телефона.");
+                "В базе больше одного пользователя по данному номеру телефона.", "");
         }
 
         return dbUsers.FirstOrDefault();
@@ -32,7 +32,7 @@ public class UserRepository : GenericRepository<DbUser>
         if (dbUsers.Count > 1)
         {
             throw new AirSoftBaseException(ErrorCodes.UserRepository.MoreThanOneUserByEmail,
-                "В базе больше одного пользователя по данному email.");
+                "В базе больше одного пользователя по данному email.", "");
         }
 
         return dbUsers.FirstOrDefault();
@@ -41,5 +41,29 @@ public class UserRepository : GenericRepository<DbUser>
     public DbUser? CreateDbUser(DbUser user)
     {
         return Insert(user);
+    }
+
+    public async Task AddUserRole(Guid userId, DbUserRole userRole)
+    {
+        DbUser? dbUser = await GetAsync(x => x.Id == userId);
+
+        if (dbUser == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.UserRepository.UserNotFound, "Пользователь не найден");
+        }
+
+        if (dbUser.UserRoles != null && dbUser.UserRoles.Any(x => x.Id == userRole.Id))
+        {
+            throw new AirSoftBaseException(ErrorCodes.UserRepository.UserAlreadyHaveRole, $"У пользователя уже есть роль: {userRole.Role}");
+        }
+        
+        dbUser.UsersToRoles = new List<DbUsersToRoles>()
+        {
+            new()
+            {
+                UserId = dbUser.Id,
+                RoleId = userRole.Id
+            }
+        };
     }
 }

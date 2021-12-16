@@ -109,7 +109,6 @@ internal sealed class DbMemberMapping
                     MemberId = memberId,
                     TeamRoleId = teamRoleIds[(int)DefaultMemberRoleType.Рядовой]
                 },
-            })
-            );
+            }));
     }
 }

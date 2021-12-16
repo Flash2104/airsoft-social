@@ -43,7 +43,7 @@ namespace AirSoftApi.Controllers
             }
             catch (AirSoftBaseException baseEx)
             {
-                _logger.LogError(baseEx, $"{logPath} AirSoft Exception.");
+                _logger.LogError(baseEx, $"{baseEx.LogPath}.");
                 return new ServerResponseDto<TResponseDto>(new ErrorDto(baseEx.Code, baseEx.Message));
             }
             catch (Exception ex)
@@ -70,7 +70,7 @@ namespace AirSoftApi.Controllers
             }
             catch (AirSoftBaseException baseEx)
             {
-                _logger.LogError(baseEx, $"{logPath} AirSoft Exception.");
+                _logger.LogError(baseEx, $"{baseEx.LogPath}.");
                 return new ServerResponseDto<TResponseDto>(new ErrorDto(baseEx.Code, baseEx.Message));
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace AirSoftApi.Controllers
             }
             catch (AirSoftBaseException baseEx)
             {
-                _logger.LogError(baseEx, $"{logPath} AirSoft Exception.");
+                _logger.LogError(baseEx, $"{baseEx.LogPath}.");
                 return new ServerResponseDto<TResponseDto>(new ErrorDto(baseEx.Code, baseEx.Message));
             }
             catch (Exception ex)

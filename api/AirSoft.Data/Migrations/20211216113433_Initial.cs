@@ -348,9 +348,9 @@ namespace AirSoft.Data.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "Deleted", "ModifiedBy", "ModifiedDate", "Rank", "TeamId", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("090a79a3-4632-41ae-8350-4cf39522bd25"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), 2, new Guid("be955114-80ca-4b6c-9295-022c2460d48f"), "Заместитель" },
-                    { new Guid("6cfabf42-e6aa-4dc0-a40e-e17e8167b1e3"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), 3, new Guid("be955114-80ca-4b6c-9295-022c2460d48f"), "Рядовой" },
-                    { new Guid("fec28bf5-1355-4335-97c0-96fbc18924d4"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), 1, new Guid("be955114-80ca-4b6c-9295-022c2460d48f"), "Командир" }
+                    { new Guid("9c1da5b8-b0c6-4900-b177-22b8c426d43b"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), 1, new Guid("be955114-80ca-4b6c-9295-022c2460d48f"), "Командир" },
+                    { new Guid("b49e347a-a800-45a8-9a91-626a9f15927a"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), 2, new Guid("be955114-80ca-4b6c-9295-022c2460d48f"), "Заместитель" },
+                    { new Guid("d4ca7075-9efd-4f1b-9ed0-0f9879a753ba"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified), 3, new Guid("be955114-80ca-4b6c-9295-022c2460d48f"), "Рядовой" }
                 });
 
             migrationBuilder.InsertData(
@@ -359,8 +359,8 @@ namespace AirSoft.Data.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "Deleted", "IsDefault", "ModifiedBy", "ModifiedDate", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 15, 14, 31, 7, 736, DateTimeKind.Utc).AddTicks(7792), null, true, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 15, 14, 31, 7, 736, DateTimeKind.Utc).AddTicks(7788), "Навигация менеджера команды", new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3") },
-                    { new Guid("8908731b-fe6e-4c23-9350-753292a550c4"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 15, 14, 31, 7, 736, DateTimeKind.Utc).AddTicks(7795), null, false, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 15, 14, 31, 7, 736, DateTimeKind.Utc).AddTicks(7795), "Навигация Игрока", new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3") }
+                    { new Guid("4d3571e9-3638-46a6-8413-5164946fd225"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 16, 11, 34, 32, 831, DateTimeKind.Utc).AddTicks(5250), null, true, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 16, 11, 34, 32, 831, DateTimeKind.Utc).AddTicks(5243), "Навигация менеджера команды", new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3") },
+                    { new Guid("5253b925-a2cc-425c-b2fa-08c5f03fef2a"), new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 16, 11, 34, 32, 831, DateTimeKind.Utc).AddTicks(5254), null, false, new Guid("00000000-0000-0000-0000-000000000000"), new DateTime(2021, 12, 16, 11, 34, 32, 831, DateTimeKind.Utc).AddTicks(5254), "Навигация Игрока", new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3") }
                 });
 
             migrationBuilder.InsertData(
@@ -389,7 +389,8 @@ namespace AirSoft.Data.Migrations
                 {
                     { 1, new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3") },
                     { 2, new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3") },
-                    { 3, new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3") }
+                    { 3, new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3") },
+                    { 5, new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3") }
                 });
 
             migrationBuilder.InsertData(
@@ -398,16 +399,16 @@ namespace AirSoft.Data.Migrations
                 columns: new[] { "NavigationId", "NavigationItemId" },
                 values: new object[,]
                 {
-                    { new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"), 1 },
-                    { new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"), 2 },
-                    { new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"), 3 },
-                    { new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"), 4 },
-                    { new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"), 5 },
-                    { new Guid("2b440dd7-1f30-4282-b161-fff65f6a0362"), 6 },
-                    { new Guid("8908731b-fe6e-4c23-9350-753292a550c4"), 1 },
-                    { new Guid("8908731b-fe6e-4c23-9350-753292a550c4"), 2 },
-                    { new Guid("8908731b-fe6e-4c23-9350-753292a550c4"), 3 },
-                    { new Guid("8908731b-fe6e-4c23-9350-753292a550c4"), 6 }
+                    { new Guid("4d3571e9-3638-46a6-8413-5164946fd225"), 1 },
+                    { new Guid("4d3571e9-3638-46a6-8413-5164946fd225"), 2 },
+                    { new Guid("4d3571e9-3638-46a6-8413-5164946fd225"), 3 },
+                    { new Guid("4d3571e9-3638-46a6-8413-5164946fd225"), 4 },
+                    { new Guid("4d3571e9-3638-46a6-8413-5164946fd225"), 5 },
+                    { new Guid("4d3571e9-3638-46a6-8413-5164946fd225"), 6 },
+                    { new Guid("5253b925-a2cc-425c-b2fa-08c5f03fef2a"), 1 },
+                    { new Guid("5253b925-a2cc-425c-b2fa-08c5f03fef2a"), 2 },
+                    { new Guid("5253b925-a2cc-425c-b2fa-08c5f03fef2a"), 3 },
+                    { new Guid("5253b925-a2cc-425c-b2fa-08c5f03fef2a"), 6 }
                 });
 
             migrationBuilder.InsertData(
@@ -416,8 +417,8 @@ namespace AirSoft.Data.Migrations
                 columns: new[] { "MemberId", "TeamRoleId" },
                 values: new object[,]
                 {
-                    { new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"), new Guid("6cfabf42-e6aa-4dc0-a40e-e17e8167b1e3") },
-                    { new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"), new Guid("fec28bf5-1355-4335-97c0-96fbc18924d4") }
+                    { new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"), new Guid("9c1da5b8-b0c6-4900-b177-22b8c426d43b") },
+                    { new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"), new Guid("d4ca7075-9efd-4f1b-9ed0-0f9879a753ba") }
                 });
 
             migrationBuilder.CreateIndex(

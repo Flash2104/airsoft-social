@@ -30,6 +30,7 @@ public class DataService : IDataService
     public GenericRepository<DbUserRole> UserRoles => _userRoles ??= new GenericRepository<DbUserRole>(_dbContext);
 
     public GenericRepository<DbUserNavigation> UserNavigations => _userNavigations ??= new GenericRepository<DbUserNavigation>(_dbContext);
+    
     public GenericRepository<DbNavigationItem> NavigationItems => _navigationItems ??= new GenericRepository<DbNavigationItem>(_dbContext);
 
     public async Task<bool> SaveAsync()

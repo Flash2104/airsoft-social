@@ -15,4 +15,8 @@
     <Folder Include="Implementations\Team\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="EFCore.BulkExtensions" Version="6.2.2" />
+  </ItemGroup>
+
 </Project>

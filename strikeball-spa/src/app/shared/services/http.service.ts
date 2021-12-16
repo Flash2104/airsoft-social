@@ -14,6 +14,10 @@ import {
   IUpdateProfileResponse,
 } from './dto-models/profile/update-profile';
 import { IServerResponse } from './dto-models/server-response';
+import {
+  ICreateTeamRequest,
+  ICreateTeamResponse,
+} from './dto-models/team/create/create-team-dto';
 import { IGetCurrentTeamResponse } from './dto-models/team/get-current/get-current-team-response';
 
 @Injectable({ providedIn: 'root' })
@@ -63,6 +67,14 @@ export class HttpService {
   teamGetCurrent(): Observable<IServerResponse<IGetCurrentTeamResponse>> {
     return of('api/team/get-current').pipe(
       mergeMap((url) => this.httpGet<IGetCurrentTeamResponse>(url))
+    );
+  }
+
+  teamCreate(
+    data: ICreateTeamRequest
+  ): Observable<IServerResponse<ICreateTeamResponse>> {
+    return of('api/team/create').pipe(
+      mergeMap((url) => this.httpPost<IGetCurrentTeamResponse>(url, data))
     );
   }
 

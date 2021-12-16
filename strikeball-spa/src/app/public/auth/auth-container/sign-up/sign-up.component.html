@@ -10,7 +10,7 @@
       [errorStateMatcher]="matcher"
       placeholder="Ex.pat@example.com или 88005553535"
     />
-    <button
+    <!-- <button
       *ngIf="form.controls['email'].value"
       type="reset"
       matSuffix
@@ -19,7 +19,7 @@
       (click)="form.controls['email'].reset()"
     >
       <mat-icon>close</mat-icon>
-    </button>
+    </button> -->
     <mat-error
       *ngIf="
       form.controls['email'].hasError('email') &&
@@ -35,7 +35,7 @@
   <mat-form-field class="mb-3" appearance="fill">
     <mat-label>Пароль</mat-label>
     <input autocomplete="new-password" matInput type="password" formControlName="password" />
-    <button
+    <!-- <button
       *ngIf="form.controls['password'].value"
       type="reset"
       matSuffix
@@ -44,7 +44,7 @@
       (click)="form.controls['password'].reset()"
     >
       <mat-icon>close</mat-icon>
-    </button>
+    </button> -->
     <mat-error *ngIf="form.controls['password'].hasError('required')">
       Пароль обязателен для ввода
     </mat-error>
@@ -52,7 +52,7 @@
   <mat-form-field class="mb-3" appearance="fill">
     <mat-label>Подтверждения пароля</mat-label>
     <input matInput type="password" formControlName="confirmPassword" />
-    <button
+    <!-- <button
       *ngIf="form.controls['confirmPassword'].value"
       type="reset"
       matSuffix
@@ -61,7 +61,7 @@
       (click)="form.controls['confirmPassword'].reset()"
     >
       <mat-icon>close</mat-icon>
-    </button>
+    </button> -->
     <mat-error *ngIf="form.controls['confirmPassword'].hasError('required')">
       Подтверждение пароля обязательно
     </mat-error>

@@ -1,4 +1,5 @@
-﻿using AirSoft.Data.Entity;
+﻿using System.Reflection;
+using AirSoft.Data.Entity;
 using AirSoft.Service.Common;
 using AirSoft.Service.Contracts;
 using AirSoft.Service.Contracts.Models;
@@ -8,6 +9,7 @@ using AirSoft.Service.Contracts.Team.Delete;
 using AirSoft.Service.Contracts.Team.Get;
 using AirSoft.Service.Contracts.Team.GetCurrent;
 using AirSoft.Service.Contracts.Team.UpdateMainInfo;
+using AirSoft.Service.Contracts.User;
 using AirSoft.Service.Exceptions;
 using Microsoft.Extensions.Logging;
 
@@ -18,12 +20,19 @@ public class TeamService : ITeamService
     private readonly ILogger<TeamService> _logger;
     private readonly ICorrelationService _correlationService;
     private readonly IDataService _dataService;
+    private readonly IUserService _userService;
 
-    public TeamService(ILogger<TeamService> logger, ICorrelationService correlationService, IDataService dataService)
+    public TeamService(
+        ILogger<TeamService> logger, 
+        ICorrelationService correlationService, 
+        IDataService dataService,
+        IUserService userService
+        )
     {
         _logger = logger;
         _correlationService = correlationService;
         _dataService = dataService;
+        _userService = userService;
     }
 
     public async Task<GetCurrentTeamResponse> GetCurrent()
@@ -33,7 +42,7 @@ public class TeamService : ITeamService
         _logger.Log(LogLevel.Trace, $"{logPath} started.");
         if (!userId.HasValue)
         {
-            throw new AirSoftBaseException(ErrorCodes.TeamService.EmptyUserId, "Пустой идентификатор пользователя");
+            throw new AirSoftBaseException(ErrorCodes.TeamService.EmptyUserId, "Пустой идентификатор пользователя", logPath);
         }
         DbTeam? dbTeam = await _dataService.Team.GetByUserAsync(userId.GetValueOrDefault());
 
@@ -51,25 +60,58 @@ public class TeamService : ITeamService
         throw new NotImplementedException();
     }
 
-    public Task<CreateTeamResponse> Create(CreateTeamRequest request)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<UpdateTeamMainInfoResponse> UpdateMainInfo(UpdateTeamMainInfoRequest request)
+    public async Task<CreateTeamResponse> Create(CreateTeamRequest request)
     {
         var userId = _correlationService.GetUserId();
         var logPath = $"{userId} {nameof(TeamService)} {nameof(GetCurrent)}. | ";
         _logger.Log(LogLevel.Trace, $"{logPath} started.");
         if (!userId.HasValue)
         {
-            throw new AirSoftBaseException(ErrorCodes.TeamService.EmptyUserId, "Пустой идентификатор пользователя");
+            throw new AirSoftBaseException(ErrorCodes.TeamService.EmptyUserId, "Пустой идентификатор пользователя", logPath);
+        }
+
+        DbMember? dbMember = await _dataService.Member.GetByUserAsync(userId.GetValueOrDefault());
+
+        if (dbMember == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.MemberService.NotFound, "Профиль не найден", logPath);
+        }
+        DbTeam? dbTeam = await _dataService.Team.GetByUserAsync(userId.GetValueOrDefault());
+
+        if (dbTeam != null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.TeamService.AlreadyExist, "У пользователя уже есть команда", logPath);
+        }
+        string? root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        dbTeam = new DbTeam
+        {
+            LeaderId = dbMember.Id,
+            FoundationDate = request.FoundationDate,
+            City = request.City,
+            Title = request.Title,
+            Avatar = request.Avatar ?? await File.ReadAllBytesAsync(root + "\\InitialData\\team.png")
+        };
+        var created = await this._dataService.Team.Create(dbTeam);
+        await _userService.SetUserTeamManager(userId.GetValueOrDefault());
+        await _dataService.SaveAsync();
+        _logger.Log(LogLevel.Information, $"{logPath} Team created: {dbTeam.Id}.");
+        return new CreateTeamResponse(MapToTeamData(created));
+    }
+
+    public async Task<UpdateTeamMainInfoResponse> UpdateMainInfo(UpdateTeamMainInfoRequest request)
+    {
+        var userId = _correlationService.GetUserId();
+        var logPath = $"{userId} {nameof(TeamService)} {nameof(UpdateMainInfo)}. | ";
+        _logger.Log(LogLevel.Trace, $"{logPath} started.");
+        if (!userId.HasValue)
+        {
+            throw new AirSoftBaseException(ErrorCodes.TeamService.EmptyUserId, "Пустой идентификатор пользователя", logPath);
         }
         DbTeam? dbTeam = await _dataService.Team.GetByUserAsync(userId.GetValueOrDefault());
 
         if (dbTeam == null)
         {
-            throw new AirSoftBaseException(ErrorCodes.TeamService.NotFound, "Команда не найдена");
+            throw new AirSoftBaseException(ErrorCodes.TeamService.NotFound, "Команда не найдена", logPath);
         }
         dbTeam.FoundationDate = request.FoundationDate;
         dbTeam.City = request.City;
@@ -77,16 +119,16 @@ public class TeamService : ITeamService
         {
             if (dbTeam.Members!.All(x => x.UserId != request.Leader.Id))
             {
-                throw new AirSoftBaseException(ErrorCodes.TeamService.LeaderNotInTeam, "Командир не является членом команды");
+                throw new AirSoftBaseException(ErrorCodes.TeamService.LeaderNotInTeam, "Командир не является членом команды", logPath);
             }
             dbTeam.LeaderId = request.Leader.Id;
         }
         dbTeam.Title = request.Title;
 
         this._dataService.Team.Update(dbTeam);
-
+        await _dataService.SaveAsync();
         _logger.Log(LogLevel.Information, $"{logPath} Team Main info updated: {dbTeam.Id}.");
-        return new UpdateTeamMainInfoResponse(MapToTeamData(dbTeam));
+        return new UpdateTeamMainInfoResponse(MapToTeamData(dbTeam!));
     }
 
     public Task Delete(DeleteTeamRequest request)

@@ -175,7 +175,7 @@ public class MemberService : IMemberService
         _logger.Log(LogLevel.Information, $"{logPath} Member deleted: {request!.Id}.");
     }
 
-    private async Task<DbUserNavigation> CreateUserNavigation(Guid userId)
+    private Task<DbUserNavigation> CreateUserNavigation(Guid userId)
     {
         DbUserNavigation? dbNavigation = new DbUserNavigation()
         {
@@ -194,6 +194,6 @@ public class MemberService : IMemberService
             NavigationItemId = y
         }).ToList();
         _dataService.UserNavigations.Insert(dbNavigation);
-        return dbNavigation;
+        return Task.FromResult(dbNavigation);
     }
 }

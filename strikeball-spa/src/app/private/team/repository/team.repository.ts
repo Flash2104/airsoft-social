@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { createState, select, Store, withProps } from '@ngneat/elf';
 import { map, Observable } from 'rxjs';
 import { v1 as uuidv1 } from 'uuid';
@@ -35,7 +35,7 @@ export interface ITeamState {
 }
 
 @Injectable()
-export class TeamRepository {
+export class TeamRepository implements OnDestroy {
   _state: {
     state: ITeamState;
     config: undefined;
@@ -116,5 +116,9 @@ export class TeamRepository {
   destroy(): void {
     this.teamStore.complete();
     this.teamStore.destroy();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy();
   }
 }

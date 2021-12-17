@@ -37,7 +37,7 @@ namespace AirSoftApi.Controllers
                 _memberService.GetCurrent,
                 res => new GetCurrentMemberResponseDto(
                      new MemberDataDto(
-                         res.MemberData.Id,
+                         res.MemberData!.Id,
                          res.MemberData.Name,
                          res.MemberData.Surname,
                          res.MemberData.BirthDate,
@@ -69,7 +69,7 @@ namespace AirSoftApi.Controllers
                 () => new GetByIdMemberRequest(guidId),
                 res => new GetCurrentMemberResponseDto(
                     new MemberDataDto(
-                        res.MemberData.Id,
+                        res.MemberData!.Id,
                         res.MemberData.Name,
                         res.MemberData.Surname,
                         res.MemberData.BirthDate,
@@ -99,11 +99,11 @@ namespace AirSoftApi.Controllers
                     dto.Name,
                     dto.Surname,
                     dto.BirthDate,
-                    dto.City
+                    dto.CityId
                     ),
                 res => new UpdateMemberResponseDto(
                     new MemberDataDto(
-                        res.MemberData.Id,
+                        res.MemberData!.Id,
                         res.MemberData.Name,
                         res.MemberData.Surname,
                         res.MemberData.BirthDate,

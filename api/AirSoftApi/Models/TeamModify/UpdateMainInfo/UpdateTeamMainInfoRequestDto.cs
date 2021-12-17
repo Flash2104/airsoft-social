@@ -5,11 +5,11 @@ namespace AirSoftApi.Models.TeamModify.UpdateMainInfo;
 
 public class UpdateTeamMainInfoRequestDto: IValidatableObject
 {
-    public UpdateTeamMainInfoRequestDto(Guid id, string title, string? city, DateTime? foundationDate, ReferenceData<Guid>? leader)
+    public UpdateTeamMainInfoRequestDto(Guid id, string title, int? cityId, DateTime? foundationDate, ReferenceData<Guid>? leader)
     {
         Id = id;
         Title = title;
-        City = city;
+        CityId = cityId;
         FoundationDate = foundationDate;
         Leader = leader;
     }
@@ -20,7 +20,7 @@ public class UpdateTeamMainInfoRequestDto: IValidatableObject
     [Required]
     public string Title { get; set; }
 
-    public string? City { get; }
+    public int? CityId { get; }
 
     public DateTime? FoundationDate { get; }
 

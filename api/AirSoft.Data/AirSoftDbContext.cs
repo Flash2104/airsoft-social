@@ -86,6 +86,9 @@ public class AirSoftDbContext : DbContext, IDbContext
             .Where(x => x != UserRoleType.None)
             .Select(x => new KeyValuePair<int, Guid>((int)x, Guid.NewGuid())));
 
+        
+        new DbRuCityMapping().Map(modelBuilder.Entity<DbRuCity>()); // Список ру городов по регионам
+
         new DbUserRolesMapping().Map(modelBuilder.Entity<DbUserRole>());
         new DbUsersToRolesMapping().Map(modelBuilder.Entity<DbUsersToRoles>());
         new DbUserMapping().Map(modelBuilder.Entity<DbUser>(), userId);

@@ -4,13 +4,13 @@ namespace AirSoft.Service.Contracts.Member.Update;
 
 public class UpdateMemberRequest
 {
-    public UpdateMemberRequest(Guid id, string? name, string? surname, DateTime? birthDate, string? city)
+    public UpdateMemberRequest(Guid id, string? name, string? surname, DateTime? birthDate, int? cityId)
     {
         Id = id;
         Name = name;
         Surname = surname;
         BirthDate = birthDate;
-        City = city;
+        CityId = cityId;
     }
 
     public Guid Id { get; }
@@ -21,6 +21,6 @@ public class UpdateMemberRequest
 
     public DateTime? BirthDate { get; }
 
-    public string? City { get; }
+    public int? CityId { get; }
     
 }

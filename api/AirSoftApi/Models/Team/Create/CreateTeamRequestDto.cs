@@ -4,10 +4,10 @@ namespace AirSoftApi.Models.Team.Create;
 
 public class CreateTeamRequestDto
 {
-    public CreateTeamRequestDto(string title, string? city, DateTime? foundationDate, byte[]? avatar)
+    public CreateTeamRequestDto(string title, int? cityId, DateTime? foundationDate, byte[]? avatar)
     {
         Title = title;
-        City = city;
+        CityId = cityId;
         FoundationDate = foundationDate;
         Avatar = avatar;
     }
@@ -15,7 +15,7 @@ public class CreateTeamRequestDto
     [Required]
     public string Title { get; set; }
 
-    public string? City { get; }
+    public int? CityId { get; }
 
     public DateTime? FoundationDate { get; }
 

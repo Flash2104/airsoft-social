@@ -4,11 +4,11 @@ namespace AirSoft.Service.Contracts.Team.UpdateMainInfo;
 
 public class UpdateTeamMainInfoRequest
 {
-    public UpdateTeamMainInfoRequest(Guid id, string title, string? city, DateTime? foundationDate, ReferenceData<Guid>? leader)
+    public UpdateTeamMainInfoRequest(Guid id, string title, int? cityId, DateTime? foundationDate, ReferenceData<Guid>? leader)
     {
         Id = id;
         Title = title;
-        City = city;
+        CityId = cityId;
         FoundationDate = foundationDate;
         Leader = leader;
     }
@@ -17,7 +17,7 @@ public class UpdateTeamMainInfoRequest
 
     public string Title { get; set; }
 
-    public string? City { get; }
+    public int? CityId { get; }
 
     public DateTime? FoundationDate { get; }
 

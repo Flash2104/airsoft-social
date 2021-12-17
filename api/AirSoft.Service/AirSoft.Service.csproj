@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="Contracts\Navigation\" />
     <Folder Include="Implementations\Team\" />
+    <Folder Include="Implementations\References\" />
   </ItemGroup>
 
   <ItemGroup>

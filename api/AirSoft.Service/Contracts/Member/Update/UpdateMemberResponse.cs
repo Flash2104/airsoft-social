@@ -4,10 +4,10 @@ namespace AirSoft.Service.Contracts.Member.Update;
 
 public class UpdateMemberResponse
 {
-    public UpdateMemberResponse(MemberData memberData)
+    public UpdateMemberResponse(MemberData? memberData)
     {
         MemberData = memberData;
     }
     
-    public MemberData MemberData { get; }
+    public MemberData? MemberData { get; }
 }

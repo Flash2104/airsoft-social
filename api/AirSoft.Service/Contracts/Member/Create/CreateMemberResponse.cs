@@ -4,10 +4,10 @@ namespace AirSoft.Service.Contracts.Member.Create;
 
 public class CreateMemberResponse
 {
-    public CreateMemberResponse(MemberData memberData)
+    public CreateMemberResponse(MemberData? memberData)
     {
         MemberData = memberData;
     }
     
-    public MemberData MemberData { get; }
+    public MemberData? MemberData { get; }
 }

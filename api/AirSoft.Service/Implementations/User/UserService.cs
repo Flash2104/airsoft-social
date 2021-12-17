@@ -3,7 +3,6 @@ using AirSoft.Data.InitialData;
 using AirSoft.Service.Common;
 using AirSoft.Service.Contracts;
 using AirSoft.Service.Contracts.Member;
-using AirSoft.Service.Contracts.Member.Create;
 using AirSoft.Service.Contracts.Models;
 using AirSoft.Service.Contracts.User;
 using AirSoft.Service.Contracts.User.Get;
@@ -53,8 +52,7 @@ public class UserService : IUserService
                 dbUser.Email,
                 dbUser.Phone,
                 dbUser.Status,
-                dbUser.UserRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList(),
-                null
+                dbUser.UserRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList()
             ));
     }
 
@@ -140,8 +138,7 @@ public class UserService : IUserService
             created.Email,
             created.Phone,
             created.Status,
-            created.UserRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList(),
-            null
+            created.UserRoles?.Select(x => new ReferenceData<int>(x.Id, x.Role)).ToList()
             ));
     }
 

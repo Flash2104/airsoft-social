@@ -21,12 +21,14 @@ public class DbTeam : DbEntity<Guid>
     private List<DbTeamRole>? _teamRoles;
 
     public string Title { get; set; } = null!;
-
-    public string? City { get; set; }
-
+    
     public Guid LeaderId { get; set; }
 
     public DateTime? FoundationDate { get; set; }
+
+    public int? CityAddressId { get; set; }
+
+    public virtual DbRuCity? CityAddress { get; set; }
 
     public byte[]? Avatar { get; set; }
 
@@ -58,6 +60,7 @@ internal sealed class DbTeamMapping
         builder.Property(x => x.CreatedBy).IsRequired().HasMaxLength(50);
         builder.Property(x => x.ModifiedBy).IsRequired().HasMaxLength(50);
         builder.Property(x => x.LeaderId).IsRequired().HasMaxLength(50);
+        builder.HasOne(x => x.CityAddress).WithMany().HasForeignKey(x => x.CityAddressId);
 
         string? root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         var team = new DbTeam
@@ -68,7 +71,7 @@ internal sealed class DbTeamMapping
             CreatedBy = userId,
             ModifiedBy = userId,
             Title = "AirSoft Events",
-            City = "Москва",
+            CityAddressId = 1,
             LeaderId = memberId,
             FoundationDate = new DateTime(2021, 12, 02, 1, 50, 00),
             Avatar = File.ReadAllBytes(root + "\\InitialData\\team.png")

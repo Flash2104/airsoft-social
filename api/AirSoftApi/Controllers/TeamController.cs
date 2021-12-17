@@ -45,7 +45,7 @@ namespace AirSoftApi.Controllers
             return await HandleRequest(
                 _teamService.Create,
                 requestDto,
-                dto => new CreateTeamRequest(dto.Title, dto.City, dto.FoundationDate, dto.Avatar),
+                dto => new CreateTeamRequest(dto.Title, dto.CityId, dto.FoundationDate, dto.Avatar),
                 res => new CreateTeamResponseDto(res.TeamData),
                 logPath
             );

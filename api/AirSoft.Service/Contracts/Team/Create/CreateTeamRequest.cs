@@ -4,17 +4,17 @@ namespace AirSoft.Service.Contracts.Team.Create;
 
 public class CreateTeamRequest
 {
-    public CreateTeamRequest(string title, string? city, DateTime? foundationDate, byte[]? avatar)
+    public CreateTeamRequest(string title, int? cityId, DateTime? foundationDate, byte[]? avatar)
     {
         Title = title;
-        City = city;
+        CityId = cityId;
         FoundationDate = foundationDate;
         Avatar = avatar;
     }
 
     public string Title { get; set; }
 
-    public string? City { get; }
+    public int? CityId { get; }
 
     public DateTime? FoundationDate { get; }
 

@@ -4,7 +4,7 @@ namespace AirSoftApi.Models.Member.Update;
 
 public class UpdateMemberRequestDto
 {
-    public UpdateMemberRequestDto(Guid id, string? name, string? surname, DateTime? birthDate, string? city, byte[]? avatar, ReferenceData<Guid>? team)
+    public UpdateMemberRequestDto(Guid id, string? name, string? surname, DateTime? birthDate, int? cityId, byte[]? avatar, ReferenceData<Guid>? team)
     {
         Id = id;
         Name = name;
@@ -12,7 +12,7 @@ public class UpdateMemberRequestDto
         Avatar = avatar;
         Team = team;
         BirthDate = birthDate;
-        City = city;
+        CityId = cityId;
     }
 
     public Guid Id { get; }
@@ -23,7 +23,7 @@ public class UpdateMemberRequestDto
 
     public DateTime? BirthDate { get; }
 
-    public string? City { get; }
+    public int? CityId { get; }
 
     public byte[]? Avatar { get; }
 

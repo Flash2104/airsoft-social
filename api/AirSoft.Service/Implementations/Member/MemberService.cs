@@ -45,24 +45,7 @@ public class MemberService : IMemberService
             throw new AirSoftBaseException(ErrorCodes.MemberService.NotFound, "Профиль не найден");
         }
 
-        return new GetCurrentMemberResponse(new MemberData(
-            dbMember.Id,
-            dbMember.Name,
-            dbMember.Surname,
-            dbMember.BirthDate,
-            dbMember.City,
-            dbMember.User?.Email,
-            dbMember.User?.Phone,
-            dbMember.Avatar?.ToArray(),
-            dbMember.AvatarIcon?.ToArray(),
-            dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
-            dbMember.TeamMemberRoles?.Select(x =>
-                new ReferenceData<Guid>(
-                    x.Id,
-                    x.Title ?? throw new AirSoftBaseException(ErrorCodes.CommonError, "Пустое имя роли члена команды"),
-                    x.Rank))
-                .ToList()
-        ));
+        return new GetCurrentMemberResponse(MapToMemberData(dbMember));
     }
 
     public async Task<GetByIdMemberResponse> Get(GetByIdMemberRequest request)
@@ -82,19 +65,24 @@ public class MemberService : IMemberService
         }
 
         _logger.Log(LogLevel.Information, $"{logPath} Member updated: {dbMember!.Id}.");
-        return new GetByIdMemberResponse(new MemberData(
+        return new GetByIdMemberResponse(MapToMemberData(dbMember));
+    }
+
+    private MemberData? MapToMemberData(DbMember? dbMember)
+    {
+        return dbMember != null ? new MemberData(
             dbMember.Id,
             dbMember.Name,
             dbMember.Surname,
             dbMember.BirthDate,
-            dbMember.City,
+            dbMember.CityAddress?.City,
             dbMember.User?.Email,
             dbMember.User?.Phone,
             dbMember.Avatar?.ToArray(),
             dbMember.AvatarIcon?.ToArray(),
             dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
             dbMember.TeamMemberRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Title, x.Rank)).ToList()
-        ));
+        ) : null;
     }
 
     public async Task<GetByUserIdMemberResponse> GetByUserId(Guid userId)
@@ -104,19 +92,7 @@ public class MemberService : IMemberService
         DbMember? dbMember = await _dataService.Member.GetAsync(x => x.UserId == userId);
 
         _logger.Log(LogLevel.Information, $"{logPath} Member updated: {dbMember!.Id}.");
-        return new GetByUserIdMemberResponse(dbMember != null ? new MemberData(
-            dbMember.Id,
-            dbMember.Name,
-            dbMember.Surname,
-            dbMember.BirthDate,
-            dbMember.City,
-            dbMember.User?.Email,
-            dbMember.User?.Phone,
-            dbMember.Avatar?.ToArray(),
-            dbMember.AvatarIcon?.ToArray(),
-            dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
-            dbMember.TeamMemberRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Title, x.Rank)).ToList()
-        ) : null);
+        return new GetByUserIdMemberResponse(MapToMemberData(dbMember));
     }
 
     public async Task<CreateMemberResponse> Create(CreateMemberRequest request)
@@ -137,7 +113,6 @@ public class MemberService : IMemberService
             Id = Guid.NewGuid(),
             Name = request.Name ?? "Новенький",
             Surname = request.Surname,
-            City = request.City,
             CreatedBy = request.UserId,
             ModifiedBy = request.UserId,
             CreatedDate = DateTime.UtcNow,
@@ -154,19 +129,7 @@ public class MemberService : IMemberService
 
         await _dataService.SaveAsync();
         _logger.Log(LogLevel.Information, $"{logPath} Member created: {created!.Id}.");
-        return new CreateMemberResponse(new MemberData(
-            created.Id,
-            created.Name,
-            created.Surname,
-            created.BirthDate,
-            created.City,
-            created.User?.Email,
-            created.User?.Phone,
-            created.Avatar,
-            dbMember.AvatarIcon?.ToArray(),
-            null,
-            null
-            ));
+        return new CreateMemberResponse(MapToMemberData(created));
     }
 
     public async Task<UpdateMemberResponse> Update(UpdateMemberRequest request)
@@ -185,26 +148,13 @@ public class MemberService : IMemberService
             throw new AirSoftBaseException(ErrorCodes.MemberService.NotFound, "Профиль не найден");
         }
         dbMember.BirthDate = request.BirthDate;
-        dbMember.City = request.City;
         dbMember.Name = request.Name;
         dbMember.Surname = request.Surname;
-
+        dbMember.CityAddressId = request.CityId;
         this._dataService.Member.Update(dbMember);
         await _dataService.SaveAsync();
         _logger.Log(LogLevel.Information, $"{logPath} Member updated: {dbMember!.Id}.");
-        return new UpdateMemberResponse(new MemberData(
-            dbMember.Id,
-            dbMember.Name,
-            dbMember.Surname,
-            dbMember.BirthDate,
-            dbMember.City,
-            dbMember.User?.Email,
-            dbMember.User?.Phone,
-            dbMember.Avatar?.ToArray(),
-            dbMember.AvatarIcon?.ToArray(),
-            dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
-            dbMember.TeamMemberRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Title, x.Rank)).ToList()
-        ));
+        return new UpdateMemberResponse(MapToMemberData(dbMember));
     }
 
     public async Task Delete(DeleteMemberRequest request)

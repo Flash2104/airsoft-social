@@ -1,7 +1,7 @@
 import { ITeamData } from '../team-data';
 
 export interface ICreateTeamRequest {
-  city: string | null | undefined;
+  cityId: number | null | undefined;
   title: string;
   foundationDate: string | null | undefined;
   avatar: string | null | undefined;

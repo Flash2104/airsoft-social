@@ -15,5 +15,7 @@ public interface IDataService
 
     GenericRepository<DbNavigationItem> NavigationItems { get; }
 
+    public CitiesRepository Cities { get; }
+
     Task<bool> SaveAsync();
 }

@@ -13,12 +13,14 @@ using System.Text.Json.Serialization;
 using AirSoft.Service.Contracts.Auth;
 using AirSoft.Service.Contracts.Member;
 using AirSoft.Service.Contracts.Navigation;
+using AirSoft.Service.Contracts.References;
 using AirSoft.Service.Contracts.Team;
 using AirSoft.Service.Contracts.User;
 using AirSoft.Service.Implementations;
 using AirSoft.Service.Implementations.Auth;
 using AirSoft.Service.Implementations.Jwt;
 using AirSoft.Service.Implementations.Member;
+using AirSoft.Service.Implementations.References;
 using AirSoft.Service.Implementations.Team;
 using AirSoft.Service.Implementations.User;
 using AirSoftApi.Filters;
@@ -104,6 +106,7 @@ builder.Services.AddScoped<ICorrelationService, CorrelationService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<INavigationService, NavigationService>();
+builder.Services.AddScoped<IReferenceService, ReferenceService>();
 
 builder.Services.AddControllers();
 builder.Services.AddMvc(opt =>

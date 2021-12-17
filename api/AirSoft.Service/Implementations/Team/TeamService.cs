@@ -87,7 +87,7 @@ public class TeamService : ITeamService
         {
             LeaderId = dbMember.Id,
             FoundationDate = request.FoundationDate,
-            City = request.City,
+            CityAddressId = request.CityId,
             Title = request.Title,
             Avatar = request.Avatar ?? await File.ReadAllBytesAsync(root + "\\InitialData\\team.png")
         };
@@ -114,7 +114,7 @@ public class TeamService : ITeamService
             throw new AirSoftBaseException(ErrorCodes.TeamService.NotFound, "Команда не найдена", logPath);
         }
         dbTeam.FoundationDate = request.FoundationDate;
-        dbTeam.City = request.City;
+        dbTeam.CityAddressId = request.CityId;
         if (request.Leader != null && request.Leader.Id != Guid.Empty)
         {
             if (dbTeam.Members!.All(x => x.UserId != request.Leader.Id))
@@ -141,7 +141,7 @@ public class TeamService : ITeamService
         return dbTeam != null ? new TeamData(
             dbTeam.Id,
             dbTeam.Title,
-            dbTeam.City,
+            dbTeam.CityAddress?.City,
             dbTeam.FoundationDate,
             dbTeam.Avatar,
             dbTeam.Members?
@@ -149,7 +149,7 @@ public class TeamService : ITeamService
                     x.Id,
                     x.Name,
                     x.Surname,
-                    x.City,
+                    x.CityAddress?.CityAddress,
                     x.About,
                     x.Avatar,
                     x.Id == dbTeam.LeaderId,

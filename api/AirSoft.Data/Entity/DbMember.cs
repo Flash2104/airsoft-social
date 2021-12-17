@@ -27,7 +27,9 @@ public class DbMember : DbEntity<Guid>
 
     public string? Surname { get; set; }
 
-    public string? City { get; set; }
+    public int? CityAddressId { get; set; }
+
+    public virtual DbRuCity? CityAddress { get; set; }
 
     public DateTime? BirthDate { get; set; }
 
@@ -79,6 +81,7 @@ internal sealed class DbMemberMapping
         builder.Property(x => x.ModifiedBy).IsRequired().HasMaxLength(50);
 
         builder.HasOne(x => x.Team).WithMany(x => x.Members).HasForeignKey(x => x.TeamId);
+        builder.HasOne(x => x.CityAddress).WithMany().HasForeignKey(x => x.CityAddressId);
         builder.HasOne(x => x.User).WithOne(x => x.Member).HasForeignKey<DbMember>(x => x.UserId);
         string? root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         var adminProfile = new DbMember()
@@ -91,7 +94,7 @@ internal sealed class DbMemberMapping
             Name = "Кирилл",
             Surname = "Хоруженко",
             BirthDate = new DateTime(1993, 4, 21),
-            City = "Москва",
+            CityAddressId = 1,
             TeamId = teamId,
             UserId = userId,
             Avatar = File.ReadAllBytes(root + "\\InitialData\\admin.png"),

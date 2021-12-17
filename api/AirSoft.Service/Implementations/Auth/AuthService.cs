@@ -61,10 +61,9 @@ public class AuthService : IAuthService
                     user.Email,
                     user.Phone,
                     user.Status,
-                    user.UserRoles,
-                    user.MemberId
+                    user.UserRoles
                     ),
-                    new AuthProfileData(member.AvatarIcon)
+                    new AuthProfileData(member?.AvatarIcon)
                 );
         }
 
@@ -94,10 +93,9 @@ public class AuthService : IAuthService
                 userData.Email,
                 userData.Phone,
                 userData.Status,
-                created.User.UserRoles,
-                member.MemberData.Id
+                created.User.UserRoles
                 ),
-            new AuthProfileData(member.MemberData.AvatarIcon)
+            new AuthProfileData(member?.MemberData?.AvatarIcon)
             );
     }
 }

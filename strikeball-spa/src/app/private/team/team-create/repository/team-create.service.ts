@@ -39,7 +39,7 @@ export class TeamCreateService {
       map(([, data]): ICreateTeamRequest => {
         return {
           title: data!.title!,
-          city: data?.city,
+          cityId: data?.cityId,
           avatar: null,
           foundationDate: data?.foundationDate,
         };

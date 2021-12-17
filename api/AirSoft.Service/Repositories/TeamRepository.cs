@@ -36,12 +36,13 @@ public class TeamRepository : GenericRepository<DbTeam>
             throw new AirSoftBaseException(ErrorCodes.TeamRepository.CreatedTeamIsNull, "Результат создания команды пустой или отсутствует идентификатор");
         }
         var teamRoleIds = new Dictionary<int, Guid>(Enum.GetValues<DefaultMemberRoleType>().Select(x => new KeyValuePair<int, Guid>((int)x, Guid.NewGuid())));
-        await CreateDefaultRolesAsync(created.Id, teamRoleIds);
-        await AddLeaderToTeamMembers(created.LeaderId, created.Id, teamRoleIds);
+        await CreateDefaultTeamRolesAsync(created.Id, teamRoleIds);
+        await AddMemberToTeam(created.LeaderId, created.Id);
+        await AddTeamRoleToMember(created.LeaderId, teamRoleIds[(int) DefaultMemberRoleType.Командир]);
         return created;
     }
 
-    private async Task AddLeaderToTeamMembers(Guid memberId, Guid teamId, Dictionary<int, Guid> teamRoleIds)
+    private async Task AddMemberToTeam(Guid memberId, Guid teamId)
     {
         var dbMember = await _dbMembers.FirstOrDefaultAsync(x => x.Id == memberId).ConfigureAwait(false);
         if (dbMember == null)
@@ -50,18 +51,37 @@ public class TeamRepository : GenericRepository<DbTeam>
         }
 
         dbMember.TeamId = teamId;
+        _dbMembers.Update(dbMember);
+    }
+
+    private async Task AddTeamRoleToMember(Guid memberId, Guid teamRoleId)
+    {
+        var dbMember = await _dbMembers.FirstOrDefaultAsync(x => x.Id == memberId).ConfigureAwait(false);
+        if (dbMember == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.TeamRepository.MemberNotFound, "Профиль пользователя не найден");
+        }
+        var role = await _dbTeamRoles.FindAsync(teamRoleId);
+        if (role == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.TeamRolesRepository.TeamRoleNotFound, "Роль не найдена");
+        }
+        if (role.TeamId != dbMember.TeamId)
+        {
+            throw new AirSoftBaseException(ErrorCodes.TeamRolesRepository.MemberTeamNotEqualRoleTeam, "Роль не пренадлежит команде пользователя");
+        }
         dbMember.TeamRolesToMembers = new List<DbTeamRolesToMembers>()
         {
             new DbTeamRolesToMembers()
             {
                 MemberId = memberId,
-                TeamRoleId = teamRoleIds[(int)DefaultMemberRoleType.Командир]
+                TeamRoleId = teamRoleId
             }
         };
         _dbMembers.Update(dbMember);
     }
 
-    private async Task CreateDefaultRolesAsync(Guid teamId, Dictionary<int, Guid> teamRoleIds)
+    private async Task CreateDefaultTeamRolesAsync(Guid teamId, Dictionary<int, Guid> teamRoleIds)
     {
         var hasRoles = await _dbTeamRoles.AnyAsync(x => x.TeamId == teamId);
         if (hasRoles)

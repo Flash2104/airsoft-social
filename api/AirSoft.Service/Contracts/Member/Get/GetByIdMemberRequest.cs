@@ -4,10 +4,10 @@ namespace AirSoft.Service.Contracts.Member.Get;
 
 public class GetByIdMemberRequest
 {
-    public GetByIdMemberRequest(string id)
+    public GetByIdMemberRequest(Guid id)
     {
         Id = id;
     }
     
-    public string Id { get; }
+    public Guid Id { get; }
 }

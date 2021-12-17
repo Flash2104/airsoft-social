@@ -7,6 +7,7 @@ using AirSoft.Service.Contracts.Member;
 using AirSoft.Service.Contracts.Member.Create;
 using AirSoft.Service.Contracts.Member.Delete;
 using AirSoft.Service.Contracts.Member.Get;
+using AirSoft.Service.Contracts.Member.GetByUserId;
 using AirSoft.Service.Contracts.Member.GetCurrent;
 using AirSoft.Service.Contracts.Member.Update;
 using AirSoft.Service.Contracts.Models;
@@ -53,6 +54,7 @@ public class MemberService : IMemberService
             dbMember.User?.Email,
             dbMember.User?.Phone,
             dbMember.Avatar?.ToArray(),
+            dbMember.AvatarIcon?.ToArray(),
             dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
             dbMember.TeamMemberRoles?.Select(x =>
                 new ReferenceData<Guid>(
@@ -63,9 +65,58 @@ public class MemberService : IMemberService
         ));
     }
 
-    public Task<GetByIdMemberResponse> Get(GetByIdMemberRequest request)
+    public async Task<GetByIdMemberResponse> Get(GetByIdMemberRequest request)
     {
-        throw new NotImplementedException();
+        var userId = _correlationService.GetUserId();
+        var logPath = $"{userId} {nameof(MemberService)} {nameof(Get)}. | ";
+        _logger.Log(LogLevel.Trace, $"{logPath} started.");
+        if (!userId.HasValue)
+        {
+            throw new AirSoftBaseException(ErrorCodes.MemberService.EmptyUserId, "Пустой идентификатор пользователя");
+        }
+        DbMember? dbMember = await _dataService.Member.GetAsync(x => x.UserId == userId && x.Id == request.Id);
+
+        if (dbMember == null)
+        {
+            throw new AirSoftBaseException(ErrorCodes.MemberService.NotFound, "Профиль не найден");
+        }
+
+        _logger.Log(LogLevel.Information, $"{logPath} Member updated: {dbMember!.Id}.");
+        return new GetByIdMemberResponse(new MemberData(
+            dbMember.Id,
+            dbMember.Name,
+            dbMember.Surname,
+            dbMember.BirthDate,
+            dbMember.City,
+            dbMember.User?.Email,
+            dbMember.User?.Phone,
+            dbMember.Avatar?.ToArray(),
+            dbMember.AvatarIcon?.ToArray(),
+            dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
+            dbMember.TeamMemberRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Title, x.Rank)).ToList()
+        ));
+    }
+
+    public async Task<GetByUserIdMemberResponse> GetByUserId(Guid userId)
+    {
+        var logPath = $"{userId} {nameof(MemberService)} {nameof(GetByUserId)}. | ";
+        _logger.Log(LogLevel.Trace, $"{logPath} started.");
+        DbMember? dbMember = await _dataService.Member.GetAsync(x => x.UserId == userId);
+
+        _logger.Log(LogLevel.Information, $"{logPath} Member updated: {dbMember!.Id}.");
+        return new GetByUserIdMemberResponse(dbMember != null ? new MemberData(
+            dbMember.Id,
+            dbMember.Name,
+            dbMember.Surname,
+            dbMember.BirthDate,
+            dbMember.City,
+            dbMember.User?.Email,
+            dbMember.User?.Phone,
+            dbMember.Avatar?.ToArray(),
+            dbMember.AvatarIcon?.ToArray(),
+            dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
+            dbMember.TeamMemberRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Title, x.Rank)).ToList()
+        ) : null);
     }
 
     public async Task<CreateMemberResponse> Create(CreateMemberRequest request)
@@ -79,6 +130,8 @@ public class MemberService : IMemberService
             throw new AirSoftBaseException(ErrorCodes.MemberService.AlreadyExist, "Профиль уже существует");
         }
         string? root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        byte[] avatar = await File.ReadAllBytesAsync(root + "\\InitialData\\member-default.png");
+        byte[] avatarIcon = ImageHelper.CreateThumbnail(avatar, 120);
         dbMember = new DbMember()
         {
             Id = Guid.NewGuid(),
@@ -90,15 +143,16 @@ public class MemberService : IMemberService
             CreatedDate = DateTime.UtcNow,
             ModifiedDate = DateTime.UtcNow,
             UserId = request.UserId,
-            Avatar = await File.ReadAllBytesAsync(root + "\\InitialData\\member-default.png")
+            Avatar = avatar,
+            AvatarIcon = avatarIcon
         };
-        await this.CreateUserNavigation(request.UserId);
         var created = this._dataService.Member.Insert(dbMember);
         if (created == null)
         {
             throw new AirSoftBaseException(ErrorCodes.AuthService.CreatedUserIsNull, "Созданный пользователь пустой");
         }
 
+        await _dataService.SaveAsync();
         _logger.Log(LogLevel.Information, $"{logPath} Member created: {created!.Id}.");
         return new CreateMemberResponse(new MemberData(
             created.Id,
@@ -109,6 +163,7 @@ public class MemberService : IMemberService
             created.User?.Email,
             created.User?.Phone,
             created.Avatar,
+            dbMember.AvatarIcon?.ToArray(),
             null,
             null
             ));
@@ -129,15 +184,13 @@ public class MemberService : IMemberService
         {
             throw new AirSoftBaseException(ErrorCodes.MemberService.NotFound, "Профиль не найден");
         }
-        dbMember.Avatar = request.Avatar?.ToArray();
         dbMember.BirthDate = request.BirthDate;
         dbMember.City = request.City;
         dbMember.Name = request.Name;
         dbMember.Surname = request.Surname;
-        dbMember.TeamId = request.Team?.Id;
 
         this._dataService.Member.Update(dbMember);
-
+        await _dataService.SaveAsync();
         _logger.Log(LogLevel.Information, $"{logPath} Member updated: {dbMember!.Id}.");
         return new UpdateMemberResponse(new MemberData(
             dbMember.Id,
@@ -148,6 +201,7 @@ public class MemberService : IMemberService
             dbMember.User?.Email,
             dbMember.User?.Phone,
             dbMember.Avatar?.ToArray(),
+            dbMember.AvatarIcon?.ToArray(),
             dbMember.Team != null ? new ReferenceData<Guid>(dbMember.Team.Id, dbMember.Team.Title) : null,
             dbMember.TeamMemberRoles?.Select(x => new ReferenceData<Guid>(x.Id, x.Title, x.Rank)).ToList()
         ));
@@ -171,29 +225,7 @@ public class MemberService : IMemberService
         }
 
         this._dataService.Member.Delete(dbMember);
-
+        await _dataService.SaveAsync();
         _logger.Log(LogLevel.Information, $"{logPath} Member deleted: {request!.Id}.");
-    }
-
-    private Task<DbUserNavigation> CreateUserNavigation(Guid userId)
-    {
-        DbUserNavigation? dbNavigation = new DbUserNavigation()
-        {
-            UserId = userId,
-            CreatedBy = userId,
-            ModifiedBy = userId,
-            CreatedDate = DateTime.UtcNow,
-            ModifiedDate = DateTime.UtcNow,
-            Id = Guid.NewGuid(),
-            Title = "Навигация пользователя",
-            IsDefault = true
-        };
-        dbNavigation.NavigationsToNavigationItems = RoleNavigationItemsConst.PlayerIds.Select(y => new DbNavigationsToNavigationItems()
-        {
-            NavigationId = dbNavigation.Id,
-            NavigationItemId = y
-        }).ToList();
-        _dataService.UserNavigations.Insert(dbNavigation);
-        return Task.FromResult(dbNavigation);
     }
 }

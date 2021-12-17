@@ -24,6 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="InitialData\admin-icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="InitialData\admin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

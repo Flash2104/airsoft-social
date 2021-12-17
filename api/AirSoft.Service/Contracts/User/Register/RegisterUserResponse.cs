@@ -1,13 +1,14 @@
 ﻿using AirSoft.Data.Entity;
+using AirSoft.Service.Contracts.Models;
 
 namespace AirSoft.Service.Contracts.User.Register;
 
 public class RegisterUserResponse
 {
-    public RegisterUserResponse(DbUser user)
+    public RegisterUserResponse(UserData user)
     {
         User = user;
     }
 
-    public DbUser User { get; }
+    public UserData User { get; }
 }

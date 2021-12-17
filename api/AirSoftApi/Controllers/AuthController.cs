@@ -35,7 +35,9 @@ namespace AirSoftApi.Controllers
                 dto => new SignInRequest(dto.PhoneOrEmail, dto.Password),
                 res => new SignInResponseDto(
                     new TokenResponseDto(res.TokenData.Token, res.TokenData.ExpiryDate),
-                    new UserDto(res.User.Id, res.User.Email, res.User.Phone)),
+                    new UserDto(res.User.Id, res.User.Email, res.User.Phone),
+                    new ProfileDto(res.Profile.AvatarIcon)
+                ),
                 logPath
             );
         }
@@ -51,7 +53,9 @@ namespace AirSoftApi.Controllers
                 dto => new SignUpRequest(dto.PhoneOrEmail, dto.Password, dto.ConfirmPassword),
                 res => new SignUpResponseDto(
                     new TokenResponseDto(res.TokenData.Token, res.TokenData.ExpiryDate),
-                    new UserDto(res.User.Id, res.User.Email, res.User.Phone)),
+                    new UserDto(res.User.Id, res.User.Email, res.User.Phone),
+                    new ProfileDto(res.Profile.AvatarIcon)
+                    ),
                 logPath
             );
         }

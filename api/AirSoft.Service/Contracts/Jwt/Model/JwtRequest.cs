@@ -1,15 +1,16 @@
 ﻿
 using AirSoft.Data.Entity;
+using AirSoft.Service.Contracts.Models;
 
 namespace AirSoft.Service.Contracts.Jwt.Model;
 
 public class JwtRequest
 {
-    public JwtRequest(DbUser user)
+    public JwtRequest(UserData user)
     {
         User = user;
     }
 
-    public DbUser User { get; }
+    public UserData User { get; }
 }
 

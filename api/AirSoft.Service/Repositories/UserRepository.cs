@@ -38,11 +38,11 @@ public class UserRepository : GenericRepository<DbUser>
         return dbUsers.FirstOrDefault();
     }
 
-    public DbUser? CreateDbUser(DbUser user)
+    public DbUser CreateNewUser(DbUser user)
     {
         return Insert(user);
     }
-
+    
     public async Task AddUserRole(Guid userId, DbUserRole userRole)
     {
         DbUser? dbUser = await GetAsync(x => x.Id == userId);

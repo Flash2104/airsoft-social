@@ -77,9 +77,9 @@ public class GenericRepository<TEntity> where TEntity : class, IDbEntity
         return await query.SingleOrDefaultAsync();
     }
 
-    public virtual TEntity? Insert(TEntity entity)
+    public virtual TEntity Insert(TEntity entity)
     {
-        return _dbSet?.Add(entity).Entity;
+        return _dbSet!.Add(entity).Entity;
     }
 
     public virtual void Delete(object id)

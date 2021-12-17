@@ -19,7 +19,7 @@ public class DbTeamRole : DbEntity<Guid>
     public string Title { get; set; } = null!;
 
     public int Rank { get; set; }
-
+    
     public Guid? TeamId { get; set; }
 
     public virtual DbTeam? Team { get; set; }

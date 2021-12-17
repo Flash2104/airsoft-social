@@ -33,6 +33,8 @@ public class DbMember : DbEntity<Guid>
 
     public byte[]? Avatar { get; set; }
 
+    public byte[]? AvatarIcon { get; set; }
+
     public Guid? TeamId { get; set; }
 
     public string? About { get; set; }
@@ -93,6 +95,7 @@ internal sealed class DbMemberMapping
             TeamId = teamId,
             UserId = userId,
             Avatar = File.ReadAllBytes(root + "\\InitialData\\admin.png"),
+            AvatarIcon = File.ReadAllBytes(root + "\\InitialData\\admin-icon.png"),
             About = "Создатель приложения"
         };
         builder.HasData(adminProfile);

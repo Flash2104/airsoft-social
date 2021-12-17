@@ -35,7 +35,7 @@ public class JwtService : IJwtService
         var issuedAt = DateTime.UtcNow;
         var tokenHandler = new JwtSecurityTokenHandler();
         var userId = request?.User?.Id.ToString("N");
-        var roleClaims = request?.User?.UserRoles?.Select(r => new Claim(ClaimTypes.Role, r.Role)) ?? new List<Claim>();
+        var roleClaims = request?.User?.UserRoles?.Select(r => new Claim(ClaimTypes.Role, r.Title)) ?? new List<Claim>();
         var claims = roleClaims.Concat(new List<Claim>()
         {
             new(ClaimTypes.Actor, userId!),

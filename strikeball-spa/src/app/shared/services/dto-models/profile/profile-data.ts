@@ -7,6 +7,7 @@ export interface IProfileData {
   birthDate: string | null | undefined;
   city: string | null | undefined;
   avatarData: string | null | undefined;
+  avatarIcon: string | null | undefined;
   email: string | null | undefined;
   phone: string | null | undefined;
   team: IReferenceData<string> | null | undefined;

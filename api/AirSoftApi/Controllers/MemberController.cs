@@ -45,6 +45,7 @@ namespace AirSoftApi.Controllers
                          res.MemberData.Email,
                          res.MemberData.Phone,
                          res.MemberData.Avatar?.ToArray(),
+                         res.MemberData.AvatarIcon?.ToArray(),
                          res.MemberData.Team,
                          res.MemberData.Roles
                          )
@@ -58,9 +59,14 @@ namespace AirSoftApi.Controllers
         public async Task<ServerResponseDto<GetCurrentMemberResponseDto>> Get(string id)
         {
             var logPath = $"{_correlationService.GetUserId()}.{nameof(MemberController)} {nameof(Get)} | ";
+            if (!Guid.TryParse(id, out var guidId))
+            {
+                return new ServerResponseDto<GetCurrentMemberResponseDto>(new ErrorDto(400,
+                    "Неверный идентификатор пользователя"));
+            }
             return await HandleGetRequest(
                 _memberService.Get,
-                () => new GetByIdMemberRequest(id),
+                () => new GetByIdMemberRequest(guidId),
                 res => new GetCurrentMemberResponseDto(
                     new MemberDataDto(
                         res.MemberData.Id,
@@ -71,6 +77,7 @@ namespace AirSoftApi.Controllers
                         res.MemberData.Email,
                         res.MemberData.Phone,
                         res.MemberData.Avatar?.ToArray(),
+                        res.MemberData.AvatarIcon?.ToArray(),
                         res.MemberData.Team,
                         res.MemberData.Roles
                     )
@@ -92,9 +99,7 @@ namespace AirSoftApi.Controllers
                     dto.Name,
                     dto.Surname,
                     dto.BirthDate,
-                    dto.City,
-                    dto.Avatar,
-                    dto.Team
+                    dto.City
                     ),
                 res => new UpdateMemberResponseDto(
                     new MemberDataDto(
@@ -106,6 +111,7 @@ namespace AirSoftApi.Controllers
                         res.MemberData.Email,
                         res.MemberData.Phone,
                         res.MemberData.Avatar?.ToArray(),
+                        res.MemberData.AvatarIcon?.ToArray(),
                         res.MemberData.Team,
                         res.MemberData.Roles
                     )

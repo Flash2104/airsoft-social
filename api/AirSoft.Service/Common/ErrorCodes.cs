@@ -39,6 +39,7 @@ public class ErrorCodes
         public const int NotFound = 82102;
         public const int AlreadyExist = 82103;
         public const int NavigationAlreadyExist = 82104;
+        public const int WrongUpdateMemberId = 82105;
     }
 
     public sealed class UserRepository
@@ -76,5 +77,7 @@ public class ErrorCodes
     public sealed class TeamRolesRepository
     {
         public const int AlreadyHasRoles = 82330;
+        public const int MemberTeamNotEqualRoleTeam = 82331;
+        public const int TeamRoleNotFound = 82332;
     }
 }

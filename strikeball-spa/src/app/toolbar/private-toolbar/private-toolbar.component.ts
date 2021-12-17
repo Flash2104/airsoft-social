@@ -27,9 +27,9 @@ export class PrivateToolbarComponent implements OnInit, OnDestroy {
       filter((p) => p != null),
       map((p) => {
         const sanitized = this._sanitizer.bypassSecurityTrustResourceUrl(
-          'data:image/png;base64, ' + p?.avatarData
+          'data:image/png;base64, ' + p?.avatarIcon
         );
-        return { ...p, avatarData: sanitized } as IProfileData;
+        return { ...p, avatarIcon: sanitized } as IProfileData;
       }),
       takeUntil(this._destroy$)
     );

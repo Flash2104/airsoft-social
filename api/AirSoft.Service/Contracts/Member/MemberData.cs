@@ -13,6 +13,7 @@ public class MemberData
         string? email,
         string? phone,
         byte[]? avatar,
+        byte[]? avatarIcon,
         ReferenceData<Guid>? team,
         List<ReferenceData<Guid>>? roles
         )
@@ -23,6 +24,7 @@ public class MemberData
         Email = email;
         Phone = phone;
         Avatar = avatar;
+        AvatarIcon = avatarIcon;
         Team = team;
         Roles = roles;
         BirthDate = birthDate;
@@ -44,6 +46,8 @@ public class MemberData
     public string? City { get; }
 
     public byte[]? Avatar { get; }
+
+    public byte[]? AvatarIcon { get; }
 
     public ReferenceData<Guid>? Team { get; }
 

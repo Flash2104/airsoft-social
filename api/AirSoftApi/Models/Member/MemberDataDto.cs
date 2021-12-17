@@ -13,6 +13,7 @@ public class MemberDataDto
         string? email, 
         string? phone, 
         byte[]? avatar, 
+        byte[]? avatarIcon, 
         ReferenceData<Guid>? team, 
         List<ReferenceData<Guid>>? roles
         )
@@ -22,6 +23,7 @@ public class MemberDataDto
         Surname = surname;
         Email = email;
         Phone = phone;
+        AvatarIcon = avatarIcon;
         AvatarData = avatar != null ? Convert.ToBase64String(avatar) : null;
         Team = team;
         Roles = roles;
@@ -42,6 +44,8 @@ public class MemberDataDto
     public string? Email { get; }
 
     public string? Phone { get; }
+
+    public byte[]? AvatarIcon { get; }
 
     public List<ReferenceData<Guid>>? Roles { get; }
 

@@ -34,12 +34,12 @@ internal sealed class DbNavigationItemsMapping
         
         // Bond Navigation to NavItems
 
-        var joinedNavToNavItems = RoleNavigationItemsConst.LeaderIds.Select(i => new DbNavigationsToNavigationItems()
+        var joinedNavToNavItems = RoleNavigationItemsConst.TeamManagerNavItemIds.Select(i => new DbNavigationsToNavigationItems()
         {
             NavigationId = roleNavIds[(int)UserRoleType.TeamManager],
             NavigationItemId = i
         }).Concat(
-            RoleNavigationItemsConst.PlayerIds.Select(y => new DbNavigationsToNavigationItems()
+            RoleNavigationItemsConst.PlayerNavItemIds.Select(y => new DbNavigationsToNavigationItems()
             {
                 NavigationId = roleNavIds[(int)UserRoleType.Player],
                 NavigationItemId = y
@@ -56,12 +56,12 @@ internal sealed class DbNavigationItemsMapping
 
         // Bond User Roles to NavItems
 
-        var joinedRolesToNavItems = RoleNavigationItemsConst.LeaderIds.Select(i => new DbUserRolesToNavigationItems()
+        var joinedRolesToNavItems = RoleNavigationItemsConst.TeamManagerNavItemIds.Select(i => new DbUserRolesToNavigationItems()
         {
             RoleId = (int)UserRoleType.TeamManager,
             NavigationItemId = i
         }).Concat(
-            RoleNavigationItemsConst.PlayerIds.Select(y => new DbUserRolesToNavigationItems()
+            RoleNavigationItemsConst.PlayerNavItemIds.Select(y => new DbUserRolesToNavigationItems()
             {
                 RoleId = (int)UserRoleType.Player,
                 NavigationItemId = y
@@ -104,12 +104,12 @@ internal sealed class DbNavigationItemsMapping
                 ParentId = 2,
                 Order = 1
             },
-            new DbNavigationItem() // Команда/Редактирование
+            new DbNavigationItem() // Команда/Настройки
             {
                 Id = 4,
-                Title = "Редактировать",
-                Icon = "edit",
-                Path = "/private/team/edit",
+                Title = "Настройки",
+                Icon = "settings",
+                Path = "/private/team/settings",
                 ParentId = 2,
                 Order = 2,
             },
@@ -119,7 +119,7 @@ internal sealed class DbNavigationItemsMapping
                 Title = "Заявки",
                 Icon = "group_add",
                 Path = "/private/team/requests",
-                ParentId = 4,
+                ParentId = 2,
                 Order = 3,
             },
             new DbNavigationItem()

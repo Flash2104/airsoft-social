@@ -25,14 +25,12 @@ namespace AirSoftApi.Controllers
             _correlationService = correlationService;
         }
 
-        [HttpPost("cities")]
-        public async Task<ServerResponseDto<GetCityReferencesResponseDto>> GetCities(GetCityReferencesRequestDto request)
+        [HttpGet("cities")]
+        public async Task<ServerResponseDto<GetCityReferencesResponseDto>> GetCities()
         {
             var logPath = $"{_correlationService.GetUserId()}.{nameof(ReferencesController)} {nameof(GetCities)} | ";
             return await HandleRequest(
                 _referenceService.GetCities,
-                request,
-                (dto) => new GetCityReferencesRequest("RUS"),
                 res => new GetCityReferencesResponseDto(res.Cities),
                 logPath
             );

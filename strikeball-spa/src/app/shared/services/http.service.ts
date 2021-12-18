@@ -13,6 +13,7 @@ import {
   IUpdateProfileRequest,
   IUpdateProfileResponse,
 } from './dto-models/profile/update-profile';
+import { IGetCityReferencesResponse } from './dto-models/references/cities/cities-dto';
 import { IServerResponse } from './dto-models/server-response';
 import {
   ICreateTeamRequest,
@@ -57,6 +58,16 @@ export class HttpService {
   ): Observable<IServerResponse<IUpdateProfileResponse>> {
     return of('api/member/update').pipe(
       mergeMap((url) => this.httpPut<IUpdateProfileResponse>(url, data))
+    );
+  }
+
+  /* #endregion */
+
+  /* #region References*/
+
+  loadCities(): Observable<IServerResponse<IGetCityReferencesResponse>> {
+    return of('api/references/cities').pipe(
+      mergeMap((url) => this.httpGet<IGetCityReferencesResponse>(url))
     );
   }
 

@@ -4,5 +4,5 @@ namespace AirSoft.Service.Contracts.References;
 
 public interface IReferenceService
 {
-    Task<GetCityReferencesResponse> GetCities(GetCityReferencesRequest request);
+    Task<GetCityReferencesResponse> GetCities();
 }

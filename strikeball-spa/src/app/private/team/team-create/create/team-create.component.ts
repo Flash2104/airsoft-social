@@ -1,3 +1,4 @@
+import { CitiesService } from './../../../../shared/services/references/cities.service';
 import { Location } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -8,6 +9,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, Subject, takeUntil, tap, throttleTime } from 'rxjs';
+import { CitiesRepository } from 'src/app/shared/repository/cities.repository';
 import { TeamCreateRepository } from '../repository/team-create.repository';
 import { TeamCreateService } from '../repository/team-create.service';
 
@@ -16,6 +18,7 @@ import { TeamCreateService } from '../repository/team-create.service';
   templateUrl: './team-create.component.html',
   styleUrls: ['./team-create.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [CitiesRepository, CitiesService],
 })
 export class TeamCreateComponent implements OnInit, OnDestroy {
   private _destroy$: Subject<void> = new Subject<void>();
@@ -34,11 +37,15 @@ export class TeamCreateComponent implements OnInit, OnDestroy {
     private _teamCreateRepo: TeamCreateRepository,
     private _teamCreateService: TeamCreateService,
     private _location: Location,
-    private _sanitizer: DomSanitizer
+    private _sanitizer: DomSanitizer,
+    private _citiesRepo: CitiesRepository,
+    private _citiesService: CitiesService
   ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
+    this._citiesService.loadCityReferences().subscribe();
+
     this._teamCreateRepo.createData$
       .pipe(
         tap((data) => {

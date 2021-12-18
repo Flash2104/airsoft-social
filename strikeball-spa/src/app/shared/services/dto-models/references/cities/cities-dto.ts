@@ -6,3 +6,7 @@ export interface ICitiesData {
   regionType: string | null | undefined;
   region: string | null | undefined;
 }
+
+export interface IGetCityReferencesResponse {
+  cities: ICitiesData[] | null;
+}

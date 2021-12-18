@@ -18,9 +18,9 @@ public class ReferenceService : IReferenceService
         _dataService = dataService;
     }
 
-    public async Task<GetCityReferencesResponse> GetCities(GetCityReferencesRequest request)
+    public async Task<GetCityReferencesResponse> GetCities()
     {
-        var dbCities = await _dataService.Cities.ListAsync(x => x.CountryIsoCode == request.CountryIsoCode);
+        var dbCities = await _dataService.Cities.ListAsync();
         return new GetCityReferencesResponse(dbCities.Select(x => new CityReferenceData(
                 x.Id,
                 x.CityAddress,

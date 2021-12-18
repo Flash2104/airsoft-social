@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { createState, select, Store, withProps } from '@ngneat/elf';
-import { selectAll, withEntities } from '@ngneat/elf-entities';
+import { selectAll, upsertEntities, withEntities } from '@ngneat/elf-entities';
 import { Observable } from 'rxjs';
 import { v1 as uuidv1 } from 'uuid';
 import { ICitiesData } from '../services/dto-models/references/cities/cities-dto';
@@ -47,10 +47,9 @@ export class CitiesRepository implements OnDestroy {
   }
 
   upsertCities(cities: ICitiesData[] | null): void {
-    // if (cities != null) {
-    //   const data = cities as ICitiesData[];
-    //   this.citiesStore.update(upsertEntities([{ id: '1' }]));
-    // }
+    if (cities != null) {
+      this.citiesStore.update(upsertEntities(cities));
+    }
   }
 
   ngOnDestroy(): void {

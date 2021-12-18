@@ -15,13 +15,13 @@ public class DbRuCity
 
     public string? Country { get; set; }
 
-    public string? CountryIsoCode { get; set; }
+    public string CountryIsoCode { get; set; } = null!;
 
     public string? PostalCode { get; set; }
 
     public string? FederalDistrict { get; set; }
 
-    public string? RegionType { get; set; }
+    public string RegionType { get; set; } = null!;
 
     public string? Region { get; set; }
 

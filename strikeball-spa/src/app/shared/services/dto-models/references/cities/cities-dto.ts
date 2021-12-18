@@ -1,12 +1,17 @@
 export interface ICitiesData {
   id: number;
-  cityAddress: string;
   city: string;
+  cityAddress: string;
   federalDistrict: string | null | undefined;
-  regionType: string | null | undefined;
-  region: string | null | undefined;
+}
+
+export interface IRegionData {
+  cities: ICitiesData[] | null;
+  title: string;
+  id: number;
 }
 
 export interface IGetCityReferencesResponse {
-  cities: ICitiesData[] | null;
+  regions: IRegionData[] | null;
 }
+

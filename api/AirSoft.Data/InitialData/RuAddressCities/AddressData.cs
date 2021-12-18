@@ -17,7 +17,7 @@ public class AddressData
     public string? FederalDistrict { get; set; }
 
     [Name("region_type")]
-    public string? RegionType { get; set; }
+    public string RegionType { get; set; } = null!;
 
     [Name("region")]
     public string? Region { get; set; }

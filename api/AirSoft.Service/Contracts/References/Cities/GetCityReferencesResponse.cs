@@ -2,10 +2,26 @@
 
 public class GetCityReferencesResponse
 {
+    public List<RegionReferenceData> Regions { get; }
+
+    public GetCityReferencesResponse(List<RegionReferenceData> regions)
+    {
+        Regions = regions;
+    }
+}
+
+public class RegionReferenceData
+{
+    public int Id { get; set; }
+
+    public string Title { get; set; }
+
     public List<CityReferenceData> Cities { get; }
 
-    public GetCityReferencesResponse(List<CityReferenceData> cities)
+    public RegionReferenceData(int id, string title, List<CityReferenceData> cities)
     {
+        Id = id;
+        Title = title;
         Cities = cities;
     }
 }
@@ -18,18 +34,12 @@ public class CityReferenceData
 
     public string? FederalDistrict { get; }
 
-    public string? RegionType { get; set; }
-
-    public string? Region { get; set; }
-
     public string City { get; }
 
-    public CityReferenceData(int id, string cityAddress, string? federalDistrict, string? regionType, string? region, string city)
+    public CityReferenceData(int id, string cityAddress, string? federalDistrict, string city)
     {
         CityAddress = cityAddress;
         FederalDistrict = federalDistrict;
-        RegionType = regionType;
-        Region = region;
         City = city;
         Id = id;
     }

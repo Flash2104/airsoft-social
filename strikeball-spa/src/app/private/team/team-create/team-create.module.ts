@@ -17,6 +17,8 @@ import { SharedModule } from '../../../shared/shared.module';
 import { TeamCreateComponent } from './create/team-create.component';
 import { TeamCreateRepository } from './repository/team-create.repository';
 import { TeamCreateService } from './repository/team-create.service';
+import { MatSelectModule } from '@angular/material/select';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 const routes: Routes = [
   {
@@ -36,6 +38,8 @@ const routes: Routes = [
   imports: [
     MatButtonModule,
     MatCardModule,
+    MatSelectModule,
+    NgxMatSelectSearchModule,
     MatDatepickerModule,
     MatTooltipModule,
     MatListModule,

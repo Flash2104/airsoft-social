@@ -1,26 +1,26 @@
+import { IRegionData } from './../services/dto-models/references/cities/cities-dto';
 import { Injectable, OnDestroy } from '@angular/core';
 import { createState, select, Store, withProps } from '@ngneat/elf';
 import { selectAll, upsertEntities, withEntities } from '@ngneat/elf-entities';
 import { Observable } from 'rxjs';
 import { v1 as uuidv1 } from 'uuid';
-import { ICitiesData } from '../services/dto-models/references/cities/cities-dto';
 
 @Injectable()
 export class CitiesRepository implements OnDestroy {
   _state: {
-    state: { entities: Record<number, ICitiesData> };
+    state: { entities: Record<string, IRegionData> };
     config: { idKey: 'id' };
   } = createState(
-    withEntities<ICitiesData>({ initialValue: [], idKey: 'id' }),
+    withEntities<IRegionData>({ initialValue: [], idKey: 'id' }),
     withProps<{ loading: boolean }>({ loading: false })
   );
 
-  _name: string = `cities-${uuidv1().substring(0, 8)}`;
+  _name: string = `cities-byRegions-${uuidv1().substring(0, 8)}`;
 
   citiesStore: Store<{
     state: {
-      entities: Record<number, ICitiesData>;
-      ids: number[];
+      entities: Record<string, IRegionData>;
+      ids: string[];
       loading: boolean;
     };
     name: string;
@@ -31,7 +31,7 @@ export class CitiesRepository implements OnDestroy {
     config: this._state.config,
   });
 
-  cities$: Observable<ICitiesData[] | null> = this.citiesStore.pipe(
+  cities$: Observable<IRegionData[] | null> = this.citiesStore.pipe(
     selectAll()
   );
 
@@ -46,9 +46,9 @@ export class CitiesRepository implements OnDestroy {
     }));
   }
 
-  upsertCities(cities: ICitiesData[] | null): void {
-    if (cities != null) {
-      this.citiesStore.update(upsertEntities(cities));
+  upsertCities(data: IRegionData[] | null): void {
+    if (data != null) {
+      this.citiesStore.update(upsertEntities(data));
     }
   }
 

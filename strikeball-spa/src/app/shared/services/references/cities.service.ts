@@ -22,7 +22,7 @@ export class CitiesService {
       switchMap(() => this._http.loadCities()),
       tap((resp) => {
         if (resp.isSuccess && resp.data != null) {
-          this._citiesRepo.upsertCities(resp.data?.cities ?? null);
+          this._citiesRepo.upsertCities(resp.data?.regions ?? null);
         } else {
           let message = 'Произошла ошибка на подгрузке городов';
           if (resp.errors != null && resp.errors[0] != null) {

@@ -4,10 +4,10 @@ namespace AirSoftApi.Models.References.Cities;
 
 public class GetCityReferencesResponseDto
 {
-    public List<CityReferenceData> Cities { get; }
+    public List<RegionReferenceData> Regions { get; }
 
-    public GetCityReferencesResponseDto(List<CityReferenceData> cities)
+    public GetCityReferencesResponseDto(List<RegionReferenceData> regions)
     {
-        Cities = cities;
+        Regions = regions;
     }
 }

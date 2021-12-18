@@ -29,9 +29,10 @@ namespace AirSoftApi.Controllers
         public async Task<ServerResponseDto<GetCityReferencesResponseDto>> GetCities()
         {
             var logPath = $"{_correlationService.GetUserId()}.{nameof(ReferencesController)} {nameof(GetCities)} | ";
+            await Task.Delay(1000);
             return await HandleRequest(
                 _referenceService.GetCities,
-                res => new GetCityReferencesResponseDto(res.Cities),
+                res => new GetCityReferencesResponseDto(res.Regions),
                 logPath
             );
         }

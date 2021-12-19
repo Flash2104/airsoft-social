@@ -34,7 +34,7 @@ public class DbRuCity
     public string? CityType { get; set; }
 
     public string? TimeZone { get; set; }
-    
+
 }
 
 internal sealed class DbRuCityMapping
@@ -56,7 +56,10 @@ internal sealed class DbRuCityMapping
             Id = index + 1,
             Area = x.Area,
             AreaType = x.AreaType,
-            City = x.City,
+            City = !string.IsNullOrWhiteSpace(x.City)
+                ? x.City
+                : (x.RegionType == "г" ? x.Region : (x.CityAddress.Split("г ")[1]))
+            ,
             CityAddress = x.CityAddress,
             CityType = x.CityType,
             Country = x.Country,

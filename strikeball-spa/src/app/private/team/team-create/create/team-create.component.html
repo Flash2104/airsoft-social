@@ -55,42 +55,12 @@
               <tr class="mat-row py-3">
                 <td class="mat-cell">Город</td>
                 <td class="mat-cell">
-                  <mat-form-field
-                    *ngIf="filteredCities$ | async as regions"
-                    class="w-100"
-                  >
-                    <mat-label></mat-label>
-                    <!-- <input
-                      matInput
-                      autocomplete="new-password"
-                      formControlName="city"
-                      placeholder="Москва"
-                    /> -->
-                    <mat-select
-                      formControlName="city"
-                      placeholder="Не указан"
-                      [disabled]="(loadingCities$ | async) === true"
-                    >
-                      <mat-option>
-                        <ngx-mat-select-search
-                          [formControl]="cityFilter"
-                          placeholderLabel="Выберите город"
-                        ></ngx-mat-select-search>
-                      </mat-option>
-                      <mat-option [value]="null">Не указан</mat-option>
-                      <mat-optgroup
-                        *ngFor="let region of regions"
-                        [label]="region.title"
-                      >
-                        <mat-option
-                          *ngFor="let city of region.cities"
-                          [value]="city.id"
-                        >
-                          {{ city.cityAddress }}
-                        </mat-option>
-                      </mat-optgroup>
-                    </mat-select>
-                  </mat-form-field>
+                  <air-grouped-selector
+                    formControlName="city"
+                    [data]="(cities$ | async) || []"
+                    [loading]="(loadingCities$ | async) === true"
+                    placeholder="Выберите город"
+                  ></air-grouped-selector>
                 </td>
               </tr>
               <tr class="mat-row py-3">

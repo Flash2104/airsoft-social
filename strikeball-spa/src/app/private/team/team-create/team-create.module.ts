@@ -8,17 +8,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTreeModule } from '@angular/material/tree';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../../shared/shared.module';
 import { TeamCreateComponent } from './create/team-create.component';
 import { TeamCreateRepository } from './repository/team-create.repository';
 import { TeamCreateService } from './repository/team-create.service';
-import { MatSelectModule } from '@angular/material/select';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 const routes: Routes = [
   {
@@ -38,11 +34,8 @@ const routes: Routes = [
   imports: [
     MatButtonModule,
     MatCardModule,
-    MatSelectModule,
-    NgxMatSelectSearchModule,
     MatDatepickerModule,
     MatTooltipModule,
-    MatListModule,
     MatNativeDateModule,
     MatIconModule,
     CommonModule,
@@ -50,7 +43,6 @@ const routes: Routes = [
     MatInputModule,
     FormsModule,
     MatDividerModule,
-    MatTreeModule,
     ReactiveFormsModule,
     SharedModule,
     RouterModule.forChild(routes),

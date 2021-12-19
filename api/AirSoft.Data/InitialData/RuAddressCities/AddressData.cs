@@ -20,7 +20,7 @@ public class AddressData
     public string RegionType { get; set; } = null!;
 
     [Name("region")]
-    public string? Region { get; set; }
+    public string Region { get; set; } = null!;
 
     [Name("area_type")]
     public string? AreaType { get; set; }
@@ -29,7 +29,7 @@ public class AddressData
     public string? Area { get; set; }
 
     [Name("city")]
-    public string City { get; set; } = null!;
+    public string? City { get; set; }
 
     [Name("city_type")]
     public string CityType { get; set; } = null!;

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirSoft.Data.Migrations
 {
     [DbContext(typeof(AirSoftDbContext))]
-    [Migration("20211217154342_Initial")]
+    [Migration("20211219011508_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -248,52 +248,52 @@ namespace AirSoft.Data.Migrations
                     b.HasData(
                         new
                         {
-                            NavigationId = new Guid("440e9bc2-7ac2-4ca3-99e3-e7ee5025d6ed"),
+                            NavigationId = new Guid("86443532-662a-4681-8249-91963d2ced16"),
                             NavigationItemId = 1
                         },
                         new
                         {
-                            NavigationId = new Guid("440e9bc2-7ac2-4ca3-99e3-e7ee5025d6ed"),
+                            NavigationId = new Guid("86443532-662a-4681-8249-91963d2ced16"),
                             NavigationItemId = 2
                         },
                         new
                         {
-                            NavigationId = new Guid("440e9bc2-7ac2-4ca3-99e3-e7ee5025d6ed"),
+                            NavigationId = new Guid("86443532-662a-4681-8249-91963d2ced16"),
                             NavigationItemId = 3
                         },
                         new
                         {
-                            NavigationId = new Guid("440e9bc2-7ac2-4ca3-99e3-e7ee5025d6ed"),
+                            NavigationId = new Guid("86443532-662a-4681-8249-91963d2ced16"),
                             NavigationItemId = 4
                         },
                         new
                         {
-                            NavigationId = new Guid("440e9bc2-7ac2-4ca3-99e3-e7ee5025d6ed"),
+                            NavigationId = new Guid("86443532-662a-4681-8249-91963d2ced16"),
                             NavigationItemId = 5
                         },
                         new
                         {
-                            NavigationId = new Guid("440e9bc2-7ac2-4ca3-99e3-e7ee5025d6ed"),
+                            NavigationId = new Guid("86443532-662a-4681-8249-91963d2ced16"),
                             NavigationItemId = 6
                         },
                         new
                         {
-                            NavigationId = new Guid("4b7c1fa3-b134-4c24-9958-45bf76c21460"),
+                            NavigationId = new Guid("89303065-8f27-4a4a-a0a4-c19c9fc43fe3"),
                             NavigationItemId = 1
                         },
                         new
                         {
-                            NavigationId = new Guid("4b7c1fa3-b134-4c24-9958-45bf76c21460"),
+                            NavigationId = new Guid("89303065-8f27-4a4a-a0a4-c19c9fc43fe3"),
                             NavigationItemId = 2
                         },
                         new
                         {
-                            NavigationId = new Guid("4b7c1fa3-b134-4c24-9958-45bf76c21460"),
+                            NavigationId = new Guid("89303065-8f27-4a4a-a0a4-c19c9fc43fe3"),
                             NavigationItemId = 3
                         },
                         new
                         {
-                            NavigationId = new Guid("4b7c1fa3-b134-4c24-9958-45bf76c21460"),
+                            NavigationId = new Guid("89303065-8f27-4a4a-a0a4-c19c9fc43fe3"),
                             NavigationItemId = 6
                         });
                 });
@@ -329,6 +329,7 @@ namespace AirSoft.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CountryIsoCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FederalDistrict")
@@ -341,6 +342,7 @@ namespace AirSoft.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RegionType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TimeZone")
@@ -8500,7 +8502,7 @@ namespace AirSoft.Data.Migrations
                             Id = 510,
                             Area = "",
                             AreaType = "",
-                            City = "",
+                            City = "Москва",
                             CityAddress = "г Москва",
                             CityType = "",
                             Country = "Россия",
@@ -8628,7 +8630,7 @@ namespace AirSoft.Data.Migrations
                             Id = 518,
                             Area = "Воскресенск",
                             AreaType = "г",
-                            City = "",
+                            City = "Воскресенск",
                             CityAddress = "Московская обл, г Воскресенск",
                             CityType = "",
                             Country = "Россия",
@@ -8708,7 +8710,7 @@ namespace AirSoft.Data.Migrations
                             Id = 523,
                             Area = "Дмитров",
                             AreaType = "г",
-                            City = "",
+                            City = "Дмитров",
                             CityAddress = "Московская обл, г Дмитров",
                             CityType = "",
                             Country = "Россия",
@@ -8868,7 +8870,7 @@ namespace AirSoft.Data.Migrations
                             Id = 533,
                             Area = "Истра",
                             AreaType = "г",
-                            City = "",
+                            City = "Истра",
                             CityAddress = "Московская обл, г Истра",
                             CityType = "",
                             Country = "Россия",
@@ -8900,7 +8902,7 @@ namespace AirSoft.Data.Migrations
                             Id = 535,
                             Area = "Клин",
                             AreaType = "г",
-                            City = "",
+                            City = "Клин",
                             CityAddress = "Московская обл, г Клин",
                             CityType = "",
                             Country = "Россия",
@@ -9188,7 +9190,7 @@ namespace AirSoft.Data.Migrations
                             Id = 553,
                             Area = "Наро-Фоминск",
                             AreaType = "г",
-                            City = "",
+                            City = "Наро-Фоминск",
                             CityAddress = "Московская обл, г Наро-Фоминск",
                             CityType = "",
                             Country = "Россия",
@@ -9204,7 +9206,7 @@ namespace AirSoft.Data.Migrations
                             Id = 554,
                             Area = "Ногинск",
                             AreaType = "г",
-                            City = "",
+                            City = "Ногинск",
                             CityAddress = "Московская обл, г Ногинск",
                             CityType = "",
                             Country = "Россия",
@@ -9220,7 +9222,7 @@ namespace AirSoft.Data.Migrations
                             Id = 555,
                             Area = "Одинцово",
                             AreaType = "г",
-                            City = "",
+                            City = "Одинцово",
                             CityAddress = "Московская обл, г Одинцово",
                             CityType = "",
                             Country = "Россия",
@@ -9252,7 +9254,7 @@ namespace AirSoft.Data.Migrations
                             Id = 557,
                             Area = "Орехово-Зуево",
                             AreaType = "г",
-                            City = "",
+                            City = "Орехово-Зуево",
                             CityAddress = "Московская обл, г Орехово-Зуево",
                             CityType = "",
                             Country = "Россия",
@@ -9428,7 +9430,7 @@ namespace AirSoft.Data.Migrations
                             Id = 568,
                             Area = "Сергиев Посад",
                             AreaType = "г",
-                            City = "",
+                            City = "Сергиев Посад",
                             CityAddress = "Московская обл, г Сергиев Посад",
                             CityType = "",
                             Country = "Россия",
@@ -9604,7 +9606,7 @@ namespace AirSoft.Data.Migrations
                             Id = 579,
                             Area = "Шатура",
                             AreaType = "г",
-                            City = "",
+                            City = "Шатура",
                             CityAddress = "Московская обл, г Шатура",
                             CityType = "",
                             Country = "Россия",
@@ -12932,7 +12934,7 @@ namespace AirSoft.Data.Migrations
                             Id = 787,
                             Area = "",
                             AreaType = "",
-                            City = "",
+                            City = "Санкт-Петербург",
                             CityAddress = "г Санкт-Петербург",
                             CityType = "",
                             Country = "Россия",
@@ -14212,7 +14214,7 @@ namespace AirSoft.Data.Migrations
                             Id = 867,
                             Area = "",
                             AreaType = "",
-                            City = "",
+                            City = "Севастополь",
                             CityAddress = "г Севастополь",
                             CityType = "",
                             Country = "Россия",
@@ -17492,7 +17494,7 @@ namespace AirSoft.Data.Migrations
                             Id = 1072,
                             Area = "Урус-Мартановский",
                             AreaType = "р-н",
-                            City = "",
+                            City = "Урус-Мартан",
                             CityAddress = "Респ Чеченская, г Урус-Мартан",
                             CityType = "",
                             Country = "Россия",
@@ -18334,7 +18336,7 @@ namespace AirSoft.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("11b599b1-3b71-4ae5-9802-f45ba8df250a"),
+                            Id = new Guid("43ba9048-bb8a-4e93-8ac3-56c571026761"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -18345,7 +18347,7 @@ namespace AirSoft.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("25de4e13-0d4f-4cc7-89f0-d46c52e1e816"),
+                            Id = new Guid("387b63ad-654b-4263-ae09-ffec9b120bd2"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -18356,7 +18358,7 @@ namespace AirSoft.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5bb01296-ffd2-45d8-8c0a-bb557e7c0866"),
+                            Id = new Guid("0c2bf67c-e08f-448a-bdad-ac7326068009"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             CreatedDate = new DateTime(2021, 12, 2, 1, 50, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -18385,12 +18387,12 @@ namespace AirSoft.Data.Migrations
                         new
                         {
                             MemberId = new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"),
-                            TeamRoleId = new Guid("11b599b1-3b71-4ae5-9802-f45ba8df250a")
+                            TeamRoleId = new Guid("43ba9048-bb8a-4e93-8ac3-56c571026761")
                         },
                         new
                         {
                             MemberId = new Guid("703405e5-9cc1-434e-8c18-d19bb7fbd9f2"),
-                            TeamRoleId = new Guid("5bb01296-ffd2-45d8-8c0a-bb557e7c0866")
+                            TeamRoleId = new Guid("0c2bf67c-e08f-448a-bdad-ac7326068009")
                         });
                 });
 
@@ -18494,23 +18496,23 @@ namespace AirSoft.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("440e9bc2-7ac2-4ca3-99e3-e7ee5025d6ed"),
+                            Id = new Guid("86443532-662a-4681-8249-91963d2ced16"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            CreatedDate = new DateTime(2021, 12, 17, 15, 43, 42, 13, DateTimeKind.Utc).AddTicks(2113),
+                            CreatedDate = new DateTime(2021, 12, 19, 1, 15, 8, 9, DateTimeKind.Utc).AddTicks(746),
                             IsDefault = true,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            ModifiedDate = new DateTime(2021, 12, 17, 15, 43, 42, 13, DateTimeKind.Utc).AddTicks(2113),
+                            ModifiedDate = new DateTime(2021, 12, 19, 1, 15, 8, 9, DateTimeKind.Utc).AddTicks(744),
                             Title = "Навигация менеджера команды",
                             UserId = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3")
                         },
                         new
                         {
-                            Id = new Guid("4b7c1fa3-b134-4c24-9958-45bf76c21460"),
+                            Id = new Guid("89303065-8f27-4a4a-a0a4-c19c9fc43fe3"),
                             CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            CreatedDate = new DateTime(2021, 12, 17, 15, 43, 42, 13, DateTimeKind.Utc).AddTicks(2123),
+                            CreatedDate = new DateTime(2021, 12, 19, 1, 15, 8, 9, DateTimeKind.Utc).AddTicks(750),
                             IsDefault = false,
                             ModifiedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            ModifiedDate = new DateTime(2021, 12, 17, 15, 43, 42, 13, DateTimeKind.Utc).AddTicks(2123),
+                            ModifiedDate = new DateTime(2021, 12, 19, 1, 15, 8, 9, DateTimeKind.Utc).AddTicks(750),
                             Title = "Навигация Игрока",
                             UserId = new Guid("fadde9ec-7dc4-4033-b1e6-2f83a08c70f3")
                         });

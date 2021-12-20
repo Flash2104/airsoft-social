@@ -1,10 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { createState, select, Store, withProps } from '@ngneat/elf';
 import { Observable } from 'rxjs';
+import { IReferenceData } from 'src/app/shared/services/dto-models/reference-data';
 import { v1 as uuidv1 } from 'uuid';
 
 export interface ITeamCreateData {
-  cityId?: number | null | undefined;
+  city?: IReferenceData<number> | null | undefined;
   title?: string | null | undefined;
   foundationDate?: string | null | undefined;
   avatar?: string | null | undefined;

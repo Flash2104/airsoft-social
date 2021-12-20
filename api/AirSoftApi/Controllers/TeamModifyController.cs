@@ -34,7 +34,7 @@ namespace AirSoftApi.Controllers
             return await HandleRequest(
                 _teamService.UpdateMainInfo,
                 requestDto,
-                dto => new UpdateTeamMainInfoRequest(dto.Id, dto.Title, dto.CityId, dto.FoundationDate, dto.Leader),
+                dto => new UpdateTeamMainInfoRequest(dto.Id, dto.Title, dto.CityId, dto.FoundationDate),
                 res => new UpdateTeamMainInfoResponseDto(res.TeamData),
                 logPath
             );

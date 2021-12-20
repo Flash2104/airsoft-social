@@ -20,7 +20,10 @@ public class TeamRepository : GenericRepository<DbTeam>
 
     public async Task<DbTeam?> GetByUserAsync(Guid userId)
     {
-        var dbMember = await _dbMembers.FirstOrDefaultAsync(x => x.UserId == userId).ConfigureAwait(false);
+        var dbMember = await _dbMembers
+            .Include(x => x.Team)
+            .ThenInclude(x => x.CityAddress)
+            .FirstOrDefaultAsync(x => x.UserId == userId).ConfigureAwait(false);
         if (dbMember == null)
         {
             throw new AirSoftBaseException(ErrorCodes.TeamRepository.MemberNotFound, "Профиль пользователя не найден");

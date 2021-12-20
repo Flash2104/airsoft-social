@@ -115,14 +115,7 @@ public class TeamService : ITeamService
         }
         dbTeam.FoundationDate = request.FoundationDate;
         dbTeam.CityAddressId = request.CityId;
-        if (request.Leader != null && request.Leader.Id != Guid.Empty)
-        {
-            if (dbTeam.Members!.All(x => x.UserId != request.Leader.Id))
-            {
-                throw new AirSoftBaseException(ErrorCodes.TeamService.LeaderNotInTeam, "Командир не является членом команды", logPath);
-            }
-            dbTeam.LeaderId = request.Leader.Id;
-        }
+
         dbTeam.Title = request.Title;
 
         this._dataService.Team.Update(dbTeam);
@@ -141,7 +134,7 @@ public class TeamService : ITeamService
         return dbTeam != null ? new TeamData(
             dbTeam.Id,
             dbTeam.Title,
-            dbTeam.CityAddress?.City,
+            dbTeam.CityAddress?.CityAddress,
             dbTeam.FoundationDate,
             dbTeam.Avatar,
             dbTeam.Members?
